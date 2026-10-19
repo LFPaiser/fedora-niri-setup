@@ -1,0 +1,147 @@
+// Waybar — floating Catppuccin Mocha bar for niri.
+// Reload after editing:  pkill -SIGUSR2 waybar
+{
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "margin-top": 8,
+    "margin-left": 12,
+    "margin-right": 12,
+    "spacing": 6,
+
+    "modules-left": ["custom/launcher", "niri/workspaces", "niri/window"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "mpris",
+        "group/system",
+        "pulseaudio",
+        "network",
+        "battery",
+        "niri/language",
+        "idle_inhibitor",
+        "tray",
+        "custom/power"
+    ],
+
+    "custom/launcher": {
+        "format": "",
+        "tooltip-format": "Apps (Super+Space)",
+        "on-click": "fuzzel"
+    },
+
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "focused": "",
+            "active": "",
+            "default": ""
+        }
+    },
+
+    "niri/window": {
+        "format": "{title}",
+        "max-length": 50,
+        "icon": true,
+        "icon-size": 16,
+        "rewrite": {
+            "(.*) — Mozilla Firefox": "$1",
+            "(.*) - Visual Studio Code": "$1"
+        }
+    },
+
+    "clock": {
+        "format": "  {:%a %d %b   %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "left",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#cba6f7'><b>{}</b></span>",
+                "weeks": "<span color='#6c7086'>W{}</span>",
+                "weekdays": "<span color='#f9e2af'><b>{}</b></span>",
+                "today": "<span color='#11111b' background='#cba6f7'><b>{}</b></span>"
+            }
+        },
+        "actions": {
+            "on-scroll-up": "shift_up",
+            "on-scroll-down": "shift_down"
+        }
+    },
+
+    "mpris": {
+        "format": "{player_icon} {title}",
+        "format-paused": "{status_icon} <i>{title}</i>",
+        "title-len": 28,
+        "player-icons": { "default": "󰎆", "firefox": "", "mpv": "" },
+        "status-icons": { "paused": "" },
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    "group/system": {
+        "orientation": "horizontal",
+        "modules": ["cpu", "memory"]
+    },
+    "cpu": {
+        "format": "󰻠 {usage}%",
+        "interval": 3,
+        "on-click": "ghostty -e btop"
+    },
+    "memory": {
+        "format": "󰍛 {percentage}%",
+        "interval": 5,
+        "tooltip-format": "{used:0.1f} / {total:0.1f} GiB",
+        "on-click": "ghostty -e btop"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 muted",
+        "format-icons": { "headphone": "󰋋", "default": ["󰕿", "󰖀", "󰕾"] },
+        "scroll-step": 5,
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+
+    "network": {
+        "format-wifi": "󰤨 {essid}",
+        "format-ethernet": "󰈀 wired",
+        "format-disconnected": "󰤭 offline",
+        "tooltip-format": "{ifname}  {ipaddr}\n {bandwidthDownBytes}   {bandwidthUpBytes}",
+        "interval": 5,
+        "on-click": "nm-connection-editor"
+    },
+
+    "battery": {
+        "states": { "warning": 25, "critical": 12 },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"]
+    },
+
+    "niri/language": {
+        "format": "󰌌 {short}",
+        "tooltip-format": "{long} (Alt+Shift switches)"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": { "activated": "󰅶", "deactivated": "󰾪" },
+        "tooltip-format-activated": "Screen stays awake",
+        "tooltip-format-deactivated": "Screen locks when idle"
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip-format": "Power menu (Super+Shift+Esc)",
+        "on-click": "~/.local/bin/powermenu"
+    }
+}

@@ -1,0 +1,41 @@
+/* GDM-like lock screen: darkened wallpaper, clock + date, password field. */
+window {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+                      url("@HOME@/Pictures/Wallpapers/current");
+    background-size: cover;
+    background-position: center;
+    font-family: "Adwaita Sans", "Cantarell", sans-serif;
+    color: #ffffff;
+}
+
+#clock-label {
+    font-size: 64px;
+    font-weight: 300;
+    margin-bottom: 24px;
+}
+
+
+#input-field {
+    min-width: 280px;
+    min-height: 36px;
+    padding: 0 12px;
+    border-radius: 9px;
+    border: none;
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    box-shadow: none;
+}
+
+#input-field:focus {
+    box-shadow: inset 0 0 0 2px #3584e4;
+}
+
+
+#error-label {
+    color: #ff7b63;
+}
+
+#date-label {
+    font-size: 18px;
+    margin-bottom: 8px;
+}

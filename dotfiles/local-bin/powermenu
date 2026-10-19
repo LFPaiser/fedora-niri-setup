@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Power menu shown with fuzzel (waybar ⏻ button / Super+Shift+Esc).
+choice=$(printf '%s\n' \
+    "  Lock" \
+    "󰍃  Log out" \
+    "󰤄  Suspend" \
+    "󰜉  Reboot" \
+    "⏻  Shut down" |
+    fuzzel --dmenu --prompt "⏻  " --lines 5 --width 20) || exit 0
+
+case "$choice" in
+    *Lock)       gtklock -d ;;
+    *"Log out")  niri msg action quit --skip-confirmation ;;
+    *Suspend)    systemctl suspend ;;
+    *Reboot)     systemctl reboot ;;
+    *"Shut down") systemctl poweroff ;;
+esac

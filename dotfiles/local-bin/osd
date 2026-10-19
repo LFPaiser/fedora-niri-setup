@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# Volume / brightness keys with an on-screen bar (wob).
+#   osd daemon                       start wob (niri autostart)
+#   osd volume-up|volume-down|mute
+#   osd brightness-up|brightness-down
+fifo="${XDG_RUNTIME_DIR:-/tmp}/wob.sock"
+
+show() { [ -p "$fifo" ] && echo "$1" > "$fifo"; }
+
+volume() {
+    wpctl get-volume @DEFAULT_AUDIO_SINK@ |
+        awk '{ v = int($2 * 100); if ($3 == "[MUTED]") v = 0; print v }'
+}
+
+case "$1" in
+    daemon)
+        rm -f "$fifo" && mkfifo "$fifo"
+        tail -f "$fifo" | wob
+        ;;
+    volume-up)       wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+; show "$(volume)" ;;
+    volume-down)     wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-; show "$(volume)" ;;
+    mute)            wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle; show "$(volume)" ;;
+    brightness-up)   show "$(brightnessctl -m set 5%+ | cut -d, -f4 | tr -d %)" ;;
+    brightness-down) show "$(brightnessctl -m set 5%- | cut -d, -f4 | tr -d %)" ;;
+    *) echo "usage: osd daemon|volume-up|volume-down|mute|brightness-up|brightness-down" >&2; exit 1 ;;
+esac

@@ -1,0 +1,16 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.iconTheme": "catppuccin-mocha",
+    "window.titleBarStyle": "custom",
+    "editor.fontFamily": "'JetBrainsMono Nerd Font', monospace",
+    "editor.fontLigatures": true,
+    "editor.fontSize": 14,
+    "editor.formatOnSave": true,
+    "editor.minimap.enabled": false,
+    "editor.smoothScrolling": true,
+    "editor.cursorSmoothCaretAnimation": "on",
+    "files.autoSave": "onFocusChange",
+    "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
+    "terminal.integrated.defaultProfile.linux": "fish",
+    "telemetry.telemetryLevel": "off"
+}

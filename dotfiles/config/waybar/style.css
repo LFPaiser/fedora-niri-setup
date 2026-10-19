@@ -1,0 +1,124 @@
+/* Catppuccin Mocha */
+@define-color base     #1e1e2e;
+@define-color mantle   #181825;
+@define-color crust    #11111b;
+@define-color surface0 #313244;
+@define-color surface1 #45475a;
+@define-color overlay0 #6c7086;
+@define-color text     #cdd6f4;
+@define-color subtext  #a6adc8;
+@define-color mauve    #cba6f7;
+@define-color blue     #89b4fa;
+@define-color sapphire #74c7ec;
+@define-color green    #a6e3a1;
+@define-color yellow   #f9e2af;
+@define-color peach    #fab387;
+@define-color red      #f38ba8;
+@define-color pink     #f5c2e7;
+@define-color teal     #94e2d5;
+
+* {
+    font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+
+tooltip {
+    background: @base;
+    border: 2px solid @mauve;
+    border-radius: 10px;
+}
+tooltip label {
+    color: @text;
+    font-family: "JetBrainsMono Nerd Font";
+}
+
+/* Every module is a pill */
+#custom-launcher,
+#workspaces,
+#window,
+#clock,
+#mpris,
+#system,
+#pulseaudio,
+#network,
+#battery,
+#language,
+#idle_inhibitor,
+#tray,
+#custom-power {
+    background: alpha(@base, 0.92);
+    border-radius: 12px;
+    padding: 0 12px;
+    margin: 0;
+    box-shadow: 0 2px 6px alpha(@crust, 0.5);
+}
+
+#custom-launcher {
+    color: @blue;
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 17px;
+    padding: 0 14px 0 12px;
+}
+#custom-launcher:hover { background: @surface0; }
+
+#workspaces { padding: 0 4px; }
+#workspaces button {
+    color: @overlay0;
+    padding: 0 6px;
+    background: transparent;
+    font-family: "JetBrainsMono Nerd Font";
+    transition: all 0.2s ease;
+}
+#workspaces button.active,
+#workspaces button.focused { color: @mauve; }
+#workspaces button:hover {
+    color: @text;
+    background: @surface0;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+#window { color: @subtext; }
+window#waybar.empty #window { background: transparent; box-shadow: none; }
+
+#clock { color: @text; font-weight: 600; }
+
+#mpris { color: @green; }
+#mpris.paused { color: @overlay0; }
+
+#system { padding: 0 4px; }
+#cpu, #memory { padding: 0 8px; }
+#cpu { color: @sapphire; }
+#memory { color: @teal; }
+
+#pulseaudio { color: @peach; }
+#pulseaudio.muted { color: @overlay0; }
+
+#network { color: @blue; }
+#network.disconnected { color: @red; }
+
+#battery { color: @green; }
+#battery.warning:not(.charging) { color: @yellow; }
+#battery.critical:not(.charging) { color: @red; }
+
+#language { color: @pink; }
+
+#idle_inhibitor { color: @overlay0; font-family: "JetBrainsMono Nerd Font"; }
+#idle_inhibitor.activated { color: @yellow; }
+
+#tray > .needs-attention { background: @red; }
+
+#custom-power {
+    color: @red;
+    padding: 0 14px 0 12px;
+}
+#custom-power:hover { background: @red; color: @crust; }
