@@ -124,6 +124,27 @@ fi
 [ -f ~/.config/mpv/scripts/thumbfast.lua ] ||
     fetch -o ~/.config/mpv/scripts/thumbfast.lua https://raw.githubusercontent.com/po5/thumbfast/master/thumbfast.lua
 
+step "Nemo as the default file manager"
+xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty 2>/dev/null || true
+
+step "herdr (terminal workspace manager for coding agents)"
+if ! command -v herdr >/dev/null; then
+    fetch -o ~/.local/bin/herdr "https://github.com/herdrdev/herdr/releases/latest/download/herdr-linux-$(uname -m)"
+    chmod 755 ~/.local/bin/herdr
+fi
+
+step "Claude Code + Orca (stable checkout)"
+command -v claude >/dev/null || fetch https://claude.ai/install.sh | bash
+# Orca lives in its own "stable" checkout; orca-lc and the Claude hooks/skills
+# link into it, so updating Orca is a git pull + install.sh there.
+ORCA_DIR=${ORCA_DIR:-$HOME/.local/src/orca-stable}
+if [ ! -d "$ORCA_DIR/.git" ]; then
+    mkdir -p "$(dirname "$ORCA_DIR")"
+    git clone -q https://github.com/Umbra-Productions-Development/Orca.git "$ORCA_DIR"
+fi
+(cd "$ORCA_DIR" && ./install.sh)
+
 step "Check niri config"
 niri validate
 

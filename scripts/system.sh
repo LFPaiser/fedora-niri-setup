@@ -63,7 +63,7 @@ dnf_install niri xwayland-satellite greetd tuigreet \
     pipewire pipewire-pulseaudio wireplumber pavucontrol \
     NetworkManager-tui network-manager-applet blueman \
     wl-clipboard cliphist grim slurp brightnessctl playerctl \
-    ghostty alacritty nautilus file-roller loupe gnome-text-editor tuned-ppd \
+    ghostty alacritty nemo nautilus file-roller loupe gnome-text-editor tuned-ppd \
     f"$fedora"-backgrounds-base libjxl-utils \
     cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper
 
@@ -141,6 +141,10 @@ if [ "$virt" = oracle ]; then
     printf '#!/bin/sh\nLIBGL_ALWAYS_SOFTWARE=1 exec /usr/bin/ghostty "$@"\n' > /usr/local/bin/ghostty
     chmod 755 /usr/local/bin/ghostty
 fi
+
+step "Keyboard: Brazilian ABNT2 on the console and login screen"
+localectl set-keymap br-abnt2 || true
+localectl set-x11-keymap br,us abnt2, || true
 
 step "Login: greetd + tuigreet (text greeter) starting niri, fish as shell"
 install -Dm644 "$here/system-files/greetd-config.toml" /etc/greetd/config.toml

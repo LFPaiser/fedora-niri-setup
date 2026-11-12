@@ -88,6 +88,8 @@ On real hardware it automatically:
   - NVIDIA: `akmod-nvidia` plus CUDA, VA-API and suspend support, with the GPU powering off when idle to save battery;
 - installs **gaming** tools: Steam, GameMode, MangoHud, gamescope, Heroic (Epic/GOG) and ProtonUp-Qt;
 - replaces GDM with **greetd + tuigreet** (a text login that starts niri) and makes fish your shell;
+- sets the keyboard to **Brazilian ABNT2** (US as second layout) on the console, login and desktop;
+- installs **herdr**, **Claude Code** and **Orca** (see §4);
 - builds **awww** (the wallpaper daemon, successor of swww) and installs the **Waypaper** picker.
 
 **Secure Boot + NVIDIA:** the script asks you to choose a one-time password.
@@ -110,6 +112,15 @@ ssh-keygen -t ed25519                     # then:
 gh auth login                             # uploads the key to GitHub
 ```
 
+- **Orca (first launch):** update the stable checkout before the first session,
+  then sign in to Claude Code:
+  ```bash
+  cd ~/.local/src/orca-stable && git pull && ./install.sh   # same command updates Orca later
+  claude                                                     # log in once
+  herdr                                                      # agent workspaces
+  ```
+  `install.sh` re-links `orca-lc`, the hooks, skills and agents into `~/.claude`.
+  To keep Orca elsewhere, set `ORCA_DIR=/path` before running `setup.sh`.
 - **Firefox:** sign in to sync. uBlock Origin installs itself on first start.
 - **Steam:** Settings → Compatibility → *Enable Steam Play for all titles*
   (Proton). Use ProtonUp-Qt to add GE-Proton for problem games.
@@ -138,6 +149,8 @@ gh auth login                             # uploads the key to GitHub
 | Clipboard | cliphist history (Super+Shift+V) |
 | Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Bibata cursor, Inter + JetBrainsMono Nerd Font |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
+| Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
+| Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
 | Shell | fish + starship prompt, zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`), lazygit (`lg`), btop |
 | Dev | VS Code (Catppuccin recolored to Umbra, Python, ESLint, Prettier), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails, yt-dlp (`mpv <youtube-url>` works) |
@@ -152,7 +165,7 @@ gh auth login                             # uploads the key to GitHub
 |---|---|
 | Super+Enter (or T) | Ghostty terminal |
 | Super+Space (or D) | app launcher |
-| Super+B / Super+E | Firefox / Files |
+| Super+B / Super+E | Firefox / Files (Nemo) |
 | Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
 | Super+Q | close window |
@@ -171,7 +184,7 @@ gh auth login                             # uploads the key to GitHub
 | Print or Super+Shift+S | screenshot (select area; copied + saved to ~/Pictures/Screenshots) |
 | Super+Alt+L | lock (type the password, Enter to unlock) |
 | Super+Shift+Esc | power menu (lock, log out, suspend, reboot, shut down) |
-| Alt+Shift | switch keyboard layout (when more than one is set in `niri/config.kdl`) |
+| Alt+Shift | switch keyboard layout (ABNT2 ↔ US; set in `niri/config.kdl`) |
 | Media keys / Super+F9–F12 | play-pause / volume down, mute, up |
 
 Ghostty: Ctrl+Shift+Enter splits; Ctrl+Shift+H/J/K/L moves between splits;
@@ -224,7 +237,7 @@ Ctrl+Shift+T opens a tab.
 - Attach `oemdrv-ks.iso` to the VM next to the Fedora install ISO. The unattended
   installer reads `ks/ks.cfg` from it (volume label `OEMDRV`). It **wipes the VM disk**;
   never boot that ISO on real hardware.
-- The kickstart creates the user `user` (password `changeme`) with a US keyboard,
+- The kickstart creates the user `user` (password `changeme`) with a Brazilian ABNT2 keyboard (US second),
   `en_US.UTF-8` and UTC. Edit `ks/ks.cfg` to change them (the user name appears
   twice: the `user` line and `KS_USER` in `%post`), then rebuild the ISO, e.g.
   `xorriso -as mkisofs -V OEMDRV -J -r -o oemdrv-ks.iso ks/ks.cfg`.
