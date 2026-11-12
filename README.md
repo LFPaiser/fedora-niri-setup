@@ -4,8 +4,10 @@ Everything needed to set up a themed niri desktop on Fedora, on real hardware
 (e.g. a laptop with hybrid Intel + NVIDIA graphics) or in a VirtualBox VM for testing.
 
 - **Desktop:** Fedora 44 + [niri](https://github.com/YaLTeR/niri), a scrollable-tiling Wayland compositor.
-- **Look:** Catppuccin Mocha everywhere: niri, a custom waybar, Ghostty, fuzzel, mako, GTK, VS Code and fzf.
-  The lock screen (gtklock) looks like GDM's: darkened wallpaper, clock + date, password field only.
+- **Look:** **Umbra**, a warm plum + amber palette taken from the bundled wallpaper
+  (`wallpapers/umbra.png`), used everywhere: niri, a custom waybar, Ghostty, Alacritty, fuzzel,
+  mako, GTK 4 / libadwaita apps, VS Code and the lock screen. Login is a text greeter
+  (greetd + tuigreet); the lock screen (gtklock) shows the darkened wallpaper, clock + date and a password field.
 - **Uses:** development, gaming (on real hardware), browsing and video.
 
 One command (`./setup.sh`) installs and configures everything. It is safe to
@@ -18,7 +20,8 @@ scripts/system.sh         repos, packages, drivers, services (root)
 scripts/user.sh           dotfiles, fonts, cursor, wallpaper, theme, dev runtimes (user)
 dotfiles/config/...       copied to ~/.config/... (@HOME@ is replaced with your home dir)
 dotfiles/local-bin/...    copied to ~/.local/bin/ (osd, powermenu)
-system-files/             Firefox policy (uBlock Origin, no telemetry)
+system-files/             Firefox policy (uBlock Origin, no telemetry), greetd login config
+wallpapers/umbra.png      default wallpaper (the Umbra palette is derived from it)
 ks/ks.cfg, oemdrv-ks.iso  VM only: unattended install (wipes the disk!)
 vm_ed25519                VM only (optional, not committed): SSH key for the test VM
 ```
@@ -47,7 +50,8 @@ Fedora installer may not see the drives.
 5. **Secure Boot can stay on.** The script signs the NVIDIA driver for you (see §3).
 6. **Create the USB stick** with [Fedora Media Writer](https://fedoraproject.org/workstation/download):
    choose **Fedora Workstation 44**. It has a graphical installer that handles
-   dual-boot well, and GNOME stays installed as a fallback session.
+   dual-boot well. GNOME stays installed as a fallback session (pick it in the
+   greeter with F3), but `setup.sh` replaces GDM with greetd + tuigreet.
 7. **Get this folder onto the PC.** Copy it to a second USB stick, or
    `git clone` this repository after installing.
    Leave out the `vm_ed25519` key, if you made one; it only belongs to the test VM.
@@ -83,7 +87,8 @@ On real hardware it automatically:
   - AMD: the RPM Fusion "freeworld" Mesa VA-API/VDPAU drivers;
   - NVIDIA: `akmod-nvidia` plus CUDA, VA-API and suspend support, with the GPU powering off when idle to save battery;
 - installs **gaming** tools: Steam, GameMode, MangoHud, gamescope, Heroic (Epic/GOG) and ProtonUp-Qt;
-- makes niri the default login session and fish your shell.
+- replaces GDM with **greetd + tuigreet** (a text login that starts niri) and makes fish your shell;
+- builds **awww** (the wallpaper daemon, successor of swww) and installs the **Waypaper** picker.
 
 **Secure Boot + NVIDIA:** the script asks you to choose a one-time password.
 On the next reboot a blue *MOK management* screen appears. Choose **Enroll MOK →
@@ -124,15 +129,17 @@ gh auth login                             # uploads the key to GitHub
 
 | Area | Choice |
 |---|---|
-| Compositor | niri, rounded corners, shadows, gradient focus ring, overview with wallpaper backdrop |
-| Bar | custom **waybar**: floating Catppuccin "pills"; launcher, workspaces, window title, clock with calendar, media, CPU/RAM, volume, network, battery, keyboard layout, idle-inhibit, tray, power menu |
+| Login | greetd + tuigreet (remembers the last user, shows the time) |
+| Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
+| Bar | custom **waybar**: floating Umbra "pills"; launcher, workspaces, window title, clock with calendar, media, CPU/RAM, volume, network, battery, keyboard layout, idle-inhibit, tray, power menu |
 | Terminal | **Ghostty** (Alacritty kept as fallback) |
 | Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Clipboard | cliphist history (Super+Shift+V) |
-| Theme | Catppuccin Mocha, adw-gtk3-dark, Papirus-Dark icons, Bibata cursor, Inter + JetBrainsMono Nerd Font |
+| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Bibata cursor, Inter + JetBrainsMono Nerd Font |
+| Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
 | Shell | fish + starship prompt, zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`), lazygit (`lg`), btop |
-| Dev | VS Code (Catppuccin, Python, ESLint, Prettier), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
+| Dev | VS Code (Catppuccin recolored to Umbra, Python, ESLint, Prettier), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails, yt-dlp (`mpv <youtube-url>` works) |
 | Browser | Firefox + uBlock Origin |
 | Gaming (real HW) | Steam + Proton, GameMode, MangoHud, gamescope, Heroic, ProtonUp-Qt |
@@ -146,6 +153,7 @@ gh auth login                             # uploads the key to GitHub
 | Super+Enter (or T) | Ghostty terminal |
 | Super+Space (or D) | app launcher |
 | Super+B / Super+E | Firefox / Files |
+| Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
 | Super+Q | close window |
 | Super+O | overview of all windows/workspaces |
@@ -171,18 +179,21 @@ Ctrl+Shift+T opens a tab.
 
 ## 7. Customizing
 
-- **Wallpaper:** put any image in `~/Pictures/Wallpapers/` and run
-  `ln -sf myimage.jpg ~/Pictures/Wallpapers/current`. It applies at next login,
-  or immediately with `pkill swaybg; swaybg -m fill -i ~/Pictures/Wallpapers/current &`.
-  The lock screen uses the same image.
+- **Wallpaper:** put images in `~/Pictures/Wallpapers/` and press **Super+Shift+W**
+  (Waypaper) to pick one; it applies immediately with a fade and is restored at
+  login. Waypaper also points `~/Pictures/Wallpapers/.current` at it, which the lock
+  screen uses. From a terminal: `awww img myimage.jpg`. A slideshow can be turned on in Waypaper.
 - **niri:** `~/.config/niri/config.kdl` reloads live on save; run `niri validate`
   to check it.
 - **Bar:** `~/.config/waybar/config.jsonc` and `style.css` (the colors are at the
   top). Reload with `pkill -SIGUSR2 waybar`.
-- **Different theme:** the colors live in `niri/config.kdl` (focus ring),
-  `waybar/style.css`, `fuzzel/fuzzel.ini`, `mako/config`,
-  `wob/wob.ini`, `ghostty/config` (`theme = ...`; list the options with
-  `ghostty +list-themes`) and VS Code. Edit the files in this repo and
+- **Different theme:** the Umbra colors live in `niri/config.kdl` (focus ring),
+  `waybar/style.css` (palette at the top), `fuzzel/fuzzel.ini`, `mako/config`,
+  `alacritty/alacritty.toml`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
+  `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config`; list the
+  built-in options with `ghostty +list-themes`) and `Code/User/settings.json`
+  (`workbench.colorCustomizations`). The previous Catppuccin Mocha look is one
+  `theme = Catppuccin Mocha` + palette swap away. Edit the files in this repo and
   re-run `./setup.sh` to keep them in sync.
 - **Lock screen:** `~/.config/gtklock/style.css` (look) and `layout.ui` (which
   widgets show; the Unlock button and "Password:" label are hidden). Test with `gtklock`.
@@ -199,7 +210,8 @@ Ctrl+Shift+T opens a tab.
 
 | Problem | Fix |
 |---|---|
-| Black screen / no niri after login | At the GDM login, click ⚙ (bottom right) → pick *GNOME*. Then check `journalctl --user -b -u niri`. |
+| Black screen / no niri after login | In tuigreet press F3 to pick another session (e.g. GNOME), or switch to a TTY (Ctrl+Alt+F2). Then check `journalctl --user -b -u niri`. |
+| No wallpaper | Check `pgrep awww-daemon`; run `awww-daemon & waypaper --restore`. |
 | `nvidia-smi` fails after reboot | Wait for `akmods` to finish (`sudo akmods --force`), or Secure Boot key not enrolled: `mokutil --import /etc/pki/akmods/certs/public_key.der` and reboot. |
 | Game runs on Intel GPU | Use the launch options in §4; `switcherooctl list` shows the GPUs. |
 | Bar/terminal icons are boxes | `fc-cache -f` and check `fc-list | grep JetBrainsMono`. |

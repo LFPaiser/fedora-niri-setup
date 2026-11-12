@@ -1,9 +1,9 @@
-# Notifications. Catppuccin Mocha.
+# Notifications. Umbra (from wallpaper).
 font=Inter 11
-background-color=#1e1e2eee
-text-color=#cdd6f4
-border-color=#cba6f7
-progress-color=over #45475a
+background-color=#26082fee
+text-color=#fdf0dc
+border-color=#e0a050
+progress-color=over #57235a
 border-size=2
 border-radius=12
 padding=12
@@ -15,5 +15,5 @@ default-timeout=5000
 anchor=top-right
 
 [urgency=high]
-border-color=#fab387
+border-color=#e89a5c
 default-timeout=0

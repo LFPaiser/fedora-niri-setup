@@ -1,4 +1,4 @@
-# Fallback terminal (Ghostty is the main one). Catppuccin Mocha.
+# Fallback terminal (Ghostty is the main one). Umbra (from wallpaper).
 [window]
 padding = { x = 12, y = 10 }
 dynamic_padding = true
@@ -9,33 +9,33 @@ normal = { family = "JetBrainsMono Nerd Font", style = "Regular" }
 size = 11
 
 [colors.primary]
-background = "#1e1e2e"
-foreground = "#cdd6f4"
+background = "#26082f"
+foreground = "#fdf0dc"
 
 [colors.cursor]
-text = "#1e1e2e"
-cursor = "#f5e0dc"
+text = "#26082f"
+cursor = "#fdf0dc"
 
 [colors.selection]
-text = "#1e1e2e"
-background = "#f5e0dc"
+text = "#26082f"
+background = "#fdf0dc"
 
 [colors.normal]
-black = "#45475a"
-red = "#f38ba8"
-green = "#a6e3a1"
-yellow = "#f9e2af"
-blue = "#89b4fa"
-magenta = "#f5c2e7"
-cyan = "#94e2d5"
-white = "#bac2de"
+black = "#57235a"
+red = "#e86a7a"
+green = "#a8c98a"
+yellow = "#f2cf8a"
+blue = "#c58bd6"
+magenta = "#f0a6c8"
+cyan = "#8fcfc0"
+white = "#e6d6c6"
 
 [colors.bright]
-black = "#585b70"
-red = "#f38ba8"
-green = "#a6e3a1"
-yellow = "#f9e2af"
-blue = "#89b4fa"
-magenta = "#f5c2e7"
-cyan = "#94e2d5"
-white = "#a6adc8"
+black = "#6a3a6e"
+red = "#e86a7a"
+green = "#a8c98a"
+yellow = "#f2cf8a"
+blue = "#c58bd6"
+magenta = "#f0a6c8"
+cyan = "#8fcfc0"
+white = "#d9c4b8"

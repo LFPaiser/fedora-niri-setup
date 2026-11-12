@@ -12,5 +12,41 @@
     "files.autoSave": "onFocusChange",
     "terminal.integrated.fontFamily": "'JetBrainsMono Nerd Font'",
     "terminal.integrated.defaultProfile.linux": "fish",
-    "telemetry.telemetryLevel": "off"
+    "telemetry.telemetryLevel": "off",
+    "workbench.colorCustomizations": {
+        "[Catppuccin Mocha]": {
+            "editor.background": "#26082f",
+            "editor.foreground": "#fdf0dc",
+            "sideBar.background": "#1c0624",
+            "activityBar.background": "#14031a",
+            "activityBar.foreground": "#e0a050",
+            "activityBarBadge.background": "#e0a050",
+            "activityBarBadge.foreground": "#14031a",
+            "titleBar.activeBackground": "#14031a",
+            "titleBar.inactiveBackground": "#14031a",
+            "statusBar.background": "#14031a",
+            "statusBar.foreground": "#d9c4b8",
+            "panel.background": "#1c0624",
+            "terminal.background": "#1c0624",
+            "editorGroupHeader.tabsBackground": "#1c0624",
+            "tab.inactiveBackground": "#1c0624",
+            "tab.activeBackground": "#26082f",
+            "tab.activeBorderTop": "#e0a050",
+            "focusBorder": "#e0a050",
+            "editor.lineHighlightBackground": "#3a154466",
+            "editor.selectionBackground": "#57235a",
+            "editorLineNumber.activeForeground": "#e0a050",
+            "editorCursor.foreground": "#e0a050",
+            "button.background": "#e0a050",
+            "button.foreground": "#14031a",
+            "input.background": "#14031a",
+            "dropdown.background": "#1c0624",
+            "list.activeSelectionBackground": "#57235a",
+            "list.hoverBackground": "#3a1544",
+            "editorWidget.background": "#1c0624",
+            "quickInput.background": "#1c0624",
+            "badge.background": "#e0a050",
+            "badge.foreground": "#14031a"
+        }
+    }
 }

@@ -1,6 +1,6 @@
 # Ghostty — https://ghostty.org/docs/config/reference
 # Reload with Ctrl+Shift+, inside Ghostty.
-theme = Catppuccin Mocha
+theme = Umbra
 font-family = JetBrainsMono Nerd Font
 font-size = 11
 

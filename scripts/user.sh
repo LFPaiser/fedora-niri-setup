@@ -57,16 +57,29 @@ fi
 mkdir -p ~/.icons/default
 printf '[Icon Theme]\nInherits=Bibata-Modern-Classic\n' > ~/.icons/default/index.theme
 
-step "Wallpaper"
+step "Wallpaper: Umbra + awww + Waypaper"
+install_file "$here/wallpapers/umbra.png" ~/Pictures/Wallpapers/umbra.png
 fedora=$(rpm -E %fedora)
 src=$(ls /usr/share/backgrounds/f"$fedora"/default/*night*.jxl 2>/dev/null | head -1 || true)
 if [ -n "$src" ] && [ ! -f ~/Pictures/Wallpapers/fedora-"$fedora"-night.png ]; then
-    djxl "$src" ~/Pictures/Wallpapers/fedora-"$fedora"-night.png >/dev/null
+    djxl "$src" ~/Pictures/Wallpapers/fedora-"$fedora"-night.png >/dev/null || true
 fi
-# "current" is what niri shows; point it at any image you like.
-if [ ! -e ~/Pictures/Wallpapers/current ] && [ -f ~/Pictures/Wallpapers/fedora-"$fedora"-night.png ]; then
-    ln -s fedora-"$fedora"-night.png ~/Pictures/Wallpapers/current
+# ".current" is what the lock screen shows; Waypaper re-points it on every change.
+[ -e ~/Pictures/Wallpapers/.current ] || ln -s ~/Pictures/Wallpapers/umbra.png ~/Pictures/Wallpapers/.current
+# awww (successor of swww) draws the wallpaper; not packaged, so build it.
+if ! command -v awww-daemon >/dev/null; then
+    tmp=$(mktemp -d)
+    git clone -q --depth 1 https://codeberg.org/LGFae/awww.git "$tmp/awww"
+    (cd "$tmp/awww" && cargo build --release --locked -q)
+    install -m 755 "$tmp/awww/target/release/awww" "$tmp/awww/target/release/awww-daemon" ~/.local/bin/
+    rm -rf "$tmp"
 fi
+# Waypaper: wallpaper picker GUI (Super+Shift+W), in its own venv.
+if [ ! -x ~/.local/share/waypaper-venv/bin/waypaper ]; then
+    python3 -m venv --system-site-packages ~/.local/share/waypaper-venv
+    ~/.local/share/waypaper-venv/bin/pip install -q waypaper
+fi
+ln -sf ~/.local/share/waypaper-venv/bin/waypaper ~/.local/bin/waypaper
 
 step "GTK / GNOME app theme (dark, Papirus, Bibata, Inter)"
 if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && [ -S "/run/user/$(id -u)/bus" ]; then
@@ -93,6 +106,7 @@ git config --global pull.rebase true
 
 if command -v code >/dev/null; then
     step "VS Code extensions"
+    # The Catppuccin theme is the base; settings.json recolors it to Umbra.
     for ext in catppuccin.catppuccin-vsc catppuccin.catppuccin-vsc-icons \
                ms-python.python editorconfig.editorconfig \
                dbaeumer.vscode-eslint esbenp.prettier-vscode; do

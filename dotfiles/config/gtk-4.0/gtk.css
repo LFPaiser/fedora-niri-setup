@@ -1,0 +1,57 @@
+/* Umbra — from the umbra.png wallpaper */
+@define-color accent_color #e0a050;
+@define-color accent_bg_color #b8783a;
+@define-color accent_fg_color #14031a;
+@define-color window_bg_color #26082f;
+@define-color window_fg_color #fdf0dc;
+@define-color view_bg_color #1c0624;
+@define-color view_fg_color #fdf0dc;
+@define-color headerbar_bg_color #1c0624;
+@define-color headerbar_fg_color #fdf0dc;
+@define-color headerbar_backdrop_color #26082f;
+@define-color sidebar_bg_color #1c0624;
+@define-color sidebar_fg_color #fdf0dc;
+@define-color sidebar_backdrop_color #26082f;
+@define-color secondary_sidebar_bg_color #26082f;
+@define-color card_bg_color rgba(87, 35, 90, 0.45);
+@define-color card_fg_color #fdf0dc;
+@define-color dialog_bg_color #26082f;
+@define-color dialog_fg_color #fdf0dc;
+@define-color popover_bg_color #2e0b38;
+@define-color popover_fg_color #fdf0dc;
+@define-color thumbnail_bg_color #3a1544;
+@define-color destructive_bg_color #c04a5c;
+@define-color destructive_color #e86a7a;
+@define-color success_color #a8c98a;
+@define-color warning_color #f2cf8a;
+@define-color error_color #e86a7a;
+
+/* Umbra — libadwaita >= 1.6 CSS variables (Nautilus etc.) */
+:root {
+  --accent-color: #e0a050;
+  --accent-bg-color: #b8783a;
+  --accent-fg-color: #14031a;
+  --window-bg-color: #26082f;
+  --window-fg-color: #fdf0dc;
+  --view-bg-color: #1c0624;
+  --view-fg-color: #fdf0dc;
+  --headerbar-bg-color: #1c0624;
+  --headerbar-fg-color: #fdf0dc;
+  --headerbar-backdrop-color: #26082f;
+  --sidebar-bg-color: #1c0624;
+  --sidebar-fg-color: #fdf0dc;
+  --sidebar-backdrop-color: #26082f;
+  --secondary-sidebar-bg-color: #26082f;
+  --card-bg-color: rgba(87, 35, 90, 0.45);
+  --card-fg-color: #fdf0dc;
+  --dialog-bg-color: #26082f;
+  --dialog-fg-color: #fdf0dc;
+  --popover-bg-color: #2e0b38;
+  --popover-fg-color: #fdf0dc;
+  --thumbnail-bg-color: #3a1544;
+  --destructive-bg-color: #c04a5c;
+  --destructive-color: #e86a7a;
+  --success-color: #a8c98a;
+  --warning-color: #f2cf8a;
+  --error-color: #e86a7a;
+}

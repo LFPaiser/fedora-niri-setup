@@ -1,4 +1,4 @@
-// niri config — Catppuccin Mocha, keyboard-first.
+// niri config — Umbra theme, keyboard-first.
 // Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 // Check after editing:  niri validate   (niri also reloads this file live)
 
@@ -36,7 +36,7 @@ layout {
     // Transparent so the wallpaper (placed in the backdrop below) shows
     // through and stays still while scrolling between workspaces.
     background-color "transparent"
-    gaps 8
+    gaps 5
     center-focused-column "never"
     always-center-single-column
 
@@ -49,9 +49,9 @@ layout {
     default-column-width { proportion 0.5; }
 
     focus-ring {
-        width 2
-        active-gradient from="#cba6f7" to="#89b4fa" angle=45
-        inactive-color "#45475a"
+        width 1
+        active-gradient from="#e0a050" to="#c58bd6" angle=45
+        inactive-color "#57235a"
     }
 
     border { off; }
@@ -68,13 +68,13 @@ layout {
         width 4
         gap 6
         corner-radius 4
-        active-color "#cba6f7"
-        inactive-color "#45475a"
+        active-color "#e0a050"
+        inactive-color "#57235a"
     }
 }
 
 overview {
-    backdrop-color "#11111b"
+    backdrop-color "#14031a"
 }
 
 cursor {
@@ -99,14 +99,16 @@ environment {
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
 spawn-at-startup "/usr/libexec/polkit-mate-authentication-agent-1"
-spawn-sh-at-startup "swaybg -m fill -i ~/Pictures/Wallpapers/current"
+// awww draws the wallpaper; `waypaper --restore` re-applies the last one and
+// starts Waypaper's slideshow timer (interval set in the Waypaper GUI).
+spawn-sh-at-startup "export PATH=$HOME/.local/bin:$PATH; awww-daemon & sleep 1; waypaper --restore"
 spawn-sh-at-startup "wl-paste --watch cliphist store"
 spawn-sh-at-startup "~/.local/bin/osd daemon"
 spawn-sh-at-startup "swayidle -w timeout 3600 'gtklock -d' timeout 10800 'niri msg action power-off-monitors' before-sleep 'gtklock -d'"
 
 // ── Window rules ────────────────────────────────────────────────────────────
 window-rule {
-    geometry-corner-radius 10
+    geometry-corner-radius 6
     clip-to-geometry true
     // Ring is drawn as a solid rect behind the window; skip it so translucent windows stay translucent.
     draw-border-with-background false
@@ -133,7 +135,7 @@ window-rule {
 
 // Wallpaper lives in the backdrop: stationary, and visible behind the overview.
 layer-rule {
-    match namespace="^wallpaper$"
+    match namespace="^awww-daemon"
     place-within-backdrop true
 }
 
@@ -152,6 +154,7 @@ binds {
     Mod+Shift+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy"; }
     Mod+Shift+Escape hotkey-overlay-title="Power menu" { spawn-sh "~/.local/bin/powermenu"; }
     Mod+Alt+L hotkey-overlay-title="Lock screen" { spawn "gtklock" "-d"; }
+    Mod+Shift+W hotkey-overlay-title="Wallpapers: Waypaper" { spawn-sh "PATH=$HOME/.local/bin:$PATH waypaper"; }
 
     // Media keys (work on the lock screen too)
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "~/.local/bin/osd volume-up"; }

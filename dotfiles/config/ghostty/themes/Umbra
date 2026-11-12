@@ -1,0 +1,23 @@
+# Umbra — derived from the umbra.png wallpaper
+background = #26082f
+foreground = #fdf0dc
+cursor-color = #e0a050
+cursor-text = #26082f
+selection-background = #57235a
+selection-foreground = #fdf0dc
+palette = 0=#3a1544
+palette = 1=#e86a7a
+palette = 2=#a8c98a
+palette = 3=#f2cf8a
+palette = 4=#c58bd6
+palette = 5=#f0a6c8
+palette = 6=#8fcfc0
+palette = 7=#e6d6c6
+palette = 8=#6a3a6e
+palette = 9=#f0889a
+palette = 10=#bcdb9e
+palette = 11=#f7dca6
+palette = 12=#d6a6e4
+palette = 13=#f6bcd8
+palette = 14=#a6dcd0
+palette = 15=#fdf0dc

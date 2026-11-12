@@ -1,21 +1,21 @@
-/* Catppuccin Mocha */
-@define-color base     #1e1e2e;
-@define-color mantle   #181825;
-@define-color crust    #11111b;
-@define-color surface0 #313244;
-@define-color surface1 #45475a;
-@define-color overlay0 #6c7086;
-@define-color text     #cdd6f4;
-@define-color subtext  #a6adc8;
-@define-color mauve    #cba6f7;
-@define-color blue     #89b4fa;
-@define-color sapphire #74c7ec;
-@define-color green    #a6e3a1;
-@define-color yellow   #f9e2af;
-@define-color peach    #fab387;
-@define-color red      #f38ba8;
-@define-color pink     #f5c2e7;
-@define-color teal     #94e2d5;
+/* Umbra (from wallpaper). */
+@define-color base     #26082f;
+@define-color mantle   #1c0624;
+@define-color crust    #14031a;
+@define-color surface0 #3a1544;
+@define-color surface1 #57235a;
+@define-color overlay0 #7d5a80;
+@define-color text     #fdf0dc;
+@define-color subtext  #d9c4b8;
+@define-color mauve    #e0a050;
+@define-color blue     #c58bd6;
+@define-color sapphire #b48ee0;
+@define-color green    #a8c98a;
+@define-color yellow   #f2cf8a;
+@define-color peach    #e89a5c;
+@define-color red      #e86a7a;
+@define-color pink     #f0a6c8;
+@define-color teal     #8fcfc0;
 
 * {
     font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif;
