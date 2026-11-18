@@ -27,3 +27,7 @@ EnumerateSkipFirst=True
 [Behavior]
 # Keep the same input method in every window
 ShareInputState=All
+
+# Quick Phrase off: its default keys (Super+` and Super+;) clash with niri (Super+; = VS Code)
+[Behavior/DisabledAddons]
+0=quickphrase

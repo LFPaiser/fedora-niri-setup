@@ -1,0 +1,12 @@
+[tools]
+direnv = "latest"
+gitleaks = "latest"
+go = "1.26"
+lazygit = "latest"
+node = "lts"
+"npm:@colbymchenry/codegraph" = "1.6.2"
+"npm:@fission-ai/openspec" = "1.14.1"
+python = "3.13"
+rust = "latest"
+shellcheck = "latest"
+starship = "latest"

@@ -6,7 +6,7 @@ Everything needed to set up a themed niri desktop on Fedora, on real hardware
 - **Desktop:** Fedora 44 + [niri](https://github.com/YaLTeR/niri), a scrollable-tiling Wayland compositor.
 - **Look:** **Umbra**, a warm plum + amber palette taken from the bundled wallpaper
   (`wallpapers/umbra-construction-v2.png`), used everywhere: niri, a custom waybar, Ghostty, Alacritty, fuzzel,
-  mako, GTK 4 / libadwaita apps, VS Code and the lock screen. Login is a text greeter
+  mako, GTK 4 / libadwaita apps, Firefox (the Umbra theme on AMO) and the lock screen. Login is a text greeter
   (greetd + tuigreet); the lock screen (gtklock) shows the darkened wallpaper, clock + date and a password field.
 - **Uses:** development, gaming (on real hardware), browsing and video.
 
@@ -129,7 +129,10 @@ gh auth login                             # uploads the key to GitHub
   ```
   `install.sh` re-links `orca-lc`, the hooks, skills and agents into `~/.claude`.
   To keep Orca elsewhere, set `ORCA_DIR=/path` before running `setup.sh`.
-- **Firefox:** sign in to sync. uBlock Origin installs itself on first start.
+- **Firefox:** sign in to sync. uBlock Origin and the Umbra theme install themselves on first
+  start; then close Firefox and re-run `scripts/user.sh` to add userChrome.css/user.js to the profile.
+- **VS Code:** turn on Settings Sync (Accounts menu) with the same account as your other machines;
+  it brings themes, icons, extensions and profiles.
 - **Steam:** Settings → Compatibility → *Enable Steam Play for all titles*
   (Proton). Use ProtonUp-Qt to add GE-Proton for problem games.
 - **Run games on the NVIDIA GPU.** The desktop itself runs on the Intel GPU,
@@ -162,7 +165,7 @@ gh auth login                             # uploads the key to GitHub
 | "sistema" workspace | Super+0 / Super+': fastfetch + live journal warnings + btop, opened at login. The distro logo is animated in two Umbra colours (a random pair each time) |
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
 | Shell | fish + starship prompt, zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`), lazygit (`lg`), btop |
-| Dev | VS Code (Catppuccin recolored to Umbra, Python, ESLint, Prettier), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
+| Dev | VS Code (themes, extensions and profiles via its Settings Sync), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails, yt-dlp (`mpv <youtube-url>` works) |
 | Browser | Firefox + uBlock Origin |
 | Gaming (real HW) | Steam + Proton, GameMode, MangoHud, gamescope, Heroic, ProtonUp-Qt |
@@ -177,6 +180,7 @@ gh auth login                             # uploads the key to GitHub
 | Super+Shift+Enter | Foot terminal (emergency: CPU-rendered, works when the GPU/Ghostty breaks) |
 | Super+A (or Space) | app launcher |
 | Super+B / Super+E | Firefox / Files (Nemo) |
+| Super+; | VS Code |
 | Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
 | Super+N / Super+Shift+N | dismiss the notification / all of them · Super+Ctrl+N brings the last one back |
@@ -238,8 +242,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   `waybar/colors.css`, `fuzzel/fuzzel.ini`, `mako/config`,
   `alacritty/alacritty.toml`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
   `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config.ghostty`; list the
-  built-in options with `ghostty +list-themes`) and `Code/User/settings.json`
-  (`workbench.colorCustomizations`). The previous Catppuccin Mocha look is one
+  built-in options with `ghostty +list-themes`). The previous Catppuccin Mocha look is one
   `theme = Catppuccin Mocha` + palette swap away. Edit the files in this repo and
   re-run `./setup.sh` to keep them in sync.
 - **"sistema" workspace logo:** `sistema logo umbra` (default: colour wave),

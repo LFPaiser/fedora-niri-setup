@@ -1,0 +1,41 @@
+/* Umbra — from umbra-construction-v2.png */
+:root {
+  --umbra-crust: #14031a; --umbra-mantle: #1c0624; --umbra-base: #26082f;
+  --umbra-surface: #3a1544; --umbra-violet: #57235a;
+  --umbra-text: #fdf0dc; --umbra-sub: #d9c4b8; --umbra-gold: #e0a050;
+
+  --toolbox-bgcolor: var(--umbra-crust) !important;
+  --toolbox-bgcolor-inactive: var(--umbra-crust) !important;
+  --toolbox-textcolor: var(--umbra-text) !important;
+  --toolbox-textcolor-inactive: var(--umbra-sub) !important;
+  --toolbar-bgcolor: var(--umbra-base) !important;
+  --toolbar-color: var(--umbra-text) !important;
+  --tab-selected-bgcolor: var(--umbra-base) !important;
+  --tab-selected-textcolor: var(--umbra-text) !important;
+  --toolbar-field-background-color: var(--umbra-mantle) !important;
+  --toolbar-field-focus-background-color: var(--umbra-crust) !important;
+  --toolbar-field-color: var(--umbra-text) !important;
+  --toolbar-field-focus-color: var(--umbra-text) !important;
+  --toolbar-field-focus-border-color: var(--umbra-gold) !important;
+  --urlbarView-highlight-background: var(--umbra-violet) !important;
+  --urlbarView-highlight-color: var(--umbra-text) !important;
+  --arrowpanel-background: var(--umbra-mantle) !important;
+  --arrowpanel-color: var(--umbra-text) !important;
+  --arrowpanel-border-color: var(--umbra-violet) !important;
+  --sidebar-background-color: var(--umbra-mantle) !important;
+  --sidebar-text-color: var(--umbra-text) !important;
+  --focus-outline-color: var(--umbra-gold) !important;
+  --color-accent-primary: var(--umbra-gold) !important;
+  --button-primary-bgcolor: var(--umbra-gold) !important;
+  --button-primary-color: var(--umbra-crust) !important;
+  --tab-loading-fill: var(--umbra-gold) !important;
+  --lwt-tab-line-color: var(--umbra-gold) !important;
+  --newtab-background-color: var(--umbra-base) !important;
+}
+.tab-background:is([selected], [multiselected]) {
+  background: var(--umbra-violet) !important;
+  outline: 1px solid var(--umbra-gold) !important;
+}
+#urlbar-background { background-color: var(--umbra-mantle) !important; border-color: var(--umbra-violet) !important; }
+#urlbar[focused] #urlbar-background { border-color: var(--umbra-gold) !important; }
+menupopup, panel { --panel-background: var(--umbra-mantle) !important; --panel-color: var(--umbra-text) !important; }

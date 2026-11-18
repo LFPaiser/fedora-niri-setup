@@ -28,8 +28,8 @@ Tokens visuais propostos, para usar como referência nos itens de consistência:
 Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → baixa.
 
 ### Alta
-- [ ] **Configurações em uso que não estão no repo**: `gtk-3.0/gtk.css`, `fish/conf.d/` (cores Umbra, mise), btop (+ tema umbra), `mise/config.toml`, `mpv/script-opts/uosc.conf`, Firefox `userChrome.css`/`userContent.css`/`user.js` (instalar pelo `user.sh` no perfil default-release). Revisar se há dado pessoal antes.
-- [ ] **VS Code ainda é Catppuccin por baixo** (sintaxe, git, ícones; o terminal já é Umbra) — `Code/User/settings.json`: `terminal.ansi*` com as cores do tema Umbra do Ghostty; trocar o tema base ou adicionar `editor.tokenColorCustomizations`.
+- [x] **Configurações em uso que não estão no repo**: gtk.css, fish/conf.d, btop (tema), mise, uosc e Firefox (userChrome/userContent/user.js + tema Umbra do AMO pela política) agora estão no repo e o `user.sh` instala.
+- [ ] **VS Code igual ao do Windows**: ativar o Settings Sync aqui com a mesma conta (temas, ícones, extensões, perfis). O repo não gerencia mais o VS Code e não aplica Umbra nele.
 
 ### Média
 - [ ] **Associações de arquivo incompletas** (`mimeapps.list` só define PDF e pastas) → imagens: Loupe; vídeo/áudio: mpv; texto: Text Editor; compactados: File Roller; e versionar o arquivo.

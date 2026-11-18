@@ -193,6 +193,7 @@ binds {
     Mod+A { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Browser: Firefox" { spawn "firefox"; }
     Mod+E hotkey-overlay-title="Arquivos: Nemo" { spawn "nemo"; }
+    Mod+Semicolon hotkey-overlay-title="Editor: VS Code" { spawn "code"; }
     Mod+Shift+V hotkey-overlay-title="Histórico da área de transferência" { spawn-sh "cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy"; }
     Mod+P hotkey-overlay-title="Power menu" { spawn-sh "~/.local/bin/powermenu"; }
     Mod+Alt+L hotkey-overlay-title="Lock screen" { spawn "gtklock" "-d"; }

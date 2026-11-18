@@ -96,7 +96,7 @@ dnf -y swap ffmpeg-free ffmpeg --allowerasing || true
 dnf_install gstreamer1-plugins-bad-freeworld gstreamer1-plugins-ugly \
     gstreamer1-plugin-libav gstreamer1-plugin-openh264 mpv yt-dlp
 
-step "Firefox: uBlock Origin + no telemetry (system policy)"
+step "Firefox: uBlock Origin, Umbra theme, no telemetry (system policy)"
 install -Dm644 "$here/system-files/firefox-policies.json" /etc/firefox/policies/policies.json
 dnf_install firefox
 

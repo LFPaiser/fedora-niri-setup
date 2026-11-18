@@ -114,23 +114,39 @@ gs document-font-name 'Inter 11'
 gs monospace-font-name 'JetBrainsMono Nerd Font 11'
 gsettings set org.gnome.desktop.wm.preferences button-layout ':'
 
-step "mise: Node LTS, Python, starship, lazygit"
+step "mise: tools from ~/.config/mise/config.toml (Node, Python, Go, Rust, starship, lazygit...)"
 command -v mise >/dev/null || fetch https://mise.run | sh
-mise use -g -y node@lts python@3.13 starship lazygit
+mise install -y
+
+step "btop: Umbra theme"
+# btop rewrites btop.conf on exit, so only the theme line is ours.
+if [ -f ~/.config/btop/btop.conf ]; then
+    sed -i 's/^color_theme = .*/color_theme = "umbra"/' ~/.config/btop/btop.conf
+else
+    echo 'color_theme = "umbra"' > ~/.config/btop/btop.conf
+fi
+
+step "Firefox: userChrome.css, userContent.css, user.js"
+# Goes into the default-release profile, which exists only after Firefox's first start.
+# The Umbra theme comes from AMO through the system policy (scripts/system.sh).
+ff_profile=
+for ff_dir in ~/.config/mozilla/firefox ~/.mozilla/firefox; do
+    [ -f "$ff_dir/profiles.ini" ] || continue
+    rel=$(sed -n '/^\[Install/,/^$/s/^Default=//p' "$ff_dir/profiles.ini" | head -1)
+    [ -n "$rel" ] || rel=$(sed -n 's/^Path=\(.*default-release\)$/\1/p' "$ff_dir/profiles.ini" | head -1)
+    [ -n "$rel" ] && [ -d "$ff_dir/$rel" ] && { ff_profile=$ff_dir/$rel; break; }
+done
+if [ -n "$ff_profile" ]; then
+    install_file "$here/dotfiles/firefox/user.js" "$ff_profile/user.js"
+    install_file "$here/dotfiles/firefox/chrome/userChrome.css" "$ff_profile/chrome/userChrome.css"
+    install_file "$here/dotfiles/firefox/chrome/userContent.css" "$ff_profile/chrome/userContent.css"
+else
+    echo "  no Firefox profile yet: open Firefox once, close it, and re-run scripts/user.sh"
+fi
 
 step "Git defaults"
 git config --global init.defaultBranch main
 git config --global pull.rebase true
-
-if command -v code >/dev/null; then
-    step "VS Code extensions"
-    # The Catppuccin theme is the base; settings.json recolors it to Umbra.
-    for ext in catppuccin.catppuccin-vsc catppuccin.catppuccin-vsc-icons \
-               ms-python.python editorconfig.editorconfig \
-               dbaeumer.vscode-eslint esbenp.prettier-vscode; do
-        code --install-extension "$ext" --force >/dev/null 2>&1 || echo "  could not install $ext"
-    done
-fi
 
 step "mpv: uosc interface + thumbnails"
 if [ ! -f ~/.config/mpv/scripts/uosc/main.lua ]; then

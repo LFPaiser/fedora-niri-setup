@@ -1,0 +1,60 @@
+{
+  "manifest_version": 2,
+  "name": "Umbra",
+  "version": "1.0",
+  "description": "Deep plum, cream text and amber accents palette.",
+  "browser_specific_settings": {
+    "gecko": { "id": "umbra-theme@umbra.dev", "strict_min_version": "115.0" }
+  },
+  "theme": {
+    "colors": {
+      "frame": "#14031a",
+      "frame_inactive": "#14031a",
+      "tab_background_text": "#d9c4b8",
+      "tab_selected": "#57235a",
+      "tab_text": "#fdf0dc",
+      "tab_line": "#e0a050",
+      "tab_loading": "#e0a050",
+      "tab_background_separator": "#3a1544",
+
+      "toolbar": "#26082f",
+      "toolbar_text": "#fdf0dc",
+      "toolbar_top_separator": "#14031a",
+      "toolbar_bottom_separator": "#3a1544",
+      "toolbar_vertical_separator": "#3a1544",
+      "icons": "#fdf0dc",
+      "icons_attention": "#e0a050",
+      "button_background_hover": "#3a1544",
+      "button_background_active": "#57235a",
+
+      "toolbar_field": "#1c0624",
+      "toolbar_field_text": "#fdf0dc",
+      "toolbar_field_border": "#57235a",
+      "toolbar_field_focus": "#14031a",
+      "toolbar_field_text_focus": "#fdf0dc",
+      "toolbar_field_border_focus": "#e0a050",
+      "toolbar_field_highlight": "#e0a050",
+      "toolbar_field_highlight_text": "#14031a",
+
+      "popup": "#1c0624",
+      "popup_text": "#fdf0dc",
+      "popup_border": "#57235a",
+      "popup_highlight": "#57235a",
+      "popup_highlight_text": "#fdf0dc",
+
+      "sidebar": "#1c0624",
+      "sidebar_text": "#fdf0dc",
+      "sidebar_border": "#3a1544",
+      "sidebar_highlight": "#57235a",
+      "sidebar_highlight_text": "#fdf0dc",
+
+      "ntp_background": "#26082f",
+      "ntp_text": "#fdf0dc",
+      "ntp_card_background": "#3a1544"
+    },
+    "properties": {
+      "color_scheme": "dark",
+      "content_color_scheme": "dark"
+    }
+  }
+}

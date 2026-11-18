@@ -1,0 +1,9 @@
+/* Umbra new-tab and about: pages */
+@-moz-document url("about:newtab"), url("about:home"), url("about:blank") {
+  body, html { background-color: #26082f !important; color: #fdf0dc !important; }
+}
+@-moz-document url-prefix("about:") {
+  :root { --in-content-page-background: #26082f !important; --in-content-box-background: #1c0624 !important;
+          --in-content-page-color: #fdf0dc !important; --in-content-primary-button-background: #e0a050 !important;
+          --in-content-primary-button-text-color: #14031a !important; --color-accent-primary: #e0a050 !important; }
+}
