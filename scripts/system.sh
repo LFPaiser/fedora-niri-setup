@@ -79,6 +79,21 @@ dnf_install adw-gtk3-theme papirus-icon-theme rsms-inter-fonts \
     google-noto-sans-fonts google-noto-emoji-fonts google-noto-sans-cjk-fonts \
     fontawesome-fonts-all jetbrains-mono-fonts-all
 
+step "Cursor: Layan-White-Umbra for the whole system"
+# Layan's white variant with its outline recoloured to an Umbra amber -> lilac gradient
+# (scripts/cursor-recolor.py). Installed system-wide and made the default theme, so
+# root apps (pkexec, sudo), other users and the login screen get it too. Adwaita
+# stays as Layan's fallback (Inherits=Adwaita), for any name Layan does not draw.
+if [ ! -d /usr/share/icons/Layan-White-Umbra ]; then
+    tmp=$(mktemp -d)
+    curl -fsSL --retry 3 https://github.com/vinceliuice/Layan-cursors/archive/refs/heads/master.tar.gz | tar -xz -C "$tmp"
+    python3 -I "$here/scripts/cursor-recolor.py" "$tmp"/Layan-cursors-*/dist-white \
+        /usr/share/icons/Layan-White-Umbra Layan-White-Umbra d08a30 a560c0
+    chmod -R a+rX /usr/share/icons/Layan-White-Umbra
+    rm -rf "$tmp"
+fi
+printf '[Icon Theme]\nInherits=Layan-White-Umbra\n' > /usr/share/icons/default/index.theme
+
 step "Terminal tools"
 dnf_install fish eza zoxide fzf bat ripgrep fd-find btop fastfetch tealdeer jq \
     git gh curl wget unzip 7zip cpio vim-enhanced htop

@@ -250,7 +250,8 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   (static). The choice is remembered. `spin` needs fastfetch 2.69+: until Fedora ships
   it, `user.sh` installs upstream's build in `~/.local/opt/fastfetch` and drops it once
   Fedora catches up. The colour pairs are at the top of `~/.local/bin/fastfetch-umbra`.
-- **Cursor:** the default, Layan-White-Umbra, is built by `user.sh`: it downloads
+- **Cursor:** the default, Layan-White-Umbra, is built by `system.sh` into
+  `/usr/share/icons` and set as the system default (Adwaita is its fallback): it downloads
   [Layan](https://github.com/vinceliuice/Layan-cursors) and recolours its outline with
   `scripts/cursor-recolor.py SRC DST NAME COLOUR [COLOUR2]` (one colour, or a diagonal
   gradient between two). The same script makes other colours of any Xcursor theme.

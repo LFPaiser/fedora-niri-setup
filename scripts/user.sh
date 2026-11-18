@@ -55,17 +55,8 @@ fi
 fc-cache -f >/dev/null
 
 step "Cursor: Layan-White-Umbra"
-# Layan's white variant (rounded white drop) with its outline recoloured to an Umbra
-# amber → lilac gradient by scripts/cursor-recolor.py (deeper tones than the palette's,
-# so the thin outline still shows against the white).
-if [ ! -d ~/.local/share/icons/Layan-White-Umbra ]; then
-    tmp=$(mktemp -d)
-    fetch https://github.com/vinceliuice/Layan-cursors/archive/refs/heads/master.tar.gz | tar -xz -C "$tmp"
-    mkdir -p ~/.local/share/icons
-    python3 -I "$here/scripts/cursor-recolor.py" "$tmp"/Layan-cursors-*/dist-white \
-        ~/.local/share/icons/Layan-White-Umbra Layan-White-Umbra d08a30 a560c0
-    rm -rf "$tmp"
-fi
+# The theme itself is installed system-wide by system.sh (/usr/share/icons); here it is
+# only selected for this user (niri, GTK and XCURSOR_THEME name it as well).
 mkdir -p ~/.icons/default
 printf '[Icon Theme]\nInherits=Layan-White-Umbra\n' > ~/.icons/default/index.theme
 
