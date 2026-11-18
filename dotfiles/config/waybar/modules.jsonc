@@ -12,7 +12,8 @@
     },
 
     "clock": {
-        "format": "{:%a %d %b  %H:%M}",
+        "format": "{:L%a %d %b  %H:%M}",
+        "locale": "pt_BR.UTF-8",
         "tooltip-format": "<tt>{calendar}</tt>",
         "calendar": {
             "mode": "month", "weeks-pos": "left", "on-scroll": 1,

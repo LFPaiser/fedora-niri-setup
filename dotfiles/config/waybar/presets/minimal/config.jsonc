@@ -15,7 +15,7 @@
     "group/time": { "orientation": "horizontal", "modules": ["clock", "custom/weather"] },
     "modules-right":  ["privacy", "custom/updates", "group/status", "custom/power"],
 
-    "clock": { "format": "{:%H:%M}", "tooltip-format": "<b>{:%A, %d %B}</b>\n<tt>{calendar}</tt>" },
+    "clock": { "format": "{:%H:%M}", "locale": "pt_BR.UTF-8", "tooltip-format": "<b>{:L%A, %d de %B}</b>\n<tt>{calendar}</tt>" },
 
     "group/status": {
         "orientation": "horizontal",

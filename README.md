@@ -153,7 +153,7 @@ gh auth login                             # uploads the key to GitHub
 |---|---|
 | Login | greetd + tuigreet (remembers the last user, shows the time) |
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
-| Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar, weather (5 sources with automatic fallback), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
+| Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar (day and month in Portuguese), weather (5 sources with automatic fallback; expected rain in mm next to the temperature on rainy days), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
 | Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul) |
 | Terminal | **Ghostty**, one process for all windows (Alacritty kept as fallback, Foot for emergencies). Default for `Terminal=true` apps and Nemo via `xdg-terminal-exec`. Bar pop-ups (volume, network, weather, updates) open floating |
 | Launcher / notifications / lock | fuzzel / mako (with a sound through the Notifications volume group; silent in do-not-disturb and for low urgency) / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
@@ -167,7 +167,7 @@ gh auth login                             # uploads the key to GitHub
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
 | "sistema" workspace | Super+0 / Super+': fastfetch + live journal warnings + btop, opened at login. The distro logo is animated in two Umbra colours (a random pair each time) |
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
-| Shell | fish + Starship prompt (Umbra, two lines: blocks with folder · git · project language, slow-command time and clock on the right; `❯` turns red on failure), zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`, Umbra theme), lazygit (`lg`), btop |
+| Shell | fish + Starship prompt (Umbra, two lines: blocks with folder · git · project language, slow-command time and clock on the right; `❯` turns red on failure), zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`, Umbra theme), file colours via vivid `LS_COLORS` (Umbra), bat (`cat`, Umbra theme), lazygit (`lg`, Umbra, diffs through delta; `|` toggles side by side), btop |
 | Git | `~/.config/git/config`: delta as pager (Umbra syntax colours, line numbers, changed words highlighted; `n`/`N` jump between files), `git ds` for a side-by-side diff (`git dss` for a commit), zdiff3 conflicts, rerere, histogram diffs, push without `-u`; aliases `st` `sw` `co` `br` `ci` `amend` `unstage` `undo` `last` `lg` (graph log). Identity stays in `~/.gitconfig` |
 | Dev | VS Code (themes, extensions and profiles via its Settings Sync), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails, yt-dlp (`mpv <youtube-url>` works) |

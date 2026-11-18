@@ -11,7 +11,8 @@
 #   WEATHER_LON="-49.2733"
 #   WEATHER_CPTEC_ID="227"            # city id: https://brasilapi.com.br/api/cptec/v1/cidade/<nome>
 #   WEATHER_PROVIDER="misto"          # misto | open-meteo | cptec | met-no | wttr
-#   (misto = forecast from CPTEC/INPE, current conditions and UV from Open-Meteo)
+#   (misto = forecast from CPTEC/INPE, current conditions, UV and rain mm from Open-Meteo)
+# Rain days show the expected mm next to the temperature and in the tooltip.
 WEATHER_NAME="Liberdade, São Paulo"
 WEATHER_LAT="-23.5666"
 WEATHER_LON="-46.6319"
@@ -50,12 +51,13 @@ cptec_norm() {
           days: [$c[] | {d: .data, code: (.condicao | wmo), min, max, desc: .condicao_desc}] }'
 }
 open_meteo_norm() {
-    get "https://api.open-meteo.com/v1/forecast?latitude=$WEATHER_LAT&longitude=$WEATHER_LON&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max&timezone=auto&forecast_days=3" | jq -c '
+    get "https://api.open-meteo.com/v1/forecast?latitude=$WEATHER_LAT&longitude=$WEATHER_LON&current=temperature_2m,apparent_temperature,relative_humidity_2m,wind_speed_10m,weather_code&daily=weather_code,temperature_2m_max,temperature_2m_min,uv_index_max,precipitation_sum,precipitation_probability_max&timezone=auto&forecast_days=4" | jq -c '
       { temp: .current.temperature_2m, feels: .current.apparent_temperature,
         hum: .current.relative_humidity_2m, wind: .current.wind_speed_10m, code: .current.weather_code, uv: .daily.uv_index_max[0],
         days: [range(0; .daily.time|length) as $i
                | {d: .daily.time[$i], code: .daily.weather_code[$i],
-                  min: .daily.temperature_2m_min[$i], max: .daily.temperature_2m_max[$i]}] }'
+                  min: .daily.temperature_2m_min[$i], max: .daily.temperature_2m_max[$i],
+                  rain: .daily.precipitation_sum[$i], pop: .daily.precipitation_probability_max[$i]}] }'
 }
 
 # Each provider is reduced to one shape:
@@ -69,8 +71,11 @@ fetch() {
     label="CPTEC/INPE + Open-Meteo"
     cp=$(cptec_norm); om=$(open_meteo_norm)
     [ -n "$cp" ] && [ -n "$om" ] || return 1
-    # current conditions + UV from Open-Meteo, forecast and today's summary from INPE
-    norm=$(jq -nc --argjson cp "$cp" --argjson om "$om" '$om + {today: $cp.desc, days: $cp.days, mixed: true}') ;;
+    # current conditions, UV and rain mm from Open-Meteo, forecast and today's summary from INPE
+    norm=$(jq -nc --argjson cp "$cp" --argjson om "$om" '
+      ($om.days | map({key: .d, value: {rain, pop}}) | from_entries) as $r
+      | $om + {today: $cp.desc, days: [$cp.days[] | . + ($r[.d] // {})], mixed: true,
+               rainday: $om.days[0]}') ;;
   open-meteo)
     label="Open-Meteo"; norm=$(open_meteo_norm) ;;
   met-no)
@@ -95,6 +100,9 @@ fetch() {
                   | map({ d: (.[0].local | strftime("%Y-%m-%d")),
                           min: (map(.data.instant.details.air_temperature) | min),
                           max: (map(.data.instant.details.air_temperature) | max),
+                          # hourly steps for ~2 days, then 6-hour steps
+                          rain: (map(if .data.next_1_hours then .data.next_1_hours.details.precipitation_amount
+                                     else .data.next_6_hours.details.precipitation_amount end // 0) | add),
                           code: ((map(select((.local|strftime("%H")) == "12")) + .)[0]
                                  | (.data.next_6_hours // .data.next_1_hours).summary.symbol_code // "cloudy" | wmo) }) ) }') ;;
   wttr)
@@ -112,7 +120,9 @@ fetch() {
       | { temp: ($c.temp_C|tonumber), feels: ($c.FeelsLikeC|tonumber), hum: ($c.humidity|tonumber),
           wind: ($c.windspeedKmph|tonumber), code: ($c.weatherCode|wmo),
           days: [.weather[] | {d: .date, code: (.hourly[4].weatherCode|wmo),
-                               min: (.mintempC|tonumber), max: (.maxtempC|tonumber)}] }') ;;
+                               min: (.mintempC|tonumber), max: (.maxtempC|tonumber),
+                               rain: ([.hourly[].precipMM|tonumber] | add),
+                               pop: ([.hourly[].chanceofrain|tonumber] | max)}] }') ;;
     *) return 1 ;;
   esac
   [ -n "$norm" ]
@@ -136,7 +146,7 @@ done
 
 hour=$(date +%H)
 printf '%s' "$norm" | jq -c --arg place "$WEATHER_NAME" --arg src "$label" --arg cls "$used" --arg chosen "$chosen_name" --arg fallback "$( [ "$used" != "$chosen" ] && echo yes )" \
-  --argjson night "$( [ "$hour" -ge 18 ] || [ "$hour" -lt 6 ] && echo true || echo false )" '
+  --arg date "$(date +%F)" --argjson night "$( [ "$hour" -ge 18 ] || [ "$hour" -lt 6 ] && echo true || echo false )" '
   def icon: if . == 0 then "󰖙" elif . <= 2 then "󰖕" elif . == 3 then "󰖐" elif . <= 48 then "󰖑"
             elif . <= 57 then "󰖗" elif . <= 67 then "󰖗" elif . <= 77 then "󰖘" elif . <= 82 then "󰖖"
             elif . <= 86 then "󰖘" else "󰙾" end;
@@ -145,13 +155,21 @@ printf '%s' "$norm" | jq -c --arg place "$WEATHER_NAME" --arg src "$label" --arg
             elif . <= 67 then "Chuva" elif . <= 77 then "Neve" elif . <= 82 then "Pancadas de chuva"
             elif . <= 86 then "Neve" else "Trovoada" end;
   def r: round | tostring;
+  # rain shown on days whose forecast is rain (drizzle, rain, showers, storm) or with >= 1 mm
+  def wet: (.code as $c | ($c >= 51 and $c <= 67) or ($c >= 80 and $c <= 82) or $c >= 95)
+           and .rain != null or (.rain // 0) >= 1;
+  def mm: if . < 1 then "<1" elif . < 10 then (. * 10 | round / 10 | tostring) else round | tostring end + " mm";
+  # bar: rain for today (CPTEC drops today from its list in the evening; misto keeps the Open-Meteo day)
+  def rainbar: ((.rainday // (.days | map(select(.d == $date)) | .[0])) // {}) as $t
+    | if ($t | wet) then "  󰖌 \($t.rain | mm)" else "" end;
+  def raintip: if wet then "   󰖌 \(.rain | mm)" + (if .pop then " · \(.pop)%" else "" end) else "" end;
   # "2026-11-18" → "18/nov"
   def ddmon: (.[5:7] | tonumber) as $m
     | .[8:10] + "/" + (["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"][$m - 1]);
   # moon instead of sun for clear / partly cloudy skies at night
   def nowicon: if $night and . == 0 then "󰖔" elif $night and . <= 2 then "󰼱" else icon end;
   { text: (if .temp then "\(.code|nowicon) \(.temp|r)°"
-            else "\(.code|icon) \(.days[0].min|r)°/\(.days[0].max|r)°" end),
+            else "\(.code|icon) \(.days[0].min|r)°/\(.days[0].max|r)°" end) + rainbar,
     tooltip: (
       "<b>\($place)</b>  " + (if .temp then "Agora: " else "" end) + "\(.desc // (.code|desc))\n"
       + (if .today then "Ainda hoje: \(.today)\n" else "" end)
@@ -160,7 +178,7 @@ printf '%s' "$norm" | jq -c --arg place "$WEATHER_NAME" --arg src "$label" --arg
            + "Umidade \(.hum|r)%  ·  Vento \(.wind|r) km/h"
            + (if (.uv // 0) > 0 then "  ·  UV máx \(.uv|r)" else "" end) + "\n\n"
          else "Previsão do dia (sem temperatura atual)" + (if (.uv // 0) > 0 then "  ·  UV \(.uv)" else "" end) + "\n\n" end)
-      + ([.days[] | "\(.d|ddmon)   \(.code|icon)  \(.min|r)° / \(.max|r)°" + (if .desc then "   \(.desc)" else "" end)] | join("\n"))
+      + ([.days[] | "\(.d|ddmon)   \(.code|icon)  \(.min|r)° / \(.max|r)°" + (if .desc then "   \(.desc)" else "" end) + raintip] | join("\n"))
       + (if .mixed then "\n\n<small>Previsão: CPTEC/INPE · Agora e UV: Open-Meteo · botão direito troca</small>"
          else "\n\n<small>Fonte: \($src) · botão direito troca</small>" end)
       + (if $fallback == "yes" then "\n<small>󰀦 \($chosen) não respondeu, usando \($src)</small>" else "" end)),
