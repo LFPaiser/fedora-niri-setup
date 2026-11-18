@@ -84,6 +84,18 @@ def main():
         if data[:4] == b'Xcur':
             with open(p, 'wb') as fh:
                 fh.write(recolor(data, c1, c2))
+    # Names Layan does not ship but draws under another name: link them, so these
+    # cursors (resize ↕/↔ above all) keep Layan's look instead of falling to Adwaita.
+    aliases = {
+        'ns-resize': 'size_ver', 'ew-resize': 'size_hor', 'all-resize': 'size_all',
+        'bd_double_arrow': 'nwse-resize', 'fd_double_arrow': 'nesw-resize',
+        'cross_reverse': 'crosshair', 'diamond_cross': 'crosshair', 'tcross': 'crosshair',
+        'dnd-ask': 'context-menu', 'top_left_arrow': 'default', 'X_cursor': 'x-cursor',
+    }
+    for alias, target in aliases.items():
+        p = os.path.join(cursors, alias)
+        if not os.path.lexists(p) and os.path.exists(os.path.join(cursors, target)):
+            os.symlink(target, p)
     # Adwaita as fallback for any cursor name the theme does not draw
     with open(os.path.join(dst, 'index.theme'), 'w') as fh:
         fh.write(f'[Icon Theme]\nName={name}\nComment={name} cursor theme\nInherits=Adwaita\n')
