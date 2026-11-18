@@ -90,14 +90,18 @@ if [ ! -x ~/.local/share/waypaper-venv/bin/waypaper ]; then
 fi
 ln -sf ~/.local/share/waypaper-venv/bin/waypaper ~/.local/bin/waypaper
 
-step "GTK / GNOME app theme (dark, Papirus, Layan-White-Umbra cursor, Inter)"
+step "Icons: Papirus-Dark with violet folders"
+# A user icon theme on top of Papirus-Dark that only recolours the folders.
+bash "$here/scripts/papirus-umbra.sh" violet
+
+step "GTK / GNOME app theme (dark, Papirus violet folders, Layan-White-Umbra cursor, Inter)"
 if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && [ -S "/run/user/$(id -u)/bus" ]; then
     export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 fi
 gs() { gsettings set org.gnome.desktop.interface "$@"; }
 gs color-scheme prefer-dark
 gs gtk-theme adw-gtk3-dark
-gs icon-theme Papirus-Dark
+gs icon-theme Papirus-Dark-Umbra
 gs cursor-theme Layan-White-Umbra
 gs cursor-size 24
 gs font-name 'Inter 11'

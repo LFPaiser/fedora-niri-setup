@@ -159,7 +159,7 @@ gh auth login                             # uploads the key to GitHub
 | Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Clipboard | cliphist history (Super+Shift+V) |
-| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Layan white cursor with an Umbra amber → lilac outline, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
+| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons with violet folders (`scripts/papirus-umbra.sh`), Layan white cursor with an Umbra amber → lilac outline, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
 | "sistema" workspace | Super+0 / Super+': fastfetch + live journal warnings + btop, opened at login. The distro logo is animated in two Umbra colours (a random pair each time) |

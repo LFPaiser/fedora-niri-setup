@@ -41,7 +41,7 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 - [x] Cores fora da paleta: popover GTK agora `mantle` (`#1c0624`, igual aos menus do Firefox); `dim`/`soft` viraram `overlay1`/`haze` na paleta; o campo do gtklock já usava `surface1`; sombras do niri desligadas.
 - [x] Separadores entre módulos em `@surface0` (roxo) nas barras que têm separador (faixa e solida), pelo papel `@sep` em `colors.css`; o contorno da barra continua âmbar (`@line`).
 - [x] Cursor do sistema: Layan-White-Umbra instalado em `/usr/share/icons` pelo `system.sh` e padrão do sistema (Adwaita só como fallback); nomes que o Layan não tinha (redimensionar ↕/↔ etc.) agora apontam para os desenhos dele.
-- [ ] Pastas do Papirus azuis, destoam do roxo/âmbar — `papirus-folders -C orange` (ou `violet`).
+- [x] Pastas do Papirus em violeta: tema `Papirus-Dark-Umbra` em `~/.local/share/icons` (herda o Papirus-Dark, troca só as pastas), feito por `scripts/papirus-umbra.sh`, sem root.
 
 ## Alterações
 
