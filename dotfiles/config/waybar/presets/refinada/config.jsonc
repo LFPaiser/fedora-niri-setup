@@ -17,7 +17,7 @@
 
     "group/hw": {
         "orientation": "horizontal",
-        "drawer": { "transition-duration": 250, "transition-left-to-right": false },
+        "drawer": { "transition-duration": 150, "transition-left-to-right": false },
         "modules": ["cpu", "memory", "disk", "temperature", "custom/uptime"]
     }
 }

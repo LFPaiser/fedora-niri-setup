@@ -20,7 +20,7 @@ Tokens visuais propostos, para usar como referência nos itens de consistência:
 | Fonte da interface | Inter 11 |
 | Fonte mono | JetBrainsMono Nerd Font 11 |
 | Cores com função fixa | âmbar = foco/ativo; lilás = secundário; surface1 = seleção; vermelho forte `#e5455a` = urgente/erro; amarelo = aviso |
-| Animação curta | 150 ms ease-out |
+| Animação | 150 ms ease-in em todas (niri: `cubic-bezier 0.42 0 1 1`; waybar) |
 | Sombra | larga e suave: softness 60, spread 8, y 10, `#14031a55` |
 
 ## Problemas

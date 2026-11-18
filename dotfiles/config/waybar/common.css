@@ -36,4 +36,4 @@ tooltip label { color: @text; }
 #custom-power:hover { background: @red; color: @bg; }
 
 /* one motion speed for every preset */
-#workspaces button, #custom-power, #custom-launcher { transition: all 150ms ease-out; }
+#workspaces button, #custom-power, #custom-launcher { transition: all 150ms ease-in; }
