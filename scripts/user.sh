@@ -198,6 +198,19 @@ elif ! ~/.local/bin/fastfetch --version 2>/dev/null | grep -q .; then
     ln -sf ~/.local/opt/fastfetch/bin/fastfetch ~/.local/bin/fastfetch
 fi
 
+step "satty (screenshot annotation, Shift+Print)"
+# Not packaged by Fedora: upstream's release binary in ~/.local/bin. Re-run with
+# SATTY_UPDATE=1 to fetch the latest release again.
+if ! command -v satty >/dev/null || [ -n "${SATTY_UPDATE:-}" ]; then
+    tmp=$(mktemp -d)
+    fetch https://github.com/Satty-org/Satty/releases/latest/download/satty-x86_64-unknown-linux-gnu.tar.gz |
+        tar -xz -C "$tmp"
+    install -Dm755 "$tmp/satty" ~/.local/bin/satty
+    install -Dm644 "$tmp/completions/satty.fish" ~/.config/fish/completions/satty.fish
+    rm -rf "$tmp"
+fi
+mkdir -p ~/Videos/Recordings
+
 step "Claude Code + Orca (stable checkout)"
 command -v claude >/dev/null || fetch https://claude.ai/install.sh | bash
 # Orca lives in its own "stable" checkout; orca-lc and the Claude hooks/skills

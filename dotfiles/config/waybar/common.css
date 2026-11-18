@@ -10,8 +10,8 @@ tooltip label { color: @text; }
 
 /* Neutral colours */
 #cpu, #memory, #disk, #temperature, #custom-uptime { color: @load; }
-#pulseaudio, #backlight, #network, #bluetooth, #battery, #custom-weather { color: @soft; }
-#custom-dnd, #idle_inhibitor, #custom-clipboard, #custom-github.none { color: @dim; }
+#pulseaudio, #custom-mic.on, #backlight, #network, #bluetooth, #battery, #custom-weather { color: @soft; }
+#custom-dnd, #idle_inhibitor, #custom-mic.muted, #custom-mic.none, #custom-recording.idle, #custom-clipboard, #custom-github.none { color: @dim; }
 #mpris { color: @subtext; }
 #mpris.paused { color: @dim; }
 #tray > widget { opacity: 0.72; }   /* app icons are images; soften them to match */
@@ -27,7 +27,7 @@ tooltip label { color: @text; }
 #custom-weather.fallback { font-style: italic; }   /* chosen weather source failed, showing a backup */
 
 /* Warnings */
-#privacy, #temperature.critical, #custom-github.error { color: @red; }
+#privacy, #custom-mic.live, #custom-recording.recording, #temperature.critical, #custom-github.error { color: @red; }
 #battery.warning:not(.charging) { color: @yellow; }
 #battery.critical:not(.charging) { color: @bg; background: @red; border-radius: 6px; }
 #tray > .needs-attention { opacity: 1; background: @red; border-radius: 6px; }

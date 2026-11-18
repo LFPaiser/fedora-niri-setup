@@ -48,9 +48,9 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 
 ### Alta
-- [ ] **Volume por app** à mão: instalar `wiremix` (TUI) e abrir pelo clique do meio no ícone de volume; rolar no player de mídia muda só o volume da mídia; atalhos Super+Shift+F10–F12 (−, mudo, +) para a mídia.
-- [ ] **Gravação de tela**: `wf-recorder` (ou gpu-screen-recorder em hardware real) + script liga/desliga + indicador na waybar + atalho Super+Alt+R (liga/desliga).
-- [ ] **Anotar captura de tela**: `satty`; atalho Shift+Print → `grim -g "$(slurp)" - | satty -f -`.
+- [x] **Volume por grupo e por app**: grupos Mídia, Notificações, Sistema e Chamadas (loopbacks do PipeWire + roteamento por `media.role` do WirePlumber; sem papel = Mídia), cada um com volume próprio; wiremix no clique do meio do volume; rolar no player e Super+Shift+F10–F12 mexem só na Mídia.
+- [x] **Gravação de tela**: `~/.local/bin/record` (wf-recorder com o som do computador) — Super+Alt+R tela, Super+Alt+Shift+R área; cronômetro vermelho na waybar (clique para parar); notificação com Abrir/Abrir pasta. gpu-screen-recorder fica para hardware real.
+- [x] **Anotar captura de tela**: satty (binário oficial em `~/.local/bin`, Fedora não empacota) com paleta Umbra; Shift+Print.
 - [ ] **Prompt Starship**: criar `starship.toml` com a paleta Umbra (o Starship já está instalado, mas usa o prompt padrão).
 - [ ] **Git**: `git-delta` como pager (tema Umbra) + `merge.conflictstyle=zdiff3`, `rerere`, `diff.algorithm=histogram`, `push.autoSetupRemote`, aliases.
 

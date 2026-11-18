@@ -220,6 +220,10 @@ binds {
     Mod+F12 allow-when-locked=true hotkey-overlay-title="Volume +" { spawn-sh "~/.local/bin/osd volume-up"; }
     Mod+F11 allow-when-locked=true hotkey-overlay-title="Volume −" { spawn-sh "~/.local/bin/osd volume-down"; }
     Mod+F10 allow-when-locked=true hotkey-overlay-title="Mudo" { spawn-sh "~/.local/bin/osd mute"; }
+    // Media group only (Firefox, mpv, ...): pipewire/pipewire.conf.d/60-volume-groups.conf
+    Mod+Shift+F12 allow-when-locked=true hotkey-overlay-title="Volume da mídia +" { spawn-sh "~/.local/bin/osd group media up"; }
+    Mod+Shift+F11 allow-when-locked=true hotkey-overlay-title="Volume da mídia −" { spawn-sh "~/.local/bin/osd group media down"; }
+    Mod+Shift+F10 allow-when-locked=true hotkey-overlay-title="Mídia muda" { spawn-sh "~/.local/bin/osd group media mute"; }
     Mod+F9  allow-when-locked=true hotkey-overlay-title="Tocar/pausar" { spawn "playerctl" "play-pause"; }
 
     // Screenshots (saved to ~/Pictures/Screenshots and copied to the clipboard)
@@ -227,6 +231,11 @@ binds {
     Mod+Shift+S hotkey-overlay-title="Screenshot" { screenshot; }
     Ctrl+Print hotkey-overlay-title="Captura da tela" { screenshot-screen; }
     Alt+Print hotkey-overlay-title="Captura da janela" { screenshot-window; }
+    // Annotate: pick an area, edit it in satty (arrows, text, blur...), then save or copy
+    Shift+Print hotkey-overlay-title="Captura com anotação" { spawn-sh "grim -g \"$(slurp -d -b '#14031a66' -c '#e0a050' -w 2)\" - | satty -f -"; }
+    // Screen recording: the same key starts and stops (~/.local/bin/record)
+    Mod+Alt+R hotkey-overlay-title="Gravar a tela (liga/desliga)" { spawn-sh "~/.local/bin/record"; }
+    Mod+Alt+Shift+R hotkey-overlay-title="Gravar uma área (liga/desliga)" { spawn-sh "~/.local/bin/record region"; }
 
     // Windows
     Mod+Q repeat=false hotkey-overlay-title="Fechar janela em foco" { close-window; }

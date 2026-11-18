@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Screen recording with wf-recorder, started and stopped by the same key.
+#   record            toggle: record the focused screen (Super+Alt+R)
+#   record region     toggle: record an area picked with slurp (Super+Alt+Shift+R)
+#   record stop       stop if recording
+#   record status     JSON for the waybar icon (idle: dim; recording: red timer)
+# Records the computer's sound too (the output's monitor); files go to ~/Videos/Recordings.
+set -u
+state="${XDG_RUNTIME_DIR:-/tmp}/record"     # holds: pid start-epoch file
+dir=~/Videos/Recordings
+
+running() { [ -f "$state" ] && read -r pid _ _ < "$state" && kill -0 "$pid" 2>/dev/null; }
+bar() { pkill -RTMIN+11 waybar 2>/dev/null; }
+
+stop() {
+    running || { rm -f "$state"; return 1; }
+    read -r pid _ file < "$state"
+    kill -INT "$pid"
+    while kill -0 "$pid" 2>/dev/null; do sleep 0.1; done    # let it finish the file
+    rm -f "$state"; bar
+    action=$(notify-send -a Gravação -i media-record "Gravação salva" "${file##*/}" \
+        -A open=Abrir -A folder="Abrir pasta" 2>/dev/null)
+    case "$action" in
+        open) xdg-open "$file" ;;
+        folder) xdg-open "$dir" ;;
+    esac &
+}
+
+start() {
+    mkdir -p "$dir"
+    file="$dir/Recording $(date '+%Y-%m-%d %H-%M-%S').mp4"
+    # H.264 + AAC: plays everywhere (browsers, phones, chat apps); veryfast keeps the CPU calm
+    args=(-f "$file" -c libx264 -p preset=veryfast -p crf=23 -x yuv420p
+          -C aac --audio="$(pactl get-default-sink).monitor")
+    if [ "${1:-}" = region ]; then
+        geo=$(slurp -d -b '#14031a66' -c '#e0a050' -w 2) || exit 0     # Esc: cancel
+        args+=(-g "$geo")
+    else
+        out=$(niri msg -j focused-output | jq -r .name)
+        args+=(-o "$out")
+    fi
+    wf-recorder "${args[@]}" >/dev/null 2>&1 &
+    pid=$!
+    sleep 0.3
+    kill -0 "$pid" 2>/dev/null || { notify-send -u critical -a Gravação "Gravação falhou" "wf-recorder não iniciou"; exit 1; }
+    echo "$pid $(date +%s) $file" > "$state"; bar
+}
+
+case "${1:-}" in
+    ""|screen) stop || start ;;
+    region) stop || start region ;;
+    stop) stop ;;
+    status)
+        if running; then
+            read -r _ t0 _ < "$state"; s=$(( $(date +%s) - t0 ))
+            printf '{"text":"󰑊 %d:%02d","tooltip":"Gravando — clique para parar","class":"recording"}\n' $((s/60)) $((s%60))
+        else
+            echo '{"text":"󰻃","class":"idle","tooltip":"Gravar a tela\nclique: tela (Super+Alt+R) · direito: área (Super+Alt+Shift+R)"}'
+        fi
+        ;;
+    *) echo "usage: record [screen|region|stop|status]" >&2; exit 1 ;;
+esac

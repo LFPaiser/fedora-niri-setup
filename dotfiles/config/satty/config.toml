@@ -1,0 +1,21 @@
+# satty (screenshot annotation), opened by Shift+Print in niri. Umbra colours.
+# Enter: copy + save to ~/Pictures/Screenshots + close. Ctrl+C copy, Ctrl+S save, Esc close.
+[general]
+output-filename = "~/Pictures/Screenshots/Annotated %Y-%m-%d %H-%M-%S.png"
+copy-command = "wl-copy"
+actions-on-enter = ["save-to-clipboard", "save-to-file", "exit"]
+actions-on-escape = ["exit"]
+early-exit = ["copy", "save"]
+initial-tool = "arrow"
+corner-roundness = 6
+floating-hack = true
+resize = { mode = "smart" }
+default-round-caps = true
+
+[font]
+family = "Inter"
+style = "Regular"
+
+# Amber (focus), lilac, pink, green, yellow, strong red, cream, deep purple
+[color-palette]
+palette = ["#e0a050ff", "#c58bd6ff", "#f0a6c8ff", "#a8c98aff", "#f2cf8aff", "#e5455aff", "#fdf0dcff", "#26082fff"]
