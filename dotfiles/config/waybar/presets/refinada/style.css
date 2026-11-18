@@ -7,15 +7,15 @@ window#waybar { background: transparent; color: @text; }
 tooltip label { font-family: "JetBrainsMono Nerd Font"; }
 
 #custom-launcher, #workspaces, #window, #time, #mpris, #privacy,
-#hw, #info, #conn, #media, #custom-power {
+#hw, #info, #conn, #media, #power {
     background: alpha(@bg, 0.92);
     border: 1px solid @line;
     border-radius: 12px;
     padding: 0 12px;
     box-shadow: 0 2px 6px alpha(@crust, 0.5);
 }
-#hw, #info, #conn, #media { padding: 0 4px; }
-#hw > * > *, #info > * > *, #conn > * > *, #media > * > * { padding: 0 7px; }
+#hw, #info, #conn, #media, #power { padding: 0 4px; }
+#hw > * > *, #info > * > *, #conn > * > *, #media > * > *, #power > * > * { padding: 0 7px; }
 #custom-weather { padding-left: 10px; }   /* shares the clock pill */
 
 window#waybar.empty #window { background: transparent; border: none; box-shadow: none; padding: 0; }
@@ -30,4 +30,4 @@ window#waybar.empty #window { background: transparent; border: none; box-shadow:
 #workspaces button.urgent { color: @red; }
 #workspaces button:hover { color: @text; background: @surface0; border-radius: 10px; box-shadow: none; }
 
-#custom-power { padding: 0 14px 0 12px; }
+#custom-power { padding: 0 12px 0 10px; border-radius: 10px; }

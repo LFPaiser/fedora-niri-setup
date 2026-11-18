@@ -6,7 +6,7 @@
 
     "modules-left":   ["niri/workspaces", "niri/window"],
     "modules-center": ["clock", "custom/weather"],
-    "modules-right":  ["mpris", "privacy", "group/hw", "group/info", "group/conn", "group/media", "custom/power"],
+    "modules-right":  ["mpris", "privacy", "group/hw", "group/info", "group/conn", "group/media", "group/power"],
 
     // Shows the name of the "sistema" workspace, and the others with the number of their
     // shortcut: "sistema" is niri's workspace 1 (Super+0), so niri's 2 is Super+1, and so on.

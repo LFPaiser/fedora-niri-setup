@@ -15,9 +15,10 @@ window#waybar { background: alpha(@crust, 0.96); color: @subtext; border-bottom:
 window#waybar.empty #window { color: transparent; }
 #custom-weather { padding-left: 12px; }
 
-#mpris, #privacy, #hw, #info, #conn, #media, #custom-power { padding: 0 6px; border-left: 1px solid @sep; }
+#mpris, #privacy, #hw, #info, #conn, #media, #power { padding: 0 6px; border-left: 1px solid @sep; }
 #mpris, #privacy { padding: 0 10px; }
-#hw > * > *, #info > * > *, #conn > * > *, #media > * > * { padding: 0 5px; }
+#hw > * > *, #info > * > *, #conn > * > *, #media > * > *, #power > * > * { padding: 0 5px; }
+#power { padding-right: 0; }
 #tray { padding: 0 6px 0 4px; }
 #tray.empty { padding: 0; }
 #custom-power { padding: 0 12px; }

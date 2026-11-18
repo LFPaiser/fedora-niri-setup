@@ -189,5 +189,7 @@
     "group/info":  { "orientation": "horizontal", "modules": ["custom/updates", "custom/github", "custom/clipboard"] },
     // language (fcitx5) comes from the tray; the native network module always sits after it
     "group/conn":  { "orientation": "horizontal", "modules": ["tray", "network", "bluetooth", "battery"] },
-    "group/media": { "orientation": "horizontal", "modules": ["pulseaudio", "custom/mic", "custom/recording", "backlight", "custom/dnd", "idle_inhibitor"] }
+    "group/media": { "orientation": "horizontal", "modules": ["pulseaudio", "custom/mic", "custom/recording"] },
+    // screen & session: brightness, do-not-disturb, stay-awake, then the power menu
+    "group/power": { "orientation": "horizontal", "modules": ["backlight", "custom/dnd", "idle_inhibitor", "custom/power"] }
 }

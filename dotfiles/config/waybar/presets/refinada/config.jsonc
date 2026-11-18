@@ -13,7 +13,7 @@
     },
     "modules-center": ["group/time"],
     "group/time": { "orientation": "horizontal", "modules": ["clock", "custom/weather"] },
-    "modules-right":  ["mpris", "privacy", "group/hw", "group/info", "group/conn", "group/media", "custom/power"],
+    "modules-right":  ["mpris", "privacy", "group/hw", "group/info", "group/conn", "group/media", "group/power"],
 
     "group/hw": {
         "orientation": "horizontal",
