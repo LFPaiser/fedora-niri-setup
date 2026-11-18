@@ -18,6 +18,7 @@ as `<file>.bak-<date>`.
 setup.sh                  entry point (run as your user, asks for sudo once)
 scripts/system.sh         repos, packages, drivers, services (root)
 scripts/user.sh           dotfiles, fonts, cursor, wallpaper, theme, dev runtimes (user)
+scripts/cursor-recolor.py recolours a cursor theme (builds the default Layan-White-Umbra)
 dotfiles/config/...       copied to ~/.config/... (@HOME@ is replaced with your home dir)
 dotfiles/local-bin/...    copied to ~/.local/bin/ (osd, powermenu, sistema, fastfetch-umbra)
 system-files/             Firefox policy (uBlock Origin, no telemetry), greetd login config
@@ -241,13 +242,22 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   (static). The choice is remembered. `spin` needs fastfetch 2.69+: until Fedora ships
   it, `user.sh` installs upstream's build in `~/.local/opt/fastfetch` and drops it once
   Fedora catches up. The colour pairs are at the top of `~/.local/bin/fastfetch-umbra`.
+- **Cursor:** the default, Layan-White-Umbra, is built by `user.sh`: it downloads
+  [Layan](https://github.com/vinceliuice/Layan-cursors) and recolours its outline with
+  `scripts/cursor-recolor.py SRC DST NAME COLOUR [COLOUR2]` (one colour, or a diagonal
+  gradient between two). The same script makes other colours of any Xcursor theme.
+  To switch theme, change `xcursor-theme` in `niri/config.kdl`,
+  `gtk-cursor-theme-name` in `gtk-3.0/settings.ini` and
+  `gsettings set org.gnome.desktop.interface cursor-theme NAME`.
 - **Lock screen:** `~/.config/gtklock/style.css` (look) and `layout.ui` (which
   widgets show; the Unlock button and "Password:" label are hidden). Test with `gtklock`.
 - **A fancier bar/shell (real hardware only):** [Noctalia](https://github.com/noctalia-dev/noctalia-shell)
   and [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) are
   complete, animated niri shells. They replace waybar, mako and the OSD. They were
   not used here because they need a real GPU to feel smooth. To try one,
-  install it and remove the `waybar`/`mako`/`osd` lines from `spawn-at-startup`.
+  install it, turn off the bar and notifications with
+  `systemctl --user disable --now waybar mako` and remove the `osd` line from
+  `spawn-at-startup`.
 - **Caps Lock as Esc (tap) / Ctrl (hold):** install `keyd` from COPR
   (`dnf copr enable alternateved/keyd`) and map `capslock = overload(control, esc)`.
 - **More apps (Flathub):** `flatpak install flathub com.discordapp.Discord com.spotify.Client com.obsproject.Studio`.
