@@ -18,7 +18,7 @@
 @define-color teal     #8fcfc0;
 
 /* Tones the presets share: colour is kept for state (on, active, warning). */
-@define-color bg     #2a0a33;              /* bar background, the wallpaper purple */
+@define-color bg     #26082f;              /* bar background = the palette base (same as GTK, Ghostty) */
 @define-color line   alpha(@mauve, 0.30);  /* thin amber separators, like the wallpaper grid */
 @define-color dim    #8f6a90;              /* idle / off */
 @define-color soft   #bfa6c2;              /* status icons: sound, network, battery, weather */

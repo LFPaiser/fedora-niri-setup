@@ -36,7 +36,7 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 
 ### Baixa
 - [x] Arquivos `*.bak*` antigos em `~/.config` apagados (17, até 17/11). Os de 18/11 ficam até confirmar que está tudo certo.
-- [ ] Dois tons de fundo quase iguais (`#2a0a33` na barra, `#26082f` no resto) — usar um só.
+- [x] Dois tons de fundo quase iguais: a waybar agora usa `#26082f` (`@bg`), o mesmo do resto.
 - [ ] Nomes enganosos na paleta (`mauve` = âmbar, `blue` = lilás; `lilac` duplica `blue`) — renomear/criar aliases em `colors.css`.
 - [ ] Cores fora da paleta: popover GTK `#2e0b38`, sombra do niri preto puro, campo do gtklock branco neutro, `dim`/`soft` só na waybar — integrar à paleta.
 - [ ] Preset *solida* usa separadores de outra cor — usar `@line` se não for intencional.
