@@ -1,4 +1,4 @@
-// niri config — Umbra theme, keyboard-first.
+// niri config — Umbra theme (colours taken from the wallpaper), keyboard-first.
 // Docs: https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 // Check after editing:  niri validate   (niri also reloads this file live)
 
@@ -176,6 +176,7 @@ binds {
     // Apps
     Mod+Return hotkey-overlay-title="Terminal: Ghostty" { spawn "ghostty"; }
     Mod+T { spawn "ghostty"; }
+    Mod+Shift+Return hotkey-overlay-title="Terminal de emergência: Foot" { spawn "foot"; }
     Mod+Space hotkey-overlay-title="App launcher" { spawn "fuzzel"; }
     Mod+A { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Browser: Firefox" { spawn "firefox"; }

@@ -1,0 +1,39 @@
+onboarding = false
+
+[theme]
+# "terminal" = use the outer terminal's palette (Ghostty's Umbra theme)
+name = "terminal"
+auto_switch = false
+
+[ui]
+status_indicators = "dots"
+
+# Background agent finished / needs attention -> desktop notification (mako)
+[ui.toast]
+delivery = "system"
+
+[ui.sound]
+enabled = false
+
+[keys]
+next_agent = "prefix+]"
+previous_agent = "prefix+["
+last_pane = "prefix+tab"
+open_worktree = "prefix+shift+o"
+remove_worktree = "prefix+alt+x"
+
+# prefix+g stays as goto
+[[keys.command]]
+key = "prefix+alt+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
+
+[experimental]
+# Pane screen contents survive a herdr server restart
+pane_history = true
+
+[advanced]
+# Per pane; long Claude sessions outgrow the 10 MB default
+scrollback_limit_bytes = 100000000

@@ -36,7 +36,7 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 - [ ] **VS Code ainda é Catppuccin por baixo** (sintaxe, git, ícones; o terminal já é Umbra) — `Code/User/settings.json`: `terminal.ansi*` com as cores do tema Umbra do Ghostty; trocar o tema base ou adicionar `editor.tokenColorCustomizations`.
 
 ### Média
-- [ ] **herdr com tema `rose-pine`** → tema Umbra (se suportar tema próprio) ou o mais próximo.
+- [x] **herdr com tema `rose-pine`** → `name = "terminal"` (herda as cores Umbra do Ghostty).
 - [x] **Login com paleta VGA padrão**: o tuigreet herda as cores do console → paleta Umbra via `vt.default_red/grn/blu` no kernel ou serviço setvtrgb; fonte maior (terminus `ter-v20b`).
 - [ ] **Associações de arquivo incompletas** (`mimeapps.list` só define PDF e pastas) → imagens: Loupe; vídeo/áudio: mpv; texto: Text Editor; compactados: File Roller; e versionar o arquivo.
 - [x] **Cantos com 6 raios diferentes** (janelas 6, barra 10, tooltip 8, gtklock 9, mako 12, fuzzel 14) — padronizar: janelas/barra/tooltip/gtklock 10, fuzzel/mako 12, detalhes 6.
@@ -75,6 +75,10 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **Prompt Starship**: criar `starship.toml` com a paleta Umbra (o Starship já está instalado, mas usa o prompt padrão).
 - [ ] **Git**: `git-delta` como pager (tema Umbra) + `merge.conflictstyle=zdiff3`, `rerere`, `diff.algorithm=histogram`, `push.autoSetupRemote`, aliases.
 - [x] **Animações do niri**: bloco `animations {}` explícito (abrir janela 200 ms ease-out-cubic, troca de workspace um pouco mais suave) para poder ajustar.
+
+- [ ] **Kitty no lugar do Alacritty** como terminal reserva: usa o mesmo protocolo de imagens do Ghostty (yazi, `icat`), então as ferramentas continuam funcionando ao trocar. Trocar o pacote em `system.sh`, criar `kitty/kitty.conf` com as cores Umbra, atalho no niri; o Foot (`Super+Shift+Enter`) fica como terminal de emergência.
+- [ ] **Ghostty pela GPU** `[HW]`: confirmar que em hardware real não existe `/usr/local/bin/ghostty` (o script com `LIBGL_ALWAYS_SOFTWARE=1` é só da VM, que tem OpenGL 4.1 e o Ghostty precisa de 4.3) e que o Ghostty usa a GPU (`ghostty +show-config` / desempenho com muita saída).
+- [ ] **Ghostty: instância única ou não** — hoje `gtk-single-instance = detect` põe todas as janelas num processo só; se o Ghostty travar, todas as sessões (ex.: várias do Claude Code) fecham juntas. Decidir entre `false` (um processo por janela) ou manter + tmux/zellij.
 
 ### Média
 - [ ] **Som de notificação** no mako (`on-notify=exec pw-play …/message.oga`), mudo no modo não perturbe.

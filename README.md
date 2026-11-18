@@ -145,7 +145,7 @@ gh auth login                             # uploads the key to GitHub
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
 | Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar, weather (5 sources with automatic fallback), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
 | Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul) |
-| Terminal | **Ghostty** (Alacritty kept as fallback) |
+| Terminal | **Ghostty** (Alacritty kept as fallback, Foot for emergencies) |
 | Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Clipboard | cliphist history (Super+Shift+V) |
@@ -166,6 +166,7 @@ gh auth login                             # uploads the key to GitHub
 | Keys | Action |
 |---|---|
 | Super+Enter (or T) | Ghostty terminal |
+| Super+Shift+Enter | Foot terminal (emergency: CPU-rendered, works when the GPU/Ghostty breaks) |
 | Super+A (or Space) | app launcher |
 | Super+B / Super+E | Firefox / Files (Nemo) |
 | Super+Shift+W | wallpaper picker (Waypaper) |
@@ -192,6 +193,7 @@ gh auth login                             # uploads the key to GitHub
 | Media keys / Super+F9–F12 | play-pause / volume down, mute, up |
 
 Ghostty: Ctrl+Shift+Enter splits; Ctrl+Shift+H/J/K/L moves between splits;
+Ctrl+Shift+Alt+H/J/K/L resizes; Ctrl+Shift+Z zooms a split; Ctrl+Shift+= evens them out;
 Ctrl+Shift+T opens a tab.
 
 ## 7. Customizing
@@ -220,7 +222,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 - **Different theme:** the Umbra colors live in `niri/config.kdl` (focus ring),
   `waybar/colors.css`, `fuzzel/fuzzel.ini`, `mako/config`,
   `alacritty/alacritty.toml`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
-  `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config`; list the
+  `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config.ghostty`; list the
   built-in options with `ghostty +list-themes`) and `Code/User/settings.json`
   (`workbench.colorCustomizations`). The previous Catppuccin Mocha look is one
   `theme = Catppuccin Mocha` + palette swap away. Edit the files in this repo and
