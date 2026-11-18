@@ -7,7 +7,7 @@
 window#waybar { background: alpha(@crust, 0.96); color: @subtext; border-bottom: 1px solid @line; }
 
 #workspaces button { color: @dim; padding: 0 10px; background: transparent; }
-#workspaces button.active, #workspaces button.focused { color: @crust; background: @mauve; font-weight: bold; }
+#workspaces button.active, #workspaces button.focused { color: @crust; background: @amber; font-weight: bold; }
 #workspaces button.urgent { color: @red; }
 #workspaces button:hover { background: @surface0; color: @text; box-shadow: none; }
 

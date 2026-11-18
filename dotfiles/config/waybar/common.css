@@ -2,14 +2,14 @@
    then only describes its shape (pills, strip, floating band...). */
 @import "colors.css";
 
-tooltip { background: @bg; border: 1px solid @mauve; border-radius: 10px; }
+tooltip { background: @bg; border: 1px solid @amber; border-radius: 10px; }
 tooltip label { color: @text; }
 
 #window { color: @subtext; }
 #clock { color: @text; font-weight: bold; }
 
 /* Neutral colours */
-#cpu, #memory, #disk, #temperature, #custom-uptime { color: @lilac; }
+#cpu, #memory, #disk, #temperature, #custom-uptime { color: @load; }
 #pulseaudio, #backlight, #network, #bluetooth, #battery, #custom-weather { color: @soft; }
 #custom-dnd, #idle_inhibitor, #custom-clipboard, #custom-github.none { color: @dim; }
 #mpris { color: @subtext; }
@@ -18,7 +18,7 @@ tooltip label { color: @text; }
 
 /* On / active / something to look at: amber */
 #mpris.playing, #custom-dnd.on, #idle_inhibitor.activated, #bluetooth.connected,
-#battery.charging, #battery.plugged, #custom-github.unread, #custom-updates.pending { color: @mauve; }
+#battery.charging, #battery.plugged, #custom-github.unread, #custom-updates.pending { color: @amber; }
 #bluetooth.on { color: @text; }
 
 /* Off / missing: dim */
@@ -32,7 +32,7 @@ tooltip label { color: @text; }
 #battery.critical:not(.charging) { color: @bg; background: @red; border-radius: 6px; }
 #tray > .needs-attention { opacity: 1; background: @red; border-radius: 6px; }
 
-#custom-power { color: @mauve; }
+#custom-power { color: @amber; }
 #custom-power:hover { background: @red; color: @bg; }
 
 /* one motion speed for every preset */

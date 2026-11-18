@@ -1,25 +1,34 @@
-/* Umbra palette (taken from the wallpaper). Shared by every waybar preset. */
-@define-color base     #26082f;
-@define-color mantle   #1c0624;
-@define-color crust    #14031a;
-@define-color surface0 #3a1544;
-@define-color surface1 #57235a;
-@define-color overlay0 #7d5a80;
-@define-color text     #fdf0dc;
-@define-color subtext  #d9c4b8;
-@define-color mauve    #e0a050;
-@define-color blue     #c58bd6;
-@define-color sapphire #b48ee0;
-@define-color green    #a8c98a;
-@define-color yellow   #f2cf8a;
-@define-color peach    #e89a5c;
-@define-color red      #e5455a;              /* errors & urgent: stronger than the terminal red */
-@define-color pink     #f0a6c8;
-@define-color teal     #8fcfc0;
+/* Umbra palette (taken from the wallpaper). Shared by every waybar preset.
+   Names say what the colour is; the roles below say what it is for. */
 
-/* Tones the presets share: colour is kept for state (on, active, warning). */
-@define-color bg     #26082f;              /* bar background = the palette base (same as GTK, Ghostty) */
-@define-color line   alpha(@mauve, 0.30);  /* thin amber separators, like the wallpaper grid */
-@define-color dim    #8f6a90;              /* idle / off */
-@define-color soft   #bfa6c2;              /* status icons: sound, network, battery, weather */
-@define-color lilac  #c58bd6;              /* system load: CPU, RAM, temperature */
+/* Surfaces, dark to light */
+@define-color crust    #14031a;
+@define-color mantle   #1c0624;
+@define-color base     #26082f;
+@define-color surface0 #3a1544;
+@define-color surface1 #57235a;              /* selection */
+
+/* Muted text, dark to light */
+@define-color overlay0 #7d5a80;
+@define-color overlay1 #8f6a90;              /* also fish comments */
+@define-color haze     #bfa6c2;
+@define-color subtext  #d9c4b8;
+@define-color text     #fdf0dc;
+
+/* Accents */
+@define-color amber    #e0a050;              /* focus / active */
+@define-color lilac    #c58bd6;              /* secondary */
+@define-color violet   #b48ee0;
+@define-color pink     #f0a6c8;
+@define-color peach    #e89a5c;
+@define-color yellow   #f2cf8a;              /* warning */
+@define-color green    #a8c98a;
+@define-color teal     #8fcfc0;
+@define-color red      #e5455a;              /* errors & urgent: stronger than the terminal red */
+
+/* Roles the presets share: colour is kept for state (on, active, warning). */
+@define-color bg     @base;                  /* bar background (same as GTK, Ghostty) */
+@define-color line   alpha(@amber, 0.30);    /* thin amber separators, like the wallpaper grid */
+@define-color dim    @overlay1;              /* idle / off */
+@define-color soft   @haze;                  /* status icons: sound, network, battery, weather */
+@define-color load   @lilac;                 /* system load: CPU, RAM, temperature */
