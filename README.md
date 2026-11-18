@@ -91,6 +91,8 @@ On real hardware it automatically:
 - installs **gaming** tools: Steam, GameMode, MangoHud, gamescope, Heroic (Epic/GOG) and ProtonUp-Qt;
 - replaces GDM with **greetd + tuigreet** (a text login that starts niri) and makes fish your shell;
 - sets the keyboard to **Brazilian ABNT2** (US as second layout) on the console, login and desktop;
+- keeps the system language in **English** but uses **Brazilian formats** (dates, 24h clock, R$, A4,
+  metric); numbers keep the decimal point, which shell scripts rely on;
 - installs **fcitx5** (input method: ABNT2/US plus Japanese, Chinese, Korean) and makes **Nemo** the file manager;
 - installs **herdr**, **Claude Code** and **Orca** (see §4);
 - builds **awww** (the wallpaper daemon, successor of swww) and installs the **Waypaper** picker.

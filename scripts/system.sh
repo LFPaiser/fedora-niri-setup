@@ -153,6 +153,15 @@ step "Keyboard: Brazilian ABNT2 on the console and login screen"
 localectl set-keymap br-abnt2 || true
 localectl set-x11-keymap br,us abnt2, || true
 
+step "Locale: English messages, Brazilian formats"
+# Programs speak English (errors and docs are easier to search); dates (dd/mm/aaaa, 24h),
+# currency (R$), paper (A4), units and addresses are Brazilian. LC_NUMERIC stays en_US:
+# with pt_BR's decimal comma, shell scripts break (bash's printf rejects "3.5").
+dnf_install glibc-langpack-pt
+localectl set-locale LANG=en_US.UTF-8 LC_TIME=pt_BR.UTF-8 LC_MONETARY=pt_BR.UTF-8 \
+    LC_PAPER=pt_BR.UTF-8 LC_MEASUREMENT=pt_BR.UTF-8 LC_ADDRESS=pt_BR.UTF-8 \
+    LC_TELEPHONE=pt_BR.UTF-8 LC_NAME=pt_BR.UTF-8 || true
+
 step "Login: greetd + tuigreet (text greeter) starting niri, fish as shell"
 install -Dm644 "$here/system-files/greetd-config.toml" /etc/greetd/config.toml
 install -Dm644 "$here/system-files/vtrgb" /etc/vtrgb    # Umbra console palette
