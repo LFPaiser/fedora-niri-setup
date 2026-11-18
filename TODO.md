@@ -32,7 +32,7 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 - [ ] **VS Code igual ao do Windows**: ativar o Settings Sync aqui com a mesma conta (temas, ícones, extensões, perfis). O repo não gerencia mais o VS Code e não aplica Umbra nele.
 
 ### Média
-- [ ] **Associações de arquivo incompletas** (`mimeapps.list` só define PDF e pastas) → imagens: Loupe; vídeo/áudio: mpv; texto: Text Editor; compactados: File Roller; e versionar o arquivo.
+- [x] **Associações de arquivo**: `mimeapps.list` no repo, montado a partir dos tipos de cada app — compactados: File Roller; imagens: Loupe; vídeo/áudio: mpv; texto: Text Editor (zip abria no Nautilus).
 
 ### Baixa
 - [ ] Arquivos `*.bak*` / `*.bak-catppuccin` espalhados em `~/.config` → apagar depois de sincronizar.
