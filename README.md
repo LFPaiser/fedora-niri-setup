@@ -155,8 +155,8 @@ gh auth login                             # uploads the key to GitHub
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
 | Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar, weather (5 sources with automatic fallback), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
 | Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul) |
-| Terminal | **Ghostty** (Alacritty kept as fallback, Foot for emergencies) |
-| Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
+| Terminal | **Ghostty**, one process for all windows (Alacritty kept as fallback, Foot for emergencies). Default for `Terminal=true` apps and Nemo via `xdg-terminal-exec`. Bar pop-ups (volume, network, weather, updates) open floating |
+| Launcher / notifications / lock | fuzzel / mako (with a sound through the Notifications volume group; silent in do-not-disturb and for low urgency) / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Volume groups | **Media**, **Notifications**, **System**, **Calls**: each its own volume in front of the master (PipeWire loopbacks + WirePlumber role routing; apps that set no role are Media). **wiremix** (middle-click the volume icon) adjusts groups and single apps |
 | Screen recording / annotation | `~/.local/bin/record` (wf-recorder, H.264 + AAC, with the computer's sound) / satty |

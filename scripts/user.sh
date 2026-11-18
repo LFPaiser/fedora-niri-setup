@@ -161,6 +161,7 @@ mkdir -p ~/.local/share/dbus-1/services
 printf '[D-BUS Service]\nName=org.freedesktop.FileManager1\nExec=/usr/bin/nemo --no-default-window\n' \
     > ~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service
 gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty 2>/dev/null || true
+gsettings set org.cinnamon.desktop.default-applications.terminal exec-arg -e 2>/dev/null || true    # Nemo: "Open in Terminal", Terminal=true apps
 
 step "Launcher: hide helper apps from fuzzel"
 mkdir -p ~/.local/share/applications

@@ -155,6 +155,15 @@ window-rule {
     open-floating true
 }
 
+// Small Ghostty windows opened from the bar (volume mixer, network, weather, updates):
+// floating and centred instead of a full column. Matched by the --title the bar gives them.
+window-rule {
+    match app-id=r#"^com\.mitchellh\.ghostty$"# title=r#"^(Volume|Rede|Clima|Atualizações)$"#
+    open-floating true
+    default-column-width { fixed 920; }
+    default-window-height { fixed 620; }
+}
+
 window-rule {
     match app-id="mpv"
     default-column-width { proportion 1.0; }

@@ -60,7 +60,7 @@ step "Desktop: niri + bar, launcher, notifications, lock, portals"
 dnf_install niri xwayland-satellite greetd tuigreet \
     waybar fuzzel mako gtklock swayidle wob libnotify \
     xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring mate-polkit \
-    pipewire pipewire-pulseaudio wireplumber pavucontrol wiremix wf-recorder \
+    pipewire pipewire-pulseaudio wireplumber pavucontrol wiremix wf-recorder xdg-terminal-exec \
     NetworkManager-tui network-manager-applet blueman \
     wl-clipboard cliphist grim slurp brightnessctl playerctl \
     ghostty alacritty foot nemo nautilus file-roller loupe gnome-text-editor tuned-ppd \

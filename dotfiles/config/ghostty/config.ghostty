@@ -17,6 +17,9 @@ cursor-style-blink = true
 mouse-hide-while-typing = true
 copy-on-select = clipboard
 confirm-close-surface = false
+# All windows share one process (the default, gtk-single-instance = detect): new windows
+# open instantly and memory stays low. Trade-off, chosen knowingly: if Ghostty crashes,
+# every window closes with it. One process per window would be: gtk-single-instance = false
 scrollback-limit-bytes = 100000000
 
 # ssh-env/ssh-terminfo: remote hosts learn xterm-ghostty instead of erroring out

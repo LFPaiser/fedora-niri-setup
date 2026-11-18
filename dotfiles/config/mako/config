@@ -21,13 +21,22 @@ max-visible=4
 # Same app → one stacked card with a counter. Urgency in the key keeps an urgent
 # notification out of a group of normal ones.
 group-by=app-name,urgency
+# Sound on each new notification, through the Notifications volume group
+# (media-role Notification → group.notifications; see pipewire.conf.d/60-volume-groups.conf).
+on-notify=exec pw-play --media-role=Notification /usr/share/sounds/freedesktop/stereo/message.oga
 
 [grouped]
 format=<b>%s</b>  <small>(%g)</small>\n%b
 
+[urgency=low]
+on-notify=none
+
 [urgency=high]
 border-color=#e5455a
 default-timeout=0
+on-notify=exec pw-play --media-role=Notification /usr/share/sounds/freedesktop/stereo/dialog-warning.oga
 
+# Do not disturb (bell in the bar): hidden and silent
 [mode=do-not-disturb]
 invisible=1
+on-notify=none
