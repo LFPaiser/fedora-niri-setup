@@ -1,0 +1,33 @@
+/* Refinada: rounded pills with a soft shadow, Inter for text. */
+@import "../../common.css";
+
+* { font-family: "Inter", "JetBrainsMono Nerd Font", sans-serif; font-size: 13px; font-weight: 500;
+    min-height: 0; border: none; border-radius: 0; }
+window#waybar { background: transparent; color: @text; }
+tooltip label { font-family: "JetBrainsMono Nerd Font"; }
+
+#custom-launcher, #workspaces, #window, #time, #mpris, #privacy,
+#hw, #info, #conn, #media, #custom-power {
+    background: alpha(@bg, 0.92);
+    border: 1px solid @line;
+    border-radius: 12px;
+    padding: 0 12px;
+    box-shadow: 0 2px 6px alpha(@crust, 0.5);
+}
+#hw, #info, #conn, #media { padding: 0 4px; }
+#hw > * > *, #info > * > *, #conn > * > *, #media > * > * { padding: 0 7px; }
+#custom-weather { padding-left: 10px; }   /* shares the clock pill */
+
+window#waybar.empty #window { background: transparent; border: none; box-shadow: none; padding: 0; }
+
+#custom-launcher { color: @mauve; font-family: "JetBrainsMono Nerd Font"; font-size: 16px; padding: 0 14px 0 12px; }
+#custom-launcher:hover { background: @surface0; }
+
+#workspaces { padding: 0 4px; }
+#workspaces button { color: @dim; padding: 0 6px; background: transparent;
+    font-family: "JetBrainsMono Nerd Font"; transition: all 0.2s ease; }
+#workspaces button.focused, #workspaces button.active { color: @mauve; }
+#workspaces button.urgent { color: @red; }
+#workspaces button:hover { color: @text; background: @surface0; border-radius: 10px; box-shadow: none; }
+
+#custom-power { padding: 0 14px 0 12px; }

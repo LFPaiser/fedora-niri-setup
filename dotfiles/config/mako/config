@@ -17,3 +17,6 @@ anchor=top-right
 [urgency=high]
 border-color=#e89a5c
 default-timeout=0
+
+[mode=do-not-disturb]
+invisible=1

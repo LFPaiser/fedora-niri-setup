@@ -58,7 +58,7 @@ dnf -y upgrade --refresh
 
 step "Desktop: niri + bar, launcher, notifications, lock, portals"
 dnf_install niri xwayland-satellite greetd tuigreet \
-    waybar fuzzel mako gtklock swayidle wob \
+    waybar fuzzel mako gtklock swayidle wob libnotify \
     xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring mate-polkit \
     pipewire pipewire-pulseaudio wireplumber pavucontrol \
     NetworkManager-tui network-manager-applet blueman \
@@ -66,6 +66,10 @@ dnf_install niri xwayland-satellite greetd tuigreet \
     ghostty alacritty nemo nautilus file-roller loupe gnome-text-editor tuned-ppd \
     f"$fedora"-backgrounds-base libjxl-utils \
     cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper
+
+step "Input method: fcitx5 (br/us layouts, dead keys, emoji; Japanese, Chinese, Korean)"
+dnf_install fcitx5 fcitx5-gtk fcitx5-qt fcitx5-configtool fcitx5-lua \
+    fcitx5-mozc fcitx5-chinese-addons fcitx5-hangul
 
 step "Look & feel: themes, icons, fonts"
 dnf_install adw-gtk3-theme papirus-icon-theme rsms-inter-fonts \

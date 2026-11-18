@@ -1,0 +1,25 @@
+#!/bin/sh
+# Switch waybar preset.
+#   try                     list presets
+#   try <preset>            run it now (until the next login)
+#   try <preset> --fixar    also make it the default (rewrites config.jsonc / style.css)
+#   try padrao              go back to the default preset
+d="$HOME/.config/waybar"
+if [ -z "$1" ]; then
+    echo "presets: $(ls "$d/presets" | tr '\n' ' ')"
+    echo "padrão:  $(sed -n 's|.*presets/\([^/]*\)/config.jsonc.*|\1|p' "$d/config.jsonc")"
+    exit
+fi
+case "$1" in
+  padrao|padrão|atual) cfg="$d/config.jsonc"; css="$d/style.css" ;;
+  *) cfg="$d/presets/$1/config.jsonc"; css="$d/presets/$1/style.css" ;;
+esac
+[ -f "$cfg" ] || { echo "preset não existe: $1"; exit 1; }
+if [ "$2" = --fixar ]; then
+    sed -i "s|presets/[^/]*/config.jsonc|presets/$1/config.jsonc|" "$d/config.jsonc"
+    sed -i "s|presets/[^/]*/style.css|presets/$1/style.css|" "$d/style.css"
+    cfg="$d/config.jsonc"; css="$d/style.css"
+fi
+pkill -x waybar; sleep 0.3
+setsid -f waybar -c "$cfg" -s "$css" >/dev/null 2>&1
+echo "rodando: $1${2:+ (agora é o padrão)}"

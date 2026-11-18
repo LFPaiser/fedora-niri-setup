@@ -1,0 +1,25 @@
+/* Umbra palette (taken from the wallpaper). Shared by every waybar preset. */
+@define-color base     #26082f;
+@define-color mantle   #1c0624;
+@define-color crust    #14031a;
+@define-color surface0 #3a1544;
+@define-color surface1 #57235a;
+@define-color overlay0 #7d5a80;
+@define-color text     #fdf0dc;
+@define-color subtext  #d9c4b8;
+@define-color mauve    #e0a050;
+@define-color blue     #c58bd6;
+@define-color sapphire #b48ee0;
+@define-color green    #a8c98a;
+@define-color yellow   #f2cf8a;
+@define-color peach    #e89a5c;
+@define-color red      #e86a7a;
+@define-color pink     #f0a6c8;
+@define-color teal     #8fcfc0;
+
+/* Tones the presets share: colour is kept for state (on, active, warning). */
+@define-color bg     #2a0a33;              /* bar background, the wallpaper purple */
+@define-color line   alpha(@mauve, 0.30);  /* thin amber separators, like the wallpaper grid */
+@define-color dim    #8f6a90;              /* idle / off */
+@define-color soft   #bfa6c2;              /* status icons: sound, network, battery, weather */
+@define-color lilac  #c58bd6;              /* system load: CPU, RAM, temperature */

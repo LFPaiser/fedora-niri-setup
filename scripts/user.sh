@@ -27,12 +27,13 @@ step "Config files -> ~/.config"
 render=$(mktemp); trap 'rm -f "$render"' EXIT
 (cd "$here/dotfiles/config" && find . -type f) | while read -r f; do
     src=$here/dotfiles/config/$f
+    mode=644; [ -x "$src" ] && mode=755   # waybar scripts stay executable
     # Some configs (gtklock) need absolute paths: @HOME@ becomes your home dir.
     if grep -q '@HOME@' "$src"; then
         sed "s|@HOME@|$HOME|g" "$src" > "$render"
         src=$render
     fi
-    install_file "$src" "$HOME/.config/${f#./}"
+    install_file "$src" "$HOME/.config/${f#./}" "$mode"
 done
 for f in "$here"/dotfiles/local-bin/*; do
     install_file "$f" "$HOME/.local/bin/$(basename "$f")" 755
@@ -126,6 +127,10 @@ fi
 
 step "Nemo as the default file manager"
 xdg-mime default nemo.desktop inode/directory application/x-gnome-saved-search
+# apps that ask D-Bus to "show this file in a folder" get Nemo too
+mkdir -p ~/.local/share/dbus-1/services
+printf '[D-BUS Service]\nName=org.freedesktop.FileManager1\nExec=/usr/bin/nemo --no-default-window\n' \
+    > ~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service
 gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty 2>/dev/null || true
 
 step "herdr (terminal workspace manager for coding agents)"
@@ -149,3 +154,5 @@ step "Check niri config"
 niri validate
 
 step "User part done"
+echo "Weather in the bar defaults to Liberdade, São Paulo. To use your city, create"
+echo "~/.config/waybar/weather.local (see the top of ~/.config/waybar/scripts/weather.sh)."

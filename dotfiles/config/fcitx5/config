@@ -1,0 +1,29 @@
+[Hotkey]
+# Cycling with the trigger key would mix the keyboard layout into the Asian list
+EnumerateWithTriggerKeys=False
+# Skip the plain keyboard when cycling Asian input methods
+EnumerateSkipFirst=True
+
+# Super+Alt+Space: Asian input method on/off (back to the last one used)
+[Hotkey/TriggerKeys]
+0=Super+Alt+space
+
+# Super+Alt+Shift+Space: next Asian input method (Japanese -> Chinese -> Korean)
+[Hotkey/EnumerateForwardKeys]
+0=Super+Alt+Shift+space
+
+[Hotkey/EnumerateBackwardKeys]
+
+# Super+Shift+Space: keyboard layout br <-> us
+[Hotkey/EnumerateGroupForwardKeys]
+0=Super+Shift+space
+
+[Hotkey/EnumerateGroupBackwardKeys]
+
+[Hotkey/ActivateKeys]
+
+[Hotkey/DeactivateKeys]
+
+[Behavior]
+# Keep the same input method in every window
+ShareInputState=All

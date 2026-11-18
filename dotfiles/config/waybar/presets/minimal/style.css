@@ -1,0 +1,24 @@
+/* Minimal: three small islands, icons only. */
+@import "../../common.css";
+
+* { font-family: "JetBrainsMono Nerd Font", "Inter", sans-serif; font-size: 14px;
+    min-height: 0; border: none; border-radius: 0; }
+window#waybar { background: transparent; color: @text; }
+
+#workspaces, #time, #privacy, #custom-updates, #status, #custom-power {
+    background: alpha(@bg, 0.88);
+    border: 1px solid @line;
+    border-radius: 15px;
+    padding: 0 12px;
+}
+#clock { font-family: "Inter"; font-weight: 700; }
+#custom-weather { padding-left: 10px; }
+
+#workspaces { padding: 0 6px; }
+#workspaces button { color: @surface1; padding: 0 4px; background: transparent; transition: all .2s ease; }
+#workspaces button.focused, #workspaces button.active { color: @mauve; }
+#workspaces button.urgent { color: @red; }
+#workspaces button:hover { color: @text; box-shadow: none; background: transparent; }
+
+#status > * > * { padding: 0 6px; }
+#tray.empty { padding: 0; }

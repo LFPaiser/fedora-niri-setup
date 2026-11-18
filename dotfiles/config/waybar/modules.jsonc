@@ -1,0 +1,172 @@
+// Module definitions shared by every preset. A preset includes this file and only
+// overrides what it changes (its config wins over keys defined here).
+{
+    "custom/launcher": { "format": "", "tooltip-format": "Apps (Super+A)", "on-click": "fuzzel" },
+
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": { "focused": "", "active": "", "default": "" }
+    },
+
+    "niri/window": {
+        "format": "{title}",
+        "max-length": 40,
+        "icon": true,
+        "icon-size": 16,
+        "rewrite": { "(.*) — Mozilla Firefox": "$1", "(.*) - Visual Studio Code": "$1" }
+    },
+
+    "clock": {
+        "format": "{:%a %d %b  %H:%M}",
+        "tooltip-format": "<tt>{calendar}</tt>",
+        "calendar": {
+            "mode": "month", "weeks-pos": "left", "on-scroll": 1,
+            "format": {
+                "months":   "<span color='#e0a050'><b>{}</b></span>",
+                "weeks":    "<span color='#7d5a80'>W{}</span>",
+                "weekdays": "<span color='#f2cf8a'><b>{}</b></span>",
+                "today":    "<span color='#14031a' background='#e0a050'><b>{}</b></span>"
+            }
+        },
+        "actions": { "on-scroll-up": "shift_up", "on-scroll-down": "shift_down", "on-click-right": "mode" }
+    },
+
+    "mpris": {
+        "format": "{player_icon} {title}",
+        "format-paused": "{status_icon} <i>{title}</i>",
+        "title-len": 28,
+        "player-icons": { "default": "󰎆", "firefox": "󰈹", "mpv": "" },
+        "status-icons": { "paused": "" },
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    // Mic / screen-share indicator — appears only while something is capturing.
+    "privacy": {
+        "icon-size": 14,
+        "icon-spacing": 6,
+        "modules": [ { "type": "screenshare" }, { "type": "audio-in" } ]
+    },
+
+    "cpu":    { "format": "󰻠 {usage}%", "interval": 3, "on-click": "ghostty -e btop" },
+    "memory": { "format": "󰍛 {percentage}%", "interval": 5,
+                "tooltip-format": "{used:0.1f} / {total:0.1f} GiB", "on-click": "ghostty -e btop" },
+    "disk":   { "format": "󰋊 {percentage_used}%", "path": "/", "interval": 60,
+                "tooltip-format": "{used} / {total} em /" },
+    "temperature": { "format": " {temperatureC}°", "critical-threshold": 85, "interval": 5 },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟",
+        "format-icons": { "headphone": "󰋋", "default": ["󰕿", "󰖀", "󰕾"] },
+        "scroll-step": 5,
+        "tooltip-format": "{desc}\n{volume}%",
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+    },
+
+    "network": {
+        "format-wifi": "{icon}",
+        "format-ethernet": "󰈀",
+        "format-linked": "󰈀",
+        "format-disconnected": "󰤭",
+        "format-disabled": "󰤭",
+        "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+        "tooltip-format-wifi": "{essid} ({signalStrength}%)\n{ipaddr}\n {bandwidthDownBytes}   {bandwidthUpBytes}",
+        "tooltip-format-ethernet": "Cabo: {ifname}\n{ipaddr}\n {bandwidthDownBytes}   {bandwidthUpBytes}",
+        "tooltip-format-disconnected": "Sem rede",
+        "interval": 5,
+        "on-click": "~/.config/waybar/scripts/wifi-menu.sh",
+        "on-click-right": "ghostty --title=Rede -e nmtui"
+    },
+
+    // no adapter: struck-through and dim · off: dim · on: lit · connected: amber
+    "bluetooth": {
+        "format": "󰂯",
+        "format-on": "󰂯",
+        "format-off": "󰂯",
+        "format-disabled": "󰂯",
+        "format-no-controller": "󰂲",
+        "format-connected": "󰂱 {num_connections}",
+        "tooltip-format": "Bluetooth: {status}",
+        "tooltip-format-off": "Bluetooth desligado",
+        "tooltip-format-disabled": "Bluetooth bloqueado",
+        "tooltip-format-no-controller": "Sem adaptador Bluetooth",
+        "tooltip-format-connected": "{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}",
+        "on-click": "blueman-manager"
+    },
+
+    // Hides itself when there is no backlight device (VMs, desktops).
+    "backlight": {
+        "format": "{icon} {percent}%",
+        "format-icons": ["󰃞", "󰃟", "󰃠"],
+        "on-scroll-up": "brightnessctl set 5%+",
+        "on-scroll-down": "brightnessctl set 5%-"
+    },
+
+    "battery": {
+        "states": { "warning": 25, "critical": 12 },
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-full": "󰁹",
+        "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+        "tooltip-format": "{timeTo}\n{power:.1f} W"
+    },
+
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": { "activated": "󰅶", "deactivated": "󰾪" },
+        "tooltip-format-activated": "Tela fica acordada",
+        "tooltip-format-deactivated": "Tela bloqueia quando ociosa"
+    },
+
+    "custom/dnd": {
+        "exec": "~/.config/waybar/scripts/dnd.sh",
+        "on-click": "~/.config/waybar/scripts/dnd.sh toggle",
+        "return-type": "json",
+        "interval": 60,
+        "signal": 8
+    },
+
+    "tray": { "icon-size": 16, "spacing": 8 },
+
+    "custom/power": { "format": "⏻", "tooltip-format": "Power menu (Super+P)", "on-click": "~/.local/bin/powermenu" },
+
+    // Custom modules (scripts in ~/.config/waybar/scripts)
+    "custom/weather": {
+        "exec": "~/.config/waybar/scripts/weather.sh",
+        "return-type": "json", "interval": 900, "signal": 10,
+        "on-click": "ghostty --title=Clima -e ~/.config/waybar/scripts/weather.sh full",
+        "on-click-right": "~/.config/waybar/scripts/weather.sh next"
+    },
+    "custom/uptime": {
+        "exec": "~/.config/waybar/scripts/uptime.sh",
+        "return-type": "json", "interval": 60
+    },
+    "custom/updates": {
+        "exec": "~/.config/waybar/scripts/updates.sh",
+        "return-type": "json", "interval": 3600, "signal": 9,
+        "on-click": "ghostty --title=Atualizações -e ~/.config/waybar/scripts/updates-pick.sh",
+        "on-click-right": "ghostty --title=Atualizações -e sh -c 'sudo dnf upgrade; pkill -RTMIN+9 waybar; printf \"Enter para fechar\"; read -r _'"
+    },
+    "custom/github": {
+        "exec": "~/.config/waybar/scripts/github.sh",
+        "return-type": "json", "interval": 300,
+        "on-click": "xdg-open https://github.com/notifications"
+    },
+    "custom/clipboard": {
+        "exec": "~/.config/waybar/scripts/clipboard.sh",
+        "return-type": "json", "interval": 30,
+        "on-click": "~/.config/waybar/scripts/clipboard.sh pick"
+    },
+
+    // Groups used by faixa and solida (refinada and minimal define their own).
+    "group/hw":    { "orientation": "horizontal", "modules": ["cpu", "memory", "temperature", "custom/uptime"] },
+    "group/info":  { "orientation": "horizontal", "modules": ["custom/updates", "custom/github", "custom/clipboard"] },
+    // language (fcitx5) comes from the tray; the native network module always sits after it
+    "group/conn":  { "orientation": "horizontal", "modules": ["tray", "network", "bluetooth", "battery"] },
+    "group/media": { "orientation": "horizontal", "modules": ["pulseaudio", "backlight", "custom/dnd", "idle_inhibitor"] }
+}

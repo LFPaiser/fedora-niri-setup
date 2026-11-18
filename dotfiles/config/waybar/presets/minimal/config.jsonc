@@ -1,0 +1,22 @@
+// Minimal: only the essentials, icons without text, details in the tooltips.
+{
+    "include": ["~/.config/waybar/modules.jsonc"],
+    "layer": "top", "position": "top", "height": 30, "spacing": 6,
+    "margin-top": 6, "margin-left": 10, "margin-right": 10,
+
+    "modules-left":   ["niri/workspaces"],
+    "modules-center": ["group/time"],
+    "group/time": { "orientation": "horizontal", "modules": ["clock", "custom/weather"] },
+    "modules-right":  ["privacy", "custom/updates", "group/status", "custom/power"],
+
+    "clock": { "format": "{:%H:%M}", "tooltip-format": "<b>{:%A, %d %B}</b>\n<tt>{calendar}</tt>" },
+
+    "group/status": {
+        "orientation": "horizontal",
+        "modules": ["tray", "network", "bluetooth", "battery", "pulseaudio", "custom/dnd"]
+    },
+    "tray":       { "icon-size": 14, "spacing": 10 },
+    "pulseaudio": { "format": "{icon}" },
+    "battery":    { "format": "{icon}", "format-charging": "󰂄", "format-plugged": "󰚥",
+                    "tooltip-format": "{capacity}% — {timeTo}" }
+}

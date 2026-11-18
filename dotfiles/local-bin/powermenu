@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Power menu shown with fuzzel (waybar ⏻ button / Super+Shift+Esc).
+# Power menu shown with fuzzel (waybar ⏻ button / Super+P).
 choice=$(printf '%s\n' \
     "  Lock" \
     "󰍃  Log out" \

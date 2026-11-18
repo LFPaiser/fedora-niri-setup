@@ -1,0 +1,23 @@
+/* Sólida: edge-to-edge strip, darker than faixa, amber underline. */
+@import "../../common.css";
+
+* { font-family: "JetBrainsMono Nerd Font", monospace; font-size: 12px;
+    min-height: 0; border: none; border-radius: 0; }
+
+window#waybar { background: alpha(@crust, 0.96); color: @subtext; border-bottom: 1px solid @line; }
+
+#workspaces button { color: @dim; padding: 0 10px; background: transparent; }
+#workspaces button.active, #workspaces button.focused { color: @crust; background: @mauve; font-weight: bold; }
+#workspaces button.urgent { color: @red; }
+#workspaces button:hover { background: @surface0; color: @text; box-shadow: none; }
+
+#window { padding: 0 12px; }
+window#waybar.empty #window { color: transparent; }
+#custom-weather { padding-left: 12px; }
+
+#mpris, #privacy, #hw, #info, #conn, #media, #custom-power { padding: 0 6px; border-left: 1px solid @surface0; }
+#mpris, #privacy { padding: 0 10px; }
+#hw > * > *, #info > * > *, #conn > * > *, #media > * > * { padding: 0 5px; }
+#tray { padding: 0 6px 0 4px; }
+#tray.empty { padding: 0; }
+#custom-power { padding: 0 12px; }

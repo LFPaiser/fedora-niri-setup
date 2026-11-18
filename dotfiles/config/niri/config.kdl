@@ -5,11 +5,10 @@
 input {
     keyboard {
         xkb {
-            // Brazilian ABNT2 first (default), US second. Alt+Shift switches.
-            // Other layouts: comma-separated, e.g. "de,us".
+            // Fallback when fcitx5 is not running; fcitx5 owns layouts and
+            // switches br <-> us on Super+Shift+Space (~/.config/fcitx5/config).
             layout "br,us"
             variant "abnt2,"
-            options "grp:alt_shift_toggle"
         }
         repeat-delay 300
         repeat-rate 40
@@ -94,11 +93,17 @@ screenshot-path "~/Pictures/Screenshots/Screenshot %Y-%m-%d %H-%M-%S.png"
 
 environment {
     ELECTRON_OZONE_PLATFORM_HINT "auto"
+    // fcitx5 is the input method (dead keys, emoji, Asian languages).
+    // GTK 3/4 talk to it over Wayland text-input-v3, so GTK_IM_MODULE stays unset.
+    XMODIFIERS "@im=fcitx"
+    QT_IM_MODULE "fcitx"
+    QT_IM_MODULES "wayland;fcitx"
 }
 
 // ── Autostart ───────────────────────────────────────────────────────────────
 spawn-at-startup "waybar"
 spawn-at-startup "mako"
+spawn-at-startup "fcitx5" "-d" "--replace"
 spawn-at-startup "/usr/libexec/polkit-mate-authentication-agent-1"
 // awww draws the wallpaper; `waypaper --restore` re-applies the last one and
 // starts Waypaper's slideshow timer (interval set in the Waypaper GUI).
@@ -141,19 +146,19 @@ layer-rule {
 }
 
 // ── Key bindings ────────────────────────────────────────────────────────────
-// Mod = Super (Windows key). Super+Shift+/ shows the cheat sheet.
+// Mod = Super (Windows key). Super+/ shows the cheat sheet.
 binds {
-    Mod+Shift+Slash { show-hotkey-overlay; }
+    Mod+Slash { show-hotkey-overlay; }
 
     // Apps
     Mod+Return hotkey-overlay-title="Terminal: Ghostty" { spawn "ghostty"; }
     Mod+T { spawn "ghostty"; }
     Mod+Space hotkey-overlay-title="App launcher" { spawn "fuzzel"; }
-    Mod+D { spawn "fuzzel"; }
+    Mod+A { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Browser: Firefox" { spawn "firefox"; }
     Mod+E hotkey-overlay-title="Files: Nemo" { spawn "nemo"; }
     Mod+Shift+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy"; }
-    Mod+Shift+Escape hotkey-overlay-title="Power menu" { spawn-sh "~/.local/bin/powermenu"; }
+    Mod+P hotkey-overlay-title="Power menu" { spawn-sh "~/.local/bin/powermenu"; }
     Mod+Alt+L hotkey-overlay-title="Lock screen" { spawn "gtklock" "-d"; }
     Mod+Shift+W hotkey-overlay-title="Wallpapers: Waypaper" { spawn-sh "PATH=$HOME/.local/bin:$PATH waypaper"; }
 
@@ -184,8 +189,8 @@ binds {
     Mod+O repeat=false { toggle-overview; }
 
     Mod+Left  { focus-column-left; }
-    Mod+Down  { focus-window-down; }
-    Mod+Up    { focus-window-up; }
+    Mod+Down  { focus-window-or-workspace-down; }
+    Mod+Up    { focus-window-or-workspace-up; }
     Mod+Right { focus-column-right; }
     Mod+H     { focus-column-left; }
     Mod+J     { focus-window-down; }
@@ -193,8 +198,8 @@ binds {
     Mod+L     { focus-column-right; }
 
     Mod+Ctrl+Left  { move-column-left; }
-    Mod+Ctrl+Down  { move-window-down; }
-    Mod+Ctrl+Up    { move-window-up; }
+    Mod+Ctrl+Down  { move-window-down-or-to-workspace-down; }
+    Mod+Ctrl+Up    { move-window-up-or-to-workspace-up; }
     Mod+Ctrl+Right { move-column-right; }
     Mod+Ctrl+H     { move-column-left; }
     Mod+Ctrl+J     { move-window-down; }
@@ -209,24 +214,18 @@ binds {
     // Monitors
     Mod+Shift+Left  { focus-monitor-left; }
     Mod+Shift+Right { focus-monitor-right; }
-    Mod+Shift+Up    { focus-monitor-up; }
-    Mod+Shift+Down  { focus-monitor-down; }
+    Mod+Shift+Up    { move-workspace-up; }
+    Mod+Shift+Down  { move-workspace-down; }
     Mod+Shift+Ctrl+Left  { move-column-to-monitor-left; }
     Mod+Shift+Ctrl+Right { move-column-to-monitor-right; }
     Mod+Shift+Ctrl+Up    { move-column-to-monitor-up; }
     Mod+Shift+Ctrl+Down  { move-column-to-monitor-down; }
 
     // Workspaces (vertical strip per monitor)
-    Mod+Page_Down      { focus-workspace-down; }
-    Mod+Page_Up        { focus-workspace-up; }
     Mod+U              { focus-workspace-down; }
     Mod+I              { focus-workspace-up; }
-    Mod+Ctrl+Page_Down { move-column-to-workspace-down; }
-    Mod+Ctrl+Page_Up   { move-column-to-workspace-up; }
     Mod+Ctrl+U         { move-column-to-workspace-down; }
     Mod+Ctrl+I         { move-column-to-workspace-up; }
-    Mod+Shift+Page_Down { move-workspace-down; }
-    Mod+Shift+Page_Up   { move-workspace-up; }
     Mod+Tab { focus-workspace-previous; }
 
     Mod+WheelScrollDown cooldown-ms=150 { focus-workspace-down; }

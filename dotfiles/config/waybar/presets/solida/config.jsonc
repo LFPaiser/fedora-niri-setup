@@ -1,0 +1,13 @@
+// Sólida: the same modules as faixa, in a continuous strip glued to the top edge.
+{
+    "include": ["~/.config/waybar/modules.jsonc"],
+    "layer": "top", "position": "top", "height": 26, "spacing": 0,
+
+    "modules-left":   ["niri/workspaces", "niri/window"],
+    "modules-center": ["clock", "custom/weather"],
+    "modules-right":  ["mpris", "privacy", "group/hw", "group/info", "group/conn", "group/media", "custom/power"],
+
+    "niri/workspaces": { "format": "{index}" },
+    "niri/window": { "max-length": 60, "icon": true, "icon-size": 14 },
+    "tray": { "icon-size": 13, "spacing": 8 }
+}

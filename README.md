@@ -89,6 +89,7 @@ On real hardware it automatically:
 - installs **gaming** tools: Steam, GameMode, MangoHud, gamescope, Heroic (Epic/GOG) and ProtonUp-Qt;
 - replaces GDM with **greetd + tuigreet** (a text login that starts niri) and makes fish your shell;
 - sets the keyboard to **Brazilian ABNT2** (US as second layout) on the console, login and desktop;
+- installs **fcitx5** (input method: ABNT2/US plus Japanese, Chinese, Korean) and makes **Nemo** the file manager;
 - installs **herdr**, **Claude Code** and **Orca** (see §4);
 - builds **awww** (the wallpaper daemon, successor of swww) and installs the **Waypaper** picker.
 
@@ -142,7 +143,8 @@ gh auth login                             # uploads the key to GitHub
 |---|---|
 | Login | greetd + tuigreet (remembers the last user, shows the time) |
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
-| Bar | custom **waybar**: floating Umbra "pills"; launcher, workspaces, window title, clock with calendar, media, CPU/RAM, volume, network, battery, keyboard layout, idle-inhibit, tray, power menu |
+| Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar, weather (5 sources with automatic fallback), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
+| Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul) |
 | Terminal | **Ghostty** (Alacritty kept as fallback) |
 | Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
@@ -159,19 +161,20 @@ gh auth login                             # uploads the key to GitHub
 
 ## 6. Keyboard cheat sheet
 
-`Super` is the Windows key. **Super+Shift+/** shows the full list on screen.
+`Super` is the Windows key. **Super+/** shows the full list on screen.
 
 | Keys | Action |
 |---|---|
 | Super+Enter (or T) | Ghostty terminal |
-| Super+Space (or D) | app launcher |
+| Super+A (or Space) | app launcher |
 | Super+B / Super+E | Firefox / Files (Nemo) |
 | Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
 | Super+Q | close window |
 | Super+O | overview of all windows/workspaces |
-| Super+←→↑↓ or H/J/K/L | move focus |
-| Super+Ctrl+arrows / HJKL | move the window/column |
+| Super+←→↑↓ or H/J/K/L | move focus (↑↓ continue into the workspace above/below) |
+| Super+Ctrl+arrows / HJKL | move the window/column (↑↓ also across workspaces) |
+| Super+Shift+↑↓ | move the whole workspace up / down |
 | Super+1…9 | go to workspace · Super+Ctrl+1…9 move window there |
 | Super+U / Super+I | workspace down / up · Super+Tab previous workspace |
 | Super+R | cycle column width (⅓, ½, ⅔, full) |
@@ -183,8 +186,9 @@ gh auth login                             # uploads the key to GitHub
 | Super+[ / Super+] | merge window into neighbour column / split out |
 | Print or Super+Shift+S | screenshot (select area; copied + saved to ~/Pictures/Screenshots) |
 | Super+Alt+L | lock (type the password, Enter to unlock) |
-| Super+Shift+Esc | power menu (lock, log out, suspend, reboot, shut down) |
-| Alt+Shift | switch keyboard layout (ABNT2 ↔ US; set in `niri/config.kdl`) |
+| Super+P | power menu (lock, log out, suspend, reboot, shut down) |
+| Super+Shift+Space | switch keyboard layout ABNT2 ↔ US (fcitx5) |
+| Super+Alt+Space | toggle the Asian input method (Shift+Super+Alt+Space cycles Mozc/Pinyin/Hangul) |
 | Media keys / Super+F9–F12 | play-pause / volume down, mute, up |
 
 Ghostty: Ctrl+Shift+Enter splits; Ctrl+Shift+H/J/K/L moves between splits;
@@ -198,10 +202,20 @@ Ctrl+Shift+T opens a tab.
   screen uses. From a terminal: `awww img myimage.jpg`. A slideshow can be turned on in Waypaper.
 - **niri:** `~/.config/niri/config.kdl` reloads live on save; run `niri validate`
   to check it.
-- **Bar:** `~/.config/waybar/config.jsonc` and `style.css` (the colors are at the
-  top). Reload with `pkill -SIGUSR2 waybar`.
+- **Bar:** presets live in `~/.config/waybar/presets/` (*faixa*, *solida*,
+  *refinada*, *minimal*). Try one with `~/.config/waybar/scripts/try refinada`
+  and keep it with `try refinada --fixar`. Shared pieces: `modules.jsonc`
+  (module settings), `colors.css` (palette), `common.css` (state colours) and
+  `scripts/`. Ideas for more modules: `~/.config/waybar/CANDIDATOS.md`.
+  Reload with `pkill -SIGUSR2 waybar`.
+- **Weather location:** defaults to Liberdade, São Paulo. Create
+  `~/.config/waybar/weather.local` (not part of the repo) with your
+  `WEATHER_NAME`, `WEATHER_LAT`, `WEATHER_LON` and `WEATHER_CPTEC_ID`; the
+  format is at the top of `waybar/scripts/weather.sh`. Right-click the weather
+  to cycle sources (Open-Meteo, INPE + Open-Meteo, CPTEC/INPE, MET Norway,
+  wttr.in); if one is down, the next one is used automatically.
 - **Different theme:** the Umbra colors live in `niri/config.kdl` (focus ring),
-  `waybar/style.css` (palette at the top), `fuzzel/fuzzel.ini`, `mako/config`,
+  `waybar/colors.css`, `fuzzel/fuzzel.ini`, `mako/config`,
   `alacritty/alacritty.toml`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
   `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config`; list the
   built-in options with `ghostty +list-themes`) and `Code/User/settings.json`
