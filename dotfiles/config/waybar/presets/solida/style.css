@@ -15,8 +15,7 @@ window#waybar { background: alpha(@crust, 0.96); color: @subtext; border-bottom:
 window#waybar.empty #window { color: transparent; }
 #custom-weather { padding-left: 12px; }
 
-/* Separators in surface0 on purpose: quieter than the amber underline. */
-#mpris, #privacy, #hw, #info, #conn, #media, #custom-power { padding: 0 6px; border-left: 1px solid @surface0; }
+#mpris, #privacy, #hw, #info, #conn, #media, #custom-power { padding: 0 6px; border-left: 1px solid @sep; }
 #mpris, #privacy { padding: 0 10px; }
 #hw > * > *, #info > * > *, #conn > * > *, #media > * > * { padding: 0 5px; }
 #tray { padding: 0 6px 0 4px; }

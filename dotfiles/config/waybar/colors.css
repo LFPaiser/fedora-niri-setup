@@ -28,7 +28,8 @@
 
 /* Roles the presets share: colour is kept for state (on, active, warning). */
 @define-color bg     @base;                  /* bar background (same as GTK, Ghostty) */
-@define-color line   alpha(@amber, 0.30);    /* thin amber separators, like the wallpaper grid */
+@define-color line   alpha(@amber, 0.30);    /* thin amber outline of the bar, like the wallpaper grid */
+@define-color sep    @surface0;              /* dividers between modules: quieter than the outline */
 @define-color dim    @overlay1;              /* idle / off */
 @define-color soft   @haze;                  /* status icons: sound, network, battery, weather */
 @define-color load   @lilac;                 /* system load: CPU, RAM, temperature */
