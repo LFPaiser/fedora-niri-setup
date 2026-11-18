@@ -1,0 +1,18 @@
+# Idle lock: lock after 1 h, screens off after 3 h, and lock before suspend.
+# A user service (enabled by user.sh) so it comes back if it ever crashes; when it was
+# spawned by niri, a crash meant no idle lock until the next login, silently.
+[Unit]
+Description=Idle lock (swayidle + gtklock)
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/swayidle -w timeout 3600 'gtklock -d' timeout 10800 'niri msg action power-off-monitors' before-sleep 'gtklock -d'
+Restart=on-failure
+# gtklock runs in this unit's cgroup: on a restart, stop only swayidle, never an open
+# lock screen (killing it would unlock the session)
+KillMode=process
+
+[Install]
+WantedBy=graphical-session.target

@@ -10,22 +10,23 @@
 #   WEATHER_LAT="-25.4284"
 #   WEATHER_LON="-49.2733"
 #   WEATHER_CPTEC_ID="227"            # city id: https://brasilapi.com.br/api/cptec/v1/cidade/<nome>
-#   WEATHER_PROVIDER="open-meteo"     # open-meteo | misto | cptec | met-no | wttr
+#   WEATHER_PROVIDER="misto"          # misto | open-meteo | cptec | met-no | wttr
 #   (misto = forecast from CPTEC/INPE, current conditions and UV from Open-Meteo)
 WEATHER_NAME="Liberdade, São Paulo"
 WEATHER_LAT="-23.5666"
 WEATHER_LON="-46.6319"
 WEATHER_CPTEC_ID="244"   # São Paulo (CPTEC has no per-neighbourhood forecast)
-WEATHER_PROVIDER="open-meteo"
+WEATHER_PROVIDER="misto"
 [ -f "$HOME/.config/waybar/weather.local" ] && . "$HOME/.config/waybar/weather.local"
 
-PROVIDERS="open-meteo misto cptec met-no wttr"
-state="${XDG_CACHE_HOME:-$HOME/.cache}/waybar-weather-provider"
+PROVIDERS="misto open-meteo cptec met-no wttr"
+# Right-click choice lasts until logout/reboot, then the default above applies again.
+state="${XDG_RUNTIME_DIR:-/tmp}/waybar-weather-provider"
 [ -s "$state" ] && WEATHER_PROVIDER=$(cat "$state")
 
 if [ "$1" = next ]; then
     next=$(printf '%s\n' $PROVIDERS $PROVIDERS | awk -v cur="$WEATHER_PROVIDER" 'f{print; exit} $0==cur{f=1}')
-    mkdir -p "$(dirname "$state")"; printf '%s\n' "${next:-open-meteo}" > "$state"
+    mkdir -p "$(dirname "$state")"; printf '%s\n' "${next:-misto}" > "$state"
     pkill -RTMIN+10 waybar; exit
 fi
 if [ "$1" = full ]; then
@@ -120,7 +121,7 @@ fetch() {
 # Try the chosen source first; if it fails, fall back through the others.
 # misto is never a fallback (it needs both INPE and Open-Meteo); cptec-only goes last (no current temp).
 FALLBACK="open-meteo met-no wttr cptec"
-case " $PROVIDERS " in *" $WEATHER_PROVIDER "*) ;; *) WEATHER_PROVIDER=open-meteo ;; esac
+case " $PROVIDERS " in *" $WEATHER_PROVIDER "*) ;; *) WEATHER_PROVIDER=misto ;; esac
 chosen="$WEATHER_PROVIDER"; used=""
 case "$chosen" in
     open-meteo) chosen_name="Open-Meteo" ;; misto) chosen_name="Misto (INPE + Open-Meteo)" ;;
@@ -144,6 +145,9 @@ printf '%s' "$norm" | jq -c --arg place "$WEATHER_NAME" --arg src "$label" --arg
             elif . <= 67 then "Chuva" elif . <= 77 then "Neve" elif . <= 82 then "Pancadas de chuva"
             elif . <= 86 then "Neve" else "Trovoada" end;
   def r: round | tostring;
+  # "2026-11-18" → "18/nov"
+  def ddmon: (.[5:7] | tonumber) as $m
+    | .[8:10] + "/" + (["jan","fev","mar","abr","mai","jun","jul","ago","set","out","nov","dez"][$m - 1]);
   # moon instead of sun for clear / partly cloudy skies at night
   def nowicon: if $night and . == 0 then "󰖔" elif $night and . <= 2 then "󰼱" else icon end;
   { text: (if .temp then "\(.code|nowicon) \(.temp|r)°"
@@ -156,7 +160,7 @@ printf '%s' "$norm" | jq -c --arg place "$WEATHER_NAME" --arg src "$label" --arg
            + "Umidade \(.hum|r)%  ·  Vento \(.wind|r) km/h"
            + (if (.uv // 0) > 0 then "  ·  UV máx \(.uv|r)" else "" end) + "\n\n"
          else "Previsão do dia (sem temperatura atual)" + (if (.uv // 0) > 0 then "  ·  UV \(.uv)" else "" end) + "\n\n" end)
-      + ([.days[] | "\(.d[5:])   \(.code|icon)  \(.min|r)° / \(.max|r)°" + (if .desc then "   \(.desc)" else "" end)] | join("\n"))
+      + ([.days[] | "\(.d|ddmon)   \(.code|icon)  \(.min|r)° / \(.max|r)°" + (if .desc then "   \(.desc)" else "" end)] | join("\n"))
       + (if .mixed then "\n\n<small>Previsão: CPTEC/INPE · Agora e UV: Open-Meteo · botão direito troca</small>"
          else "\n\n<small>Fonte: \($src) · botão direito troca</small>" end)
       + (if $fallback == "yes" then "\n<small>󰀦 \($chosen) não respondeu, usando \($src)</small>" else "" end)),

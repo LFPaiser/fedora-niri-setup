@@ -49,24 +49,31 @@ if [ ! -d "$font_dir" ]; then
 fi
 fc-cache -f >/dev/null
 
-step "Cursor: Bibata Modern Classic"
-if [ ! -d ~/.local/share/icons/Bibata-Modern-Classic ]; then
+step "Cursor: Layan-White-Umbra"
+# Layan's white variant (rounded white drop) with its outline recoloured to an Umbra
+# amber → lilac gradient by scripts/cursor-recolor.py (deeper tones than the palette's,
+# so the thin outline still shows against the white).
+if [ ! -d ~/.local/share/icons/Layan-White-Umbra ]; then
+    tmp=$(mktemp -d)
+    fetch https://github.com/vinceliuice/Layan-cursors/archive/refs/heads/master.tar.gz | tar -xz -C "$tmp"
     mkdir -p ~/.local/share/icons
-    fetch https://github.com/ful1e5/Bibata_Cursor/releases/latest/download/Bibata-Modern-Classic.tar.xz |
-        tar -xJ -C ~/.local/share/icons
+    python3 -I "$here/scripts/cursor-recolor.py" "$tmp"/Layan-cursors-*/dist-white \
+        ~/.local/share/icons/Layan-White-Umbra Layan-White-Umbra d08a30 a560c0
+    rm -rf "$tmp"
 fi
 mkdir -p ~/.icons/default
-printf '[Icon Theme]\nInherits=Bibata-Modern-Classic\n' > ~/.icons/default/index.theme
+printf '[Icon Theme]\nInherits=Layan-White-Umbra\n' > ~/.icons/default/index.theme
 
 step "Wallpaper: Umbra + awww + Waypaper"
-install_file "$here/wallpapers/umbra.png" ~/Pictures/Wallpapers/umbra.png
+# default: Umbra; second option: Fedora's own night wallpaper, converted below
+install_file "$here/wallpapers/umbra-construction-v2.png" ~/Pictures/Wallpapers/umbra-construction-v2.png
 fedora=$(rpm -E %fedora)
 src=$(ls /usr/share/backgrounds/f"$fedora"/default/*night*.jxl 2>/dev/null | head -1 || true)
 if [ -n "$src" ] && [ ! -f ~/Pictures/Wallpapers/fedora-"$fedora"-night.png ]; then
     djxl "$src" ~/Pictures/Wallpapers/fedora-"$fedora"-night.png >/dev/null || true
 fi
 # ".current" is what the lock screen shows; Waypaper re-points it on every change.
-[ -e ~/Pictures/Wallpapers/.current ] || ln -s ~/Pictures/Wallpapers/umbra.png ~/Pictures/Wallpapers/.current
+[ -e ~/Pictures/Wallpapers/.current ] || ln -s ~/Pictures/Wallpapers/umbra-construction-v2.png ~/Pictures/Wallpapers/.current
 # awww (successor of swww) draws the wallpaper; not packaged, so build it.
 if ! command -v awww-daemon >/dev/null; then
     tmp=$(mktemp -d)
@@ -82,7 +89,7 @@ if [ ! -x ~/.local/share/waypaper-venv/bin/waypaper ]; then
 fi
 ln -sf ~/.local/share/waypaper-venv/bin/waypaper ~/.local/bin/waypaper
 
-step "GTK / GNOME app theme (dark, Papirus, Bibata, Inter)"
+step "GTK / GNOME app theme (dark, Papirus, Layan-White-Umbra cursor, Inter)"
 if [ -z "${DBUS_SESSION_BUS_ADDRESS:-}" ] && [ -S "/run/user/$(id -u)/bus" ]; then
     export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$(id -u)/bus"
 fi
@@ -90,7 +97,7 @@ gs() { gsettings set org.gnome.desktop.interface "$@"; }
 gs color-scheme prefer-dark
 gs gtk-theme adw-gtk3-dark
 gs icon-theme Papirus-Dark
-gs cursor-theme Bibata-Modern-Classic
+gs cursor-theme Layan-White-Umbra
 gs cursor-size 24
 gs font-name 'Inter 11'
 gs document-font-name 'Inter 11'
@@ -149,6 +156,27 @@ if ! command -v herdr >/dev/null; then
     chmod 755 ~/.local/bin/herdr
 fi
 
+# The "sistema" workspace can use the 3D spinning logo (--logo-type spin), new in fastfetch
+# 2.69. Until Fedora ships that, use upstream's build in ~/.local (ahead of /usr/bin in PATH);
+# once Fedora's is new enough, drop the local copy and use the official package again.
+FASTFETCH_MIN=2.69
+step "fastfetch >= $FASTFETCH_MIN"
+sys_ff=$(rpm -q --qf '%{VERSION}' fastfetch 2>/dev/null || echo 0)
+if [ "$(printf '%s\n' "$FASTFETCH_MIN" "$sys_ff" | sort -V | head -1)" = "$FASTFETCH_MIN" ]; then
+    if [ -d ~/.local/opt/fastfetch ]; then
+        echo "  Fedora's fastfetch $sys_ff is new enough: removing the upstream copy"
+        rm -rf ~/.local/opt/fastfetch ~/.local/bin/fastfetch
+    fi
+elif ! ~/.local/bin/fastfetch --version 2>/dev/null | grep -q .; then
+    echo "  Fedora has $sys_ff: installing upstream's latest release in ~/.local/opt/fastfetch"
+    tmp_ff=$(mktemp -d)
+    fetch "https://github.com/fastfetch-cli/fastfetch/releases/latest/download/fastfetch-linux-$( [ "$(uname -m)" = aarch64 ] && echo aarch64 || echo amd64).tar.gz" |
+        tar -xz -C "$tmp_ff"
+    rm -rf ~/.local/opt/fastfetch && mkdir -p ~/.local/opt
+    mv "$tmp_ff"/fastfetch-linux-*/usr ~/.local/opt/fastfetch && rm -rf "$tmp_ff"
+    ln -sf ~/.local/opt/fastfetch/bin/fastfetch ~/.local/bin/fastfetch
+fi
+
 step "Claude Code + Orca (stable checkout)"
 command -v claude >/dev/null || fetch https://claude.ai/install.sh | bash
 # Orca lives in its own "stable" checkout; orca-lc and the Claude hooks/skills
@@ -159,6 +187,13 @@ if [ ! -d "$ORCA_DIR/.git" ]; then
     git clone -q https://github.com/Umbra-Productions-Development/Orca.git "$ORCA_DIR"
 fi
 (cd "$ORCA_DIR" && ./install.sh)
+
+step "Session services (systemd --user)"
+# waybar, mako, swayidle and cliphist start with the session and restart if they crash
+# (units: Fedora's for waybar/mako, ours in dotfiles/config/systemd/user).
+systemctl --user daemon-reload 2>/dev/null &&
+    systemctl --user enable waybar.service mako.service swayidle.service cliphist.service ||
+    echo "  no user session bus: run 'systemctl --user enable waybar mako swayidle cliphist' after login"
 
 step "Check niri config"
 niri validate

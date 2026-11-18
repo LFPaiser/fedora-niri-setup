@@ -1,0 +1,134 @@
+#!/usr/bin/env python3
+"""fastfetch with the distro logo animated: a slow two-colour wave sweeps across it.
+The logo's second colour (Fedora's "f") gets the opposite colour, so it stands out.
+
+The system info on the right is printed once (it is static, like plain fastfetch); only
+the logo is redrawn, 15 times a second. Any key or Ctrl+C stops it and leaves the last
+frame on screen.
+"""
+import math
+import os
+import random
+import re
+import select
+import subprocess
+import sys
+import termios
+import time
+import tty
+
+# Two Umbra colours (waybar colors.css), blended by a smooth wave that sweeps diagonally
+# across the logo. Each run picks one pair at random.
+PAIRS = [
+    ((0xe0, 0xa0, 0x50), (0xc5, 0x8b, 0xd6)),   # amber + lilac
+    ((0xe8, 0x9a, 0x5c), (0x8f, 0xcf, 0xc0)),   # peach + teal
+    ((0xe0, 0xa0, 0x50), (0xfd, 0xf0, 0xdc)),   # amber + cream (text)
+]
+FPS = 15
+PERIOD = 6.0     # seconds for one full sweep
+GAP = 4          # spaces between logo and info
+
+
+def blend(w, a, b):
+    """w in 0..1: 0 = first colour, 1 = second."""
+    return tuple(round(a[k] + (b[k] - a[k]) * w) for k in range(3))
+
+
+def run(*args):
+    return subprocess.run(["fastfetch", *args], capture_output=True, text=True).stdout
+
+
+def logo_parts():
+    """Logo lines plus, per character, whether it is the logo's second colour — in the
+    Fedora logo that is the "f". Asked with marker colours (red/green) and parsed back."""
+    raw = run("-c", "none", "-s", "none", "--pipe", "false",
+              "--logo-color-1", "red", "--logo-color-2", "green").rstrip("\n").split("\n")
+    lines, marks = [], []
+    for line in raw:
+        text, mark, second = [], [], False
+        for tok in re.split(r"(\x1b\[[0-9;]*m)", line):
+            if tok.startswith("\x1b["):
+                codes = tok[2:-1].split(";")
+                if "32" in codes:
+                    second = True
+                elif "31" in codes:
+                    second = False
+            else:
+                text.append(tok)
+                mark += [second] * len(tok)
+        lines.append("".join(text))
+        marks.append(mark)
+    return lines, marks
+
+
+def main():
+    logo, marks = logo_parts()
+    info = run("-l", "none", "--pipe", "false").rstrip("\n").split("\n")
+    width = max(len(l) for l in logo)
+    logo = [l.ljust(width) for l in logo]
+    marks = [m + [False] * (width - len(m)) for m in marks]
+    rows = max(len(logo), len(info))
+    logo += [" " * width] * (rows - len(logo))
+    marks += [[False] * width] * (rows - len(marks))
+    diag = width + len(logo) * 2
+    info += [""] * (rows - len(info))
+
+    out = sys.stdout
+    out.write("\x1b[?25l\x1b[2J\x1b[H")   # hide cursor, clear
+    # info is static: draw it once, to the right of where the logo goes
+    for r, line in enumerate(info):
+        out.write(f"\x1b[{r + 2};{width + GAP + 2}H{line}\x1b[0m")
+    out.flush()
+
+    fd = sys.stdin.fileno()
+    old = termios.tcgetattr(fd) if os.isatty(fd) else None
+    if old:
+        tty.setcbreak(fd)
+        # fastfetch queries the terminal (font, colours); drop the replies so they are
+        # not taken for a key press
+        time.sleep(0.2)
+        termios.tcflush(fd, termios.TCIFLUSH)
+    t0 = time.monotonic()
+    a, b = random.choice(PAIRS)
+    try:
+        while True:
+            el = time.monotonic() - t0
+            t = el / PERIOD * 2 * math.pi
+            frame = []
+            for r, line in enumerate(logo):
+                buf = [f"\x1b[{r + 2};2H"]
+                last = None
+                for c, ch in enumerate(line):
+                    if ch == " ":
+                        buf.append(" ")
+                        continue
+                    # one wavelength = the logo's diagonal (rows count double: cells are
+                    # about twice as tall as wide), so a single even band crosses it
+                    phase = (c + r * 2) / diag * 2 * math.pi - t
+                    if marks[r][c]:
+                        phase += math.pi   # the "f": opposite colour (180°)
+                    col = blend((1 + math.sin(phase)) / 2, a, b)
+                    if col != last:
+                        buf.append("\x1b[38;2;%d;%d;%dm" % col)
+                        last = col
+                    buf.append(ch)
+                frame.append("".join(buf))
+            out.write("".join(frame) + "\x1b[0m")
+            out.flush()
+            if old and select.select([fd], [], [], 1 / FPS)[0]:
+                # a real key stops it; a late terminal reply (starts with ESC) does not
+                if not os.read(fd, 64).startswith(b"\x1b"):
+                    break
+            if not old:
+                time.sleep(1 / FPS)
+    except KeyboardInterrupt:
+        pass
+    finally:
+        if old:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+        out.write(f"\x1b[0m\x1b[{rows + 2};1H\x1b[?25h\n")
+        out.flush()
+
+
+if __name__ == "__main__":
+    main()

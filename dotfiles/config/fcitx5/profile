@@ -1,14 +1,14 @@
 [Groups/0]
 # Group Name
-Name=US
+Name=BR
 # Layout
-Default Layout=us
+Default Layout=br
 # Default Input Method
 DefaultIM=mozc
 
 [Groups/0/Items/0]
 # Name
-Name=keyboard-us
+Name=keyboard-br
 # Layout
 # Layout=
 
@@ -32,15 +32,15 @@ Name=hangul
 
 [Groups/1]
 # Group Name
-Name=BR
+Name=US
 # Layout
-Default Layout=br
+Default Layout=us
 # Default Input Method
 DefaultIM=mozc
 
 [Groups/1/Items/0]
 # Name
-Name=keyboard-br
+Name=keyboard-us
 # Layout
 # Layout=
 

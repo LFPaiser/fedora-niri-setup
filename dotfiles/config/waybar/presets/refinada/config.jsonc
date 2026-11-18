@@ -5,6 +5,12 @@
     "margin-top": 6, "margin-left": 6, "margin-right": 6,
 
     "modules-left":   ["custom/launcher", "niri/workspaces", "niri/window"],
+
+    // dots (not numbers): filled = workspace on screen, hollow = the others
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": { "focused": "", "active": "", "default": "" }
+    },
     "modules-center": ["group/time"],
     "group/time": { "orientation": "horizontal", "modules": ["clock", "custom/weather"] },
     "modules-right":  ["mpris", "privacy", "group/hw", "group/info", "group/conn", "group/media", "custom/power"],

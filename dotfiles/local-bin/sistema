@@ -1,0 +1,83 @@
+#!/bin/sh
+# Workspace "sistema" (Super+0 / Super+'):
+#   left column:  fastfetch on top, live warnings/errors from the journal below (40%)
+#   right column: btop
+#   sistema start  → open whichever of the three is missing (runs at login)
+#   sistema        → toggle: go to the workspace, or back to where you were;
+#                    also re-opens a window you closed there
+#   sistema logo X → what the top-left window shows (remembered), and swap it in place:
+#                    umbra (default: logo in a two-colour wave, random colour pair)
+#                    · spin (fastfetch ≥2.69 3D spinning logo) · fastfetch (static)
+# The workspace is declared in niri/config.kdl (`workspace "sistema"`), and a window-rule
+# sends these windows there at half width.
+APP_ID=com.umbra.sistema
+WS=sistema
+LOGO_FILE="${XDG_STATE_HOME:-$HOME/.local/state}/sistema-logo"
+LOGO=$(cat "$LOGO_FILE" 2>/dev/null || echo umbra)
+
+win_id() {
+    niri msg -j windows |
+        jq -e --arg a "$APP_ID" --arg t "$1" '[.[] | select(.app_id == $a and .title == $t)][0].id // empty'
+}
+# wait up to ~5 s for a window to appear, print its id
+wait_id() {
+    for _ in $(seq 25); do win_id "$1" && return; sleep 0.2; done
+    return 1
+}
+term() {
+    title=$1; shift; opts=""
+    case $1 in --*) opts=$1; shift ;; esac
+    ghostty --class="$APP_ID" --title="$title" $opts -e "$@" >/dev/null 2>&1 & }
+
+# Top-left window. fish -C: run the command, then stay in an interactive shell.
+# Smaller font so it fits above the log without scrolling.
+open_logo() {
+    case $LOGO in
+        umbra) cmd=fastfetch-umbra ;;
+        spin)  cmd="fastfetch --logo-type spin --logo-spin-speed-per-round 3 --dynamic-interval 100" ;;
+        *)     cmd=fastfetch ;;
+    esac
+    # cursor hidden while the logo runs, back for the shell after it stops (any key)
+    term fastfetch --font-size=9 fish -C "printf '\\e[?25l'; $cmd; printf '\\e[?25h'"
+}
+
+start() {
+    ff=$(win_id fastfetch) || { open_logo; ff=$(wait_id fastfetch); }
+    if ! win_id log >/dev/null; then
+        # opens to the right of the focused column, then joins fastfetch's column below it
+        [ -n "$ff" ] && niri msg action focus-window --id "$ff"
+        term log journalctl -b -f -p warning
+        if log=$(wait_id log); then
+            niri msg action consume-or-expel-window-left --id "$log"
+            niri msg action set-window-height --id "$log" 40%
+        fi
+    fi
+    win_id btop >/dev/null || term btop btop
+}
+
+if [ "$1" = start ]; then start; exit; fi
+if [ "$1" = logo ]; then
+    LOGO=${2:-umbra}
+    mkdir -p "$(dirname "$LOGO_FILE")"; echo "$LOGO" > "$LOGO_FILE"
+    old=$(win_id fastfetch); log=$(win_id log)
+    [ -n "$old" ] && niri msg action close-window --id "$old" && sleep 0.3
+    niri msg action focus-workspace "$WS"
+    [ -n "$log" ] && niri msg action focus-window --id "$log"
+    open_logo
+    if new=$(wait_id fastfetch) && [ -n "$log" ]; then
+        # joins the log's column at the bottom; move it back above the log
+        niri msg action consume-or-expel-window-left --id "$new"
+        niri msg action focus-window --id "$new"
+        niri msg action move-window-up
+        niri msg action set-window-height --id "$log" 40%
+    fi
+    exit
+fi
+
+cur=$(niri msg -j workspaces | jq -r '.[] | select(.is_focused) | .name // ""')
+if [ "$cur" = "$WS" ]; then
+    niri msg action focus-workspace-previous
+else
+    niri msg action focus-workspace "$WS"
+    start
+fi

@@ -79,7 +79,7 @@ overview {
 }
 
 cursor {
-    xcursor-theme "Bibata-Modern-Classic"
+    xcursor-theme "Layan-White-Umbra"
     xcursor-size 24
     hide-when-typing
 }
@@ -104,16 +104,16 @@ environment {
 }
 
 // ── Autostart ───────────────────────────────────────────────────────────────
-spawn-at-startup "waybar"
-spawn-at-startup "mako"
+// waybar, mako, swayidle (idle lock) and cliphist (clipboard history) are systemd user
+// services, so they restart if they crash: see ~/.config/systemd/user (enabled by user.sh).
 spawn-at-startup "fcitx5" "-d" "--replace"
 spawn-at-startup "/usr/libexec/polkit-mate-authentication-agent-1"
 // awww draws the wallpaper; `waypaper --restore` re-applies the last one and
 // starts Waypaper's slideshow timer (interval set in the Waypaper GUI).
 spawn-sh-at-startup "export PATH=$HOME/.local/bin:$PATH; awww-daemon & sleep 1; waypaper --restore"
-spawn-sh-at-startup "wl-paste --watch cliphist store"
 spawn-sh-at-startup "~/.local/bin/osd daemon"
-spawn-sh-at-startup "swayidle -w timeout 3600 'gtklock -d' timeout 10800 'niri msg action power-off-monitors' before-sleep 'gtklock -d'"
+// Workspace "sistema" (Super+0) with fastfetch + btop; it is the first workspace, so login lands there.
+spawn-sh-at-startup "~/.local/bin/sistema start"
 
 // ── Animations ──────────────────────────────────────────────────────────────
 // Pinned so they are easy to tune; values close to niri's defaults.
@@ -126,6 +126,11 @@ animations {
     window-resize { spring damping-ratio=1.0 stiffness=800 epsilon=0.0001; }
     overview-open-close { spring damping-ratio=1.0 stiffness=800 epsilon=0.0001; }
 }
+
+// ── Workspaces ──────────────────────────────────────────────────────────────
+// Named workspaces always come first, so "sistema" is niri's workspace 1. The binds treat
+// it as workspace 0 (Super+0) and shift Super+1…9 by one.
+workspace "sistema"
 
 // ── Window rules ────────────────────────────────────────────────────────────
 window-rule {
@@ -154,6 +159,13 @@ window-rule {
     default-column-width { proportion 1.0; }
 }
 
+// Workspace "sistema" (Super+'): fastfetch | btop, half the screen each — see ~/.local/bin/sistema.
+window-rule {
+    match app-id=r#"^com\.umbra\.sistema$"#
+    open-on-workspace "sistema"
+    default-column-width { proportion 0.5; }
+}
+
 // Launcher and notifications get the same rounded shadow as windows.
 layer-rule {
     match namespace="^launcher$"
@@ -180,11 +192,18 @@ binds {
     Mod+Space hotkey-overlay-title="App launcher" { spawn "fuzzel"; }
     Mod+A { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Browser: Firefox" { spawn "firefox"; }
-    Mod+E hotkey-overlay-title="Files: Nemo" { spawn "nemo"; }
-    Mod+Shift+V hotkey-overlay-title="Clipboard history" { spawn-sh "cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy"; }
+    Mod+E hotkey-overlay-title="Arquivos: Nemo" { spawn "nemo"; }
+    Mod+Shift+V hotkey-overlay-title="Histórico da área de transferência" { spawn-sh "cliphist list | fuzzel --dmenu --prompt '󰅌  ' | cliphist decode | wl-copy"; }
     Mod+P hotkey-overlay-title="Power menu" { spawn-sh "~/.local/bin/powermenu"; }
     Mod+Alt+L hotkey-overlay-title="Lock screen" { spawn "gtklock" "-d"; }
     Mod+Shift+W hotkey-overlay-title="Wallpapers: Waypaper" { spawn-sh "PATH=$HOME/.local/bin:$PATH waypaper"; }
+    // ' is the key left of 1 on ABNT2
+    Mod+Apostrophe hotkey-overlay-title="Workspace sistema (fastfetch + btop)" { spawn-sh "~/.local/bin/sistema"; }
+
+    // Notifications (mako). Clicking a notification runs its default action.
+    Mod+N hotkey-overlay-title="Fechar notificação" { spawn "makoctl" "dismiss"; }
+    Mod+Shift+N hotkey-overlay-title="Fechar todas as notificações" { spawn "makoctl" "dismiss" "--all"; }
+    Mod+Ctrl+N hotkey-overlay-title="Reabrir última notificação" { spawn "makoctl" "restore"; }
 
     // Media keys (work on the lock screen too)
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "~/.local/bin/osd volume-up"; }
@@ -197,20 +216,20 @@ binds {
     XF86MonBrightnessUp   allow-when-locked=true { spawn-sh "~/.local/bin/osd brightness-up"; }
     XF86MonBrightnessDown allow-when-locked=true { spawn-sh "~/.local/bin/osd brightness-down"; }
     // Same controls for keyboards without media keys
-    Mod+F12 allow-when-locked=true { spawn-sh "~/.local/bin/osd volume-up"; }
-    Mod+F11 allow-when-locked=true { spawn-sh "~/.local/bin/osd volume-down"; }
-    Mod+F10 allow-when-locked=true { spawn-sh "~/.local/bin/osd mute"; }
-    Mod+F9  allow-when-locked=true { spawn "playerctl" "play-pause"; }
+    Mod+F12 allow-when-locked=true hotkey-overlay-title="Volume +" { spawn-sh "~/.local/bin/osd volume-up"; }
+    Mod+F11 allow-when-locked=true hotkey-overlay-title="Volume −" { spawn-sh "~/.local/bin/osd volume-down"; }
+    Mod+F10 allow-when-locked=true hotkey-overlay-title="Mudo" { spawn-sh "~/.local/bin/osd mute"; }
+    Mod+F9  allow-when-locked=true hotkey-overlay-title="Tocar/pausar" { spawn "playerctl" "play-pause"; }
 
     // Screenshots (saved to ~/Pictures/Screenshots and copied to the clipboard)
-    Print { screenshot; }
-    Mod+Shift+S { screenshot; }
-    Ctrl+Print { screenshot-screen; }
-    Alt+Print { screenshot-window; }
+    Print hotkey-overlay-title="Screenshot" { screenshot; }
+    Mod+Shift+S hotkey-overlay-title="Screenshot" { screenshot; }
+    Ctrl+Print hotkey-overlay-title="Captura da tela" { screenshot-screen; }
+    Alt+Print hotkey-overlay-title="Captura da janela" { screenshot-window; }
 
     // Windows
-    Mod+Q repeat=false { close-window; }
-    Mod+O repeat=false { toggle-overview; }
+    Mod+Q repeat=false hotkey-overlay-title="Fechar janela em foco" { close-window; }
+    Mod+O repeat=false hotkey-overlay-title="Visão geral" { toggle-overview; }
 
     Mod+Left  { focus-column-left; }
     Mod+Down  { focus-window-or-workspace-down; }
@@ -259,24 +278,27 @@ binds {
     Mod+Shift+WheelScrollDown { focus-column-right; }
     Mod+Shift+WheelScrollUp   { focus-column-left; }
 
-    Mod+1 { focus-workspace 1; }
-    Mod+2 { focus-workspace 2; }
-    Mod+3 { focus-workspace 3; }
-    Mod+4 { focus-workspace 4; }
-    Mod+5 { focus-workspace 5; }
-    Mod+6 { focus-workspace 6; }
-    Mod+7 { focus-workspace 7; }
-    Mod+8 { focus-workspace 8; }
-    Mod+9 { focus-workspace 9; }
-    Mod+Ctrl+1 { move-column-to-workspace 1; }
-    Mod+Ctrl+2 { move-column-to-workspace 2; }
-    Mod+Ctrl+3 { move-column-to-workspace 3; }
-    Mod+Ctrl+4 { move-column-to-workspace 4; }
-    Mod+Ctrl+5 { move-column-to-workspace 5; }
-    Mod+Ctrl+6 { move-column-to-workspace 6; }
-    Mod+Ctrl+7 { move-column-to-workspace 7; }
-    Mod+Ctrl+8 { move-column-to-workspace 8; }
-    Mod+Ctrl+9 { move-column-to-workspace 9; }
+    // "sistema" is niri's workspace 1 and sits on Super+0, so Super+1…9 are shifted by
+    // one: Super+1 is the first work workspace (niri's 2).
+    Mod+0 hotkey-overlay-title="Workspace sistema" { focus-workspace "sistema"; }
+    Mod+1 { focus-workspace 2; }
+    Mod+2 { focus-workspace 3; }
+    Mod+3 { focus-workspace 4; }
+    Mod+4 { focus-workspace 5; }
+    Mod+5 { focus-workspace 6; }
+    Mod+6 { focus-workspace 7; }
+    Mod+7 { focus-workspace 8; }
+    Mod+8 { focus-workspace 9; }
+    Mod+9 { focus-workspace 10; }
+    Mod+Ctrl+1 { move-column-to-workspace 2; }
+    Mod+Ctrl+2 { move-column-to-workspace 3; }
+    Mod+Ctrl+3 { move-column-to-workspace 4; }
+    Mod+Ctrl+4 { move-column-to-workspace 5; }
+    Mod+Ctrl+5 { move-column-to-workspace 6; }
+    Mod+Ctrl+6 { move-column-to-workspace 7; }
+    Mod+Ctrl+7 { move-column-to-workspace 8; }
+    Mod+Ctrl+8 { move-column-to-workspace 9; }
+    Mod+Ctrl+9 { move-column-to-workspace 10; }
 
     // Columns and sizing
     Mod+BracketLeft  { consume-or-expel-window-left; }
@@ -304,7 +326,7 @@ binds {
 
     // Session
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }
-    Mod+Shift+E { quit; }
-    Ctrl+Alt+Delete { quit; }
-    Mod+Shift+P { power-off-monitors; }
+    Mod+Shift+E hotkey-overlay-title="Sair do niri" { quit; }
+    Ctrl+Alt+Delete hotkey-overlay-title="Power menu" { spawn-sh "~/.local/bin/powermenu"; }
+    Mod+Shift+P hotkey-overlay-title="Desligar monitores" { power-off-monitors; }
 }

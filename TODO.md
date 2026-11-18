@@ -29,63 +29,42 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 
 ### Alta
 - [ ] **Configurações em uso que não estão no repo**: `gtk-3.0/gtk.css`, `fish/conf.d/` (cores Umbra, mise), btop (+ tema umbra), `mise/config.toml`, `mpv/script-opts/uosc.conf`, Firefox `userChrome.css`/`userContent.css`/`user.js` (instalar pelo `user.sh` no perfil default-release). Revisar se há dado pessoal antes.
-- [x] **Cores do fzf ainda Catppuccin** (`FZF_DEFAULT_OPTS` em `fish/config.fish`) → paleta Umbra.
-- [x] **Fontes padrão não batem**: `sans-serif`/`monospace` caem em Noto, enquanto o GTK usa Inter/JetBrainsMono → criar `fontconfig/fonts.conf` com aliases (sans → Inter, mono → JetBrainsMono NF, emoji → Noto Color Emoji).
-- [x] **wob (barra de volume/brilho) ainda usa cores Catppuccin** — `wob/wob.ini`: `background_color = 26082ff0`, `border_color = e0a050ff`, `bar_color = e0a050ff`, `overflow_bar_color = e86a7aff`, `overflow_border_color = e86a7aff`, `border_offset = 2`.
-- [x] **Apps Qt sem tema** (ex.: configurador do fcitx5 abre claro) — instalar `qt6ct qt5ct` (ou Kvantum), `QT_QPA_PLATFORMTHEME "qt6ct"` no `environment {}` do niri, esquema de cores Umbra, Inter 11, ícones Papirus-Dark.
 - [ ] **VS Code ainda é Catppuccin por baixo** (sintaxe, git, ícones; o terminal já é Umbra) — `Code/User/settings.json`: `terminal.ansi*` com as cores do tema Umbra do Ghostty; trocar o tema base ou adicionar `editor.tokenColorCustomizations`.
 
 ### Média
-- [x] **herdr com tema `rose-pine`** → `name = "terminal"` (herda as cores Umbra do Ghostty).
-- [x] **Login com paleta VGA padrão**: o tuigreet herda as cores do console → paleta Umbra via `vt.default_red/grn/blu` no kernel ou serviço setvtrgb; fonte maior (terminus `ter-v20b`).
 - [ ] **Associações de arquivo incompletas** (`mimeapps.list` só define PDF e pastas) → imagens: Loupe; vídeo/áudio: mpv; texto: Text Editor; compactados: File Roller; e versionar o arquivo.
-- [x] **Cantos com 6 raios diferentes** (janelas 6, barra 10, tooltip 8, gtklock 9, mako 12, fuzzel 14) — padronizar: janelas/barra/tooltip/gtklock 10, fuzzel/mako 12, detalhes 6.
-- [x] **Distância da borda da tela desalinhada** (janelas 5, barra 10, mako 12) — niri `gaps 8`, margens da barra 8, mako `margin=8` (e nos outros presets).
-- [x] **Anel de foco mais fraco que os popups** (1 px vs 2 px) — niri `focus-ring { width 2 }`.
-- [x] **Cor de urgência/erro diferente em cada lugar** (mako pêssego, waybar vermelho, gtklock #ff7b63) — usar o vermelho `#e86a7a` em todos.
-- [x] **Alacritty diferente do Ghostty** (cursor creme, seleção invertida, branco brilhante mais escuro que o normal) — copiar as cores de `ghostty/themes/Umbra`.
-- [x] **Tela de bloqueio usa Adwaita Sans**, o resto usa Inter — `gtklock/style.css`: `font-family: "Inter", sans-serif`.
-- [x] **Animações diferentes por preset da barra** (refinada/minimal têm, faixa/solida não) — mover `transition: all 150ms ease-out` para `common.css`.
 
 ### Baixa
 - [ ] Arquivos `*.bak*` / `*.bak-catppuccin` espalhados em `~/.config` → apagar depois de sincronizar.
-- [ ] ibus coexistindo com fcitx5 → garantir que o ibus não inicia.
-- [ ] `blueman-applet` roda mesmo sem adaptador → só iniciar se houver Bluetooth.
 - [ ] Dois tons de fundo quase iguais (`#2a0a33` na barra, `#26082f` no resto) — usar um só.
 - [ ] Nomes enganosos na paleta (`mauve` = âmbar, `blue` = lilás; `lilac` duplica `blue`) — renomear/criar aliases em `colors.css`.
 - [ ] Cores fora da paleta: popover GTK `#2e0b38`, sombra do niri preto puro, campo do gtklock branco neutro, `dim`/`soft` só na waybar — integrar à paleta.
-- [x] Opacidade dos popups varia (0.88–0.94) — padronizar em 0.94 (`f0`).
-- [x] Fuzzel usa rosa no texto destacado da seleção (único lugar com rosa) — trocar por âmbar ou amarelo.
 - [ ] Preset *solida* usa separadores de outra cor — usar `@line` se não for intencional.
-- [x] Waypaper aponta para um `style.css` que não existe — remover a linha; cor de preenchimento `#14031a`.
-- [x] Mako e fuzzel sem sombra (janelas têm) — `layer-rule` com `shadow { on; }` no niri.
-- [x] Login (tuigreet) sem cores — `--theme` em `system-files/greetd-config.toml`.
-- [ ] Cursor do sistema (`/usr/share/icons/default`) ainda Adwaita — apontar para Bibata.
+- [ ] Cursor do sistema (`/usr/share/icons/default`) ainda Adwaita — apontar para Layan-White-Umbra.
 - [ ] Pastas do Papirus azuis, destoam do roxo/âmbar — `papirus-folders -C orange` (ou `violet`).
-- [x] niri sem bloco `animations {}` (usa padrões) — fixar valores explícitos para facilitar ajuste.
 
 ## Alterações
 
 Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 
 ### Alta
-- [ ] **Volume por app** à mão: instalar `wiremix` (TUI) e abrir pelo clique do meio no ícone de volume; rolar no player de mídia muda só o volume da mídia; atalhos Super+Shift+F10–F12 para a mídia.
-- [ ] **Gravação de tela**: `wf-recorder` (ou gpu-screen-recorder em hardware real) + script liga/desliga + indicador na waybar + atalho no niri.
-- [ ] **Anotar captura de tela**: `satty`; atalho `grim -g "$(slurp)" - | satty -f -`.
+- [ ] **Volume por app** à mão: instalar `wiremix` (TUI) e abrir pelo clique do meio no ícone de volume; rolar no player de mídia muda só o volume da mídia; atalhos Super+Shift+F10–F12 (−, mudo, +) para a mídia.
+- [ ] **Gravação de tela**: `wf-recorder` (ou gpu-screen-recorder em hardware real) + script liga/desliga + indicador na waybar + atalho Super+Alt+R (liga/desliga).
+- [ ] **Anotar captura de tela**: `satty`; atalho Shift+Print → `grim -g "$(slurp)" - | satty -f -`.
 - [ ] **Prompt Starship**: criar `starship.toml` com a paleta Umbra (o Starship já está instalado, mas usa o prompt padrão).
 - [ ] **Git**: `git-delta` como pager (tema Umbra) + `merge.conflictstyle=zdiff3`, `rerere`, `diff.algorithm=histogram`, `push.autoSetupRemote`, aliases.
-- [x] **Animações do niri**: bloco `animations {}` explícito (abrir janela 200 ms ease-out-cubic, troca de workspace um pouco mais suave) para poder ajustar.
 
 - [ ] **Kitty no lugar do Alacritty** como terminal reserva: usa o mesmo protocolo de imagens do Ghostty (yazi, `icat`), então as ferramentas continuam funcionando ao trocar. Trocar o pacote em `system.sh`, criar `kitty/kitty.conf` com as cores Umbra, atalho no niri; o Foot (`Super+Shift+Enter`) fica como terminal de emergência.
 - [ ] **Ghostty pela GPU** `[HW]`: confirmar que em hardware real não existe `/usr/local/bin/ghostty` (o script com `LIBGL_ALWAYS_SOFTWARE=1` é só da VM, que tem OpenGL 4.1 e o Ghostty precisa de 4.3) e que o Ghostty usa a GPU (`ghostty +show-config` / desempenho com muita saída).
 - [ ] **Ghostty: instância única ou não** — hoje `gtk-single-instance = detect` põe todas as janelas num processo só; se o Ghostty travar, todas as sessões (ex.: várias do Claude Code) fecham juntas. Decidir entre `false` (um processo por janela) ou manter + tmux/zellij.
 
 ### Média
+- [ ] **Testar o swaync no lugar do mako**: principal motivo é pausar o tempo da notificação com o mouse em cima (o mako 1.11 não tem); de bônus, central de notificações com histórico. Confirmar a pausa antes de trocar, e ver se ele mostra o tempo restante na notificação (o mako não mostra). Para trocar: tema Umbra em CSS, atalhos Super+N / Shift+N / Ctrl+N, `dnd.sh` da waybar, 4 visíveis, agrupamento por app e o som.
 - [ ] **Som de notificação** no mako (`on-notify=exec pw-play …/message.oga`), mudo no modo não perturbe.
 - [ ] **Luz noturna**: `wlsunset` + botão na waybar (talvez não funcione na VM).
 - [ ] **Ações no Nemo**: "Abrir Ghostty aqui", "Definir como wallpaper", "Copiar caminho"; instalar `nemo-fileroller`.
-- [x] **Limpar o lançador**: esconder do fuzzel htop, mc, nm-connection-editor, Nautilus, ibus e as ferramentas do fcitx/mozc (`NoDisplay=true`).
 - [ ] **Tema do fcitx5** (janela de candidatos) em Umbra.
+- [ ] **Regras do mako por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som).
 - [ ] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.
 - [ ] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
 - [ ] **eza**: `theme.yml` Umbra.
@@ -96,6 +75,13 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **Portais**: fixar o seletor de arquivos em `xdg-desktop-portal/niri-portals.conf`.
 - [ ] **Tela de boot (Plymouth)**: tema Umbra (hoje está em `text`; na VM depende do framebuffer).
 - [ ] **yazi** (gerenciador de arquivos no terminal) com tema Umbra.
+- [ ] **Janelas de script flutuando**: as janelas Ghostty abertas pela waybar (`Clima`, `Atualizações`, wifi-menu, wiremix) abrem como coluna inteira → `window-rule` por título com `open-floating true` e tamanho fixo.
+- [ ] **Detectar diferença entre repo e `~/.config`**: script `scripts/drift.sh` que compara os dotfiles do repo com os instalados e lista o que mudou de um lado ou do outro (evita config viva fora do repo, como no item de Problemas).
+- [ ] **Backup do home**: Pika Backup ou restic com timer `systemd --user` (excluir `~/.cache`, `node_modules`, VMs).
+- [ ] **Histórico da área de transferência**: limitar o cliphist (`-max-items`), não guardar o que vem de gerenciadores de senha (`x-kde-passwordManagerHint`), atalho para apagar um item ou limpar tudo.
+- [ ] **Agente polkit**: o `mate-polkit` abre sem o tema Umbra → testar com o GTK atual ou trocar (ex.: `hyprpolkitagent`, `lxqt-policykit`).
+- [ ] **Compartilhar tela**: testar captura de tela/janela no Firefox e no Meet/Discord pelo `xdg-desktop-portal-gnome` e anotar o que funciona.
+- [ ] **Apps Flatpak com o tema**: `flatpak override --user` com `GTK_THEME`, acesso a `~/.themes`/`~/.icons`, cursor Layan-White-Umbra e fontes.
 - [ ] **Perfis de energia** `[HW]`: `tuned-ppd` + módulo da waybar.
 
 ### Baixa
@@ -113,4 +99,6 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] Monitores: escala e taxa de atualização nos blocos `output` do niri `[HW]`.
 - [ ] Touchpad: toque e rolagem natural `[HW]`.
 - [ ] MangoHud e gamemode com cores Umbra, para `system.sh --gaming` `[HW]`.
+- [ ] Seletor de emoji (`fuzzel --dmenu` com lista de emojis, Super+Ctrl+Space) e calculadora rápida (`qalc`) pelo fuzzel, com atalho.
+- [ ] Atualização de firmware `[HW]`: `fwupdmgr refresh && fwupdmgr update`, ou um aviso na waybar junto com o `updates.sh`.
 - [ ] Mais widgets da barra: ver `dotfiles/config/waybar/CANDIDATOS.md`.

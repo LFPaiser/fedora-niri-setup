@@ -21,5 +21,11 @@ if [ "$2" = --fixar ]; then
     cfg="$d/config.jsonc"; css="$d/style.css"
 fi
 pkill -x waybar; sleep 0.3
-setsid -f waybar -c "$cfg" -s "$css" >/dev/null 2>&1
+if [ "$cfg" = "$d/config.jsonc" ]; then
+    # the default preset runs as the systemd user service (restarts if it crashes)
+    systemctl --user restart waybar
+else
+    # a preset on trial runs on its own until the next login
+    setsid -f waybar -c "$cfg" -s "$css" >/dev/null 2>&1
+fi
 echo "rodando: $1${2:+ (agora é o padrão)}"

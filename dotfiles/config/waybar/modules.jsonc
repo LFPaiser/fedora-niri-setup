@@ -3,11 +3,6 @@
 {
     "custom/launcher": { "format": "", "tooltip-format": "Apps (Super+A)", "on-click": "fuzzel" },
 
-    "niri/workspaces": {
-        "format": "{icon}",
-        "format-icons": { "focused": "", "active": "", "default": "" }
-    },
-
     "niri/window": {
         "format": "{title}",
         "max-length": 40,
@@ -89,13 +84,15 @@
         "format-disabled": "󰂯",
         "format-no-controller": "󰂲",
         "format-connected": "󰂱 {num_connections}",
-        "tooltip-format": "Bluetooth: {status}",
+        "tooltip-format": "Bluetooth: {status}\n<small>clique direito: applet do Blueman liga/desliga</small>",
         "tooltip-format-off": "Bluetooth desligado",
         "tooltip-format-disabled": "Bluetooth bloqueado",
-        "tooltip-format-no-controller": "Sem adaptador Bluetooth",
+        "tooltip-format-no-controller": "Sem adaptador Bluetooth\n<small>clique direito: applet do Blueman liga/desliga</small>",
         "tooltip-format-connected": "{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}",
-        "on-click": "blueman-manager"
+        "on-click": "blueman-manager",
+        // Blueman's tray applet opens at login; right-click turns that off (and back on)
+        "on-click-right": "~/.config/waybar/scripts/blueman.sh"
     },
 
     // Hides itself when there is no backlight device (VMs, desktops).

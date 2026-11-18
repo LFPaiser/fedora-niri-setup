@@ -5,7 +5,7 @@ Everything needed to set up a themed niri desktop on Fedora, on real hardware
 
 - **Desktop:** Fedora 44 + [niri](https://github.com/YaLTeR/niri), a scrollable-tiling Wayland compositor.
 - **Look:** **Umbra**, a warm plum + amber palette taken from the bundled wallpaper
-  (`wallpapers/umbra.png`), used everywhere: niri, a custom waybar, Ghostty, Alacritty, fuzzel,
+  (`wallpapers/umbra-construction-v2.png`), used everywhere: niri, a custom waybar, Ghostty, Alacritty, fuzzel,
   mako, GTK 4 / libadwaita apps, VS Code and the lock screen. Login is a text greeter
   (greetd + tuigreet); the lock screen (gtklock) shows the darkened wallpaper, clock + date and a password field.
 - **Uses:** development, gaming (on real hardware), browsing and video.
@@ -19,9 +19,10 @@ setup.sh                  entry point (run as your user, asks for sudo once)
 scripts/system.sh         repos, packages, drivers, services (root)
 scripts/user.sh           dotfiles, fonts, cursor, wallpaper, theme, dev runtimes (user)
 dotfiles/config/...       copied to ~/.config/... (@HOME@ is replaced with your home dir)
-dotfiles/local-bin/...    copied to ~/.local/bin/ (osd, powermenu)
+dotfiles/local-bin/...    copied to ~/.local/bin/ (osd, powermenu, sistema, fastfetch-umbra)
 system-files/             Firefox policy (uBlock Origin, no telemetry), greetd login config
-wallpapers/umbra.png      default wallpaper (the Umbra palette is derived from it)
+wallpapers/umbra-construction-v2.png  default wallpaper (the Umbra palette is derived from it;
+                          Fedora's own night wallpaper is set up as the second option)
 ks/ks.cfg, oemdrv-ks.iso  VM only: unattended install (wipes the disk!)
 vm_ed25519                VM only (optional, not committed): SSH key for the test VM
 ```
@@ -149,9 +150,10 @@ gh auth login                             # uploads the key to GitHub
 | Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Clipboard | cliphist history (Super+Shift+V) |
-| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Bibata cursor, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
+| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Layan white cursor with an Umbra amber → lilac outline, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
+| "sistema" workspace | Super+0 / Super+': fastfetch + live journal warnings + btop, opened at login. The distro logo is animated in two Umbra colours (a random pair each time) |
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
 | Shell | fish + starship prompt, zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`), lazygit (`lg`), btop |
 | Dev | VS Code (Catppuccin recolored to Umbra, Python, ESLint, Prettier), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
@@ -171,12 +173,14 @@ gh auth login                             # uploads the key to GitHub
 | Super+B / Super+E | Firefox / Files (Nemo) |
 | Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
+| Super+N / Super+Shift+N | dismiss the notification / all of them · Super+Ctrl+N brings the last one back |
 | Super+Q | close window |
 | Super+O | overview of all windows/workspaces |
+| Super+' | toggle the "sistema" workspace (fastfetch + btop, opened at login) · Super+0 goes there |
 | Super+←→↑↓ or H/J/K/L | move focus (↑↓ continue into the workspace above/below) |
 | Super+Ctrl+arrows / HJKL | move the window/column (↑↓ also across workspaces) |
 | Super+Shift+↑↓ | move the whole workspace up / down |
-| Super+1…9 | go to workspace · Super+Ctrl+1…9 move window there |
+| Super+1…9 | go to workspace · Super+Ctrl+1…9 move window there (Super+0 is "sistema") |
 | Super+U / Super+I | workspace down / up · Super+Tab previous workspace |
 | Super+R | cycle column width (⅓, ½, ⅔, full) |
 | Super+F / Super+Shift+F | maximize column / true fullscreen |
@@ -186,8 +190,12 @@ gh auth login                             # uploads the key to GitHub
 | Super+W | tabbed column |
 | Super+[ / Super+] | merge window into neighbour column / split out |
 | Print or Super+Shift+S | screenshot (select area; copied + saved to ~/Pictures/Screenshots) |
+| Ctrl+Print / Alt+Print | screenshot of the whole screen / the focused window |
 | Super+Alt+L | lock (type the password, Enter to unlock) |
-| Super+P | power menu (lock, log out, suspend, reboot, shut down) |
+| Super+P or Ctrl+Alt+Delete | power menu (lock, log out, suspend, reboot, shut down) |
+| Super+Shift+E | exit niri (asks for confirmation) |
+| Super+Shift+P | turn the monitors off |
+| Super+Esc | give shortcuts back to niri when an app (VM, game) grabs them |
 | Super+Shift+Space | switch keyboard layout ABNT2 ↔ US (fcitx5) |
 | Super+Alt+Space | toggle the Asian input method (Shift+Super+Alt+Space cycles Mozc/Pinyin/Hangul) |
 | Media keys / Super+F9–F12 | play-pause / volume down, mute, up |
@@ -212,7 +220,8 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   and keep it with `try refinada --fixar`. Shared pieces: `modules.jsonc`
   (module settings), `colors.css` (palette), `common.css` (state colours) and
   `scripts/`. Ideas for more modules: `~/.config/waybar/CANDIDATOS.md`.
-  Reload with `pkill -SIGUSR2 waybar`.
+  Reload with `pkill -SIGUSR2 waybar`. Right-click on the Bluetooth icon turns
+  Blueman's tray applet off at login (and back on).
 - **Weather location:** defaults to Liberdade, São Paulo. Create
   `~/.config/waybar/weather.local` (not part of the repo) with your
   `WEATHER_NAME`, `WEATHER_LAT`, `WEATHER_LON` and `WEATHER_CPTEC_ID`; the
@@ -227,6 +236,11 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   (`workbench.colorCustomizations`). The previous Catppuccin Mocha look is one
   `theme = Catppuccin Mocha` + palette swap away. Edit the files in this repo and
   re-run `./setup.sh` to keep them in sync.
+- **"sistema" workspace logo:** `sistema logo umbra` (default: colour wave),
+  `sistema logo spin` (fastfetch's 3D spinning logo) or `sistema logo fastfetch`
+  (static). The choice is remembered. `spin` needs fastfetch 2.69+: until Fedora ships
+  it, `user.sh` installs upstream's build in `~/.local/opt/fastfetch` and drops it once
+  Fedora catches up. The colour pairs are at the top of `~/.local/bin/fastfetch-umbra`.
 - **Lock screen:** `~/.config/gtklock/style.css` (look) and `layout.ui` (which
   widgets show; the Unlock button and "Password:" label are hidden). Test with `gtklock`.
 - **A fancier bar/shell (real hardware only):** [Noctalia](https://github.com/noctalia-dev/noctalia-shell)
@@ -243,6 +257,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 | Problem | Fix |
 |---|---|
 | Black screen / no niri after login | In tuigreet press F3 to pick another session (e.g. GNOME), or switch to a TTY (Ctrl+Alt+F2). Then check `journalctl --user -b -u niri`. |
+| Bar, notifications, idle lock or clipboard history gone | They are systemd user services and restart on their own after a crash. Check with `systemctl --user status waybar mako swayidle cliphist`; restart one with `systemctl --user restart waybar`. |
 | No wallpaper | Check `pgrep awww-daemon`; run `awww-daemon & waypaper --restore`. |
 | `nvidia-smi` fails after reboot | Wait for `akmods` to finish (`sudo akmods --force`), or Secure Boot key not enrolled: `mokutil --import /etc/pki/akmods/certs/public_key.der` and reboot. |
 | Game runs on Intel GPU | Use the launch options in §4; `switcherooctl list` shows the GPUs. |

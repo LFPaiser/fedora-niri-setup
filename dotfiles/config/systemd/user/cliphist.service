@@ -1,0 +1,14 @@
+# Clipboard history (Super+Shift+V): stores every copy. A user service (enabled by
+# user.sh) so it comes back if it crashes, instead of history silently stopping.
+[Unit]
+Description=Clipboard history (cliphist)
+PartOf=graphical-session.target
+After=graphical-session.target
+Requisite=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/wl-paste --watch cliphist store
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
