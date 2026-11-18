@@ -8,8 +8,8 @@ if status is-interactive
     command -q zoxide; and zoxide init fish | source
     command -q fzf; and fzf --fish | source
 
-    # Catppuccin Mocha for fzf; bat follows the terminal colors
-    set -gx FZF_DEFAULT_OPTS "--color=bg+:#313244,bg:#1e1e2e,spinner:#f5e0dc,hl:#f38ba8,fg:#cdd6f4,header:#f38ba8,info:#cba6f7,pointer:#f5e0dc,marker:#b4befe,fg+:#cdd6f4,prompt:#cba6f7,hl+:#f38ba8 --border=rounded"
+    # Umbra colours for fzf; bat follows the terminal colors
+    set -gx FZF_DEFAULT_OPTS "--color=bg+:#3a1544,bg:#26082f,spinner:#e0a050,hl:#e0a050,fg:#e6d6c6,header:#c58bd6,info:#8f6a90,pointer:#e0a050,marker:#f2cf8a,fg+:#fdf0dc,prompt:#e0a050,hl+:#f2cf8a,border:#57235a --border=rounded"
     set -gx BAT_THEME ansi
 
     alias ls 'eza --icons --group-directories-first'

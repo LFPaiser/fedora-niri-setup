@@ -4,7 +4,7 @@ window {
                       url("@HOME@/Pictures/Wallpapers/.current");
     background-size: cover;
     background-position: center;
-    font-family: "Adwaita Sans", "Cantarell", sans-serif;
+    font-family: "Inter", sans-serif;
     color: #fdf0dc;
 }
 
@@ -19,9 +19,9 @@ window {
     min-width: 280px;
     min-height: 36px;
     padding: 0 12px;
-    border-radius: 9px;
+    border-radius: 10px;
     border: none;
-    background: rgba(255, 255, 255, 0.12);
+    background: rgba(87, 35, 90, 0.55);
     color: #fdf0dc;
     box-shadow: none;
 }
@@ -32,7 +32,7 @@ window {
 
 
 #error-label {
-    color: #ff7b63;
+    color: #e5455a;
 }
 
 #date-label {

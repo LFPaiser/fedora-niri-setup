@@ -67,6 +67,9 @@ dnf_install niri xwayland-satellite greetd tuigreet \
     f"$fedora"-backgrounds-base libjxl-utils \
     cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper
 
+step "Qt apps follow the Umbra palette (qt6ct)"
+dnf_install qt6ct
+
 step "Input method: fcitx5 (br/us layouts, dead keys, emoji; Japanese, Chinese, Korean)"
 dnf_install fcitx5 fcitx5-gtk fcitx5-qt fcitx5-configtool fcitx5-lua \
     fcitx5-mozc fcitx5-chinese-addons fcitx5-hangul
@@ -152,6 +155,9 @@ localectl set-x11-keymap br,us abnt2, || true
 
 step "Login: greetd + tuigreet (text greeter) starting niri, fish as shell"
 install -Dm644 "$here/system-files/greetd-config.toml" /etc/greetd/config.toml
+install -Dm644 "$here/system-files/vtrgb" /etc/vtrgb    # Umbra console palette
+install -Dm644 "$here/system-files/umbra-vtrgb.service" /etc/systemd/system/umbra-vtrgb.service
+systemctl enable umbra-vtrgb.service
 echo niri-session > /etc/greetd/environments
 install -d -o greetd -g greetd /var/cache/tuigreet   # lets --remember work
 systemctl disable gdm sddm lightdm 2>/dev/null || true

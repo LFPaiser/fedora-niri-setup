@@ -13,7 +13,7 @@
 @define-color green    #a8c98a;
 @define-color yellow   #f2cf8a;
 @define-color peach    #e89a5c;
-@define-color red      #e86a7a;
+@define-color red      #e5455a;              /* errors & urgent: stronger than the terminal red */
 @define-color pink     #f0a6c8;
 @define-color teal     #8fcfc0;
 

@@ -1,6 +1,8 @@
 [terminal]
 vt = 1
 
+# Colours are console palette names; system-files/vtrgb turns them into Umbra
+# (black = deep purple background, yellow = amber, blue = lilac).
 [default_session]
-command = "tuigreet --time --remember --asterisks --cmd niri-session"
+command = "tuigreet --time --remember --asterisks --greeting 'Bem-vindo' --width 60 --window-padding 1 --container-padding 2 --theme 'border=yellow;title=yellow;greet=white;text=white;prompt=yellow;input=white;time=blue;action=blue;button=yellow;container=black' --cmd niri-session"
 user = "greetd"

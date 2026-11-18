@@ -149,7 +149,7 @@ gh auth login                             # uploads the key to GitHub
 | Launcher / notifications / lock | fuzzel / mako / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Clipboard | cliphist history (Super+Shift+V) |
-| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Bibata cursor, Inter + JetBrainsMono Nerd Font |
+| Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons, Bibata cursor, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
@@ -195,6 +195,9 @@ Ghostty: Ctrl+Shift+Enter splits; Ctrl+Shift+H/J/K/L moves between splits;
 Ctrl+Shift+T opens a tab.
 
 ## 7. Customizing
+
+What is still left to tune (problems to fix and ideas, by priority) is tracked in
+[TODO.md](TODO.md).
 
 - **Wallpaper:** put images in `~/Pictures/Wallpapers/` and press **Super+Shift+W**
   (Waypaper) to pick one; it applies immediately with a fade and is restored at

@@ -133,6 +133,16 @@ printf '[D-BUS Service]\nName=org.freedesktop.FileManager1\nExec=/usr/bin/nemo -
     > ~/.local/share/dbus-1/services/org.freedesktop.FileManager1.service
 gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty 2>/dev/null || true
 
+step "Launcher: hide helper apps from fuzzel"
+mkdir -p ~/.local/share/applications
+for app in htop kbd-layout-viewer5 gkbd-keyboard-display org.fcitx.Fcitx5 \
+           fcitx5-wayland-launcher org.fcitx.fcitx5-qt6-gui-wrapper; do
+    [ -f "/usr/share/applications/$app.desktop" ] || continue
+    printf '[Desktop Entry]\nType=Application\nName=%s\nNoDisplay=true\n' "$app" \
+        > ~/.local/share/applications/$app.desktop
+done
+fc-cache -f >/dev/null   # fontconfig aliases (sans = Inter, mono = JetBrainsMono)
+
 step "herdr (terminal workspace manager for coding agents)"
 if ! command -v herdr >/dev/null; then
     fetch -o ~/.local/bin/herdr "https://github.com/herdrdev/herdr/releases/latest/download/herdr-linux-$(uname -m)"

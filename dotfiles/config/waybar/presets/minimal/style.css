@@ -15,7 +15,7 @@ window#waybar { background: transparent; color: @text; }
 #custom-weather { padding-left: 10px; }
 
 #workspaces { padding: 0 6px; }
-#workspaces button { color: @surface1; padding: 0 4px; background: transparent; transition: all .2s ease; }
+#workspaces button { color: @surface1; padding: 0 4px; background: transparent; }
 #workspaces button.focused, #workspaces button.active { color: @mauve; }
 #workspaces button.urgent { color: @red; }
 #workspaces button:hover { color: @text; box-shadow: none; background: transparent; }

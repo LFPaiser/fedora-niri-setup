@@ -25,7 +25,7 @@ window#waybar.empty #window { background: transparent; border: none; box-shadow:
 
 #workspaces { padding: 0 4px; }
 #workspaces button { color: @dim; padding: 0 6px; background: transparent;
-    font-family: "JetBrainsMono Nerd Font"; transition: all 0.2s ease; }
+    font-family: "JetBrainsMono Nerd Font"; }
 #workspaces button.focused, #workspaces button.active { color: @mauve; }
 #workspaces button.urgent { color: @red; }
 #workspaces button:hover { color: @text; background: @surface0; border-radius: 10px; box-shadow: none; }

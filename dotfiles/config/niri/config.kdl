@@ -36,7 +36,7 @@ layout {
     // Transparent so the wallpaper (placed in the backdrop below) shows
     // through and stays still while scrolling between workspaces.
     background-color "transparent"
-    gaps 5
+    gaps 6
     center-focused-column "never"
     always-center-single-column
 
@@ -49,7 +49,7 @@ layout {
     default-column-width { proportion 0.5; }
 
     focus-ring {
-        width 1
+        width 2
         active-gradient from="#e0a050" to="#c58bd6" angle=45
         inactive-color "#57235a"
     }
@@ -58,10 +58,11 @@ layout {
 
     shadow {
         on
-        softness 30
-        spread 4
-        offset x=0 y=6
-        color "#00000070"
+        // wide and faint: a soft glow rather than a hard drop
+        softness 60
+        spread 8
+        offset x=0 y=10
+        color "#14031a55"
     }
 
     tab-indicator {
@@ -97,6 +98,8 @@ environment {
     // GTK 3/4 talk to it over Wayland text-input-v3, so GTK_IM_MODULE stays unset.
     XMODIFIERS "@im=fcitx"
     QT_IM_MODULE "fcitx"
+    // Qt apps take the Umbra palette from qt6ct (~/.config/qt6ct).
+    QT_QPA_PLATFORMTHEME "qt6ct"
     QT_IM_MODULES "wayland;fcitx"
 }
 
@@ -112,9 +115,21 @@ spawn-sh-at-startup "wl-paste --watch cliphist store"
 spawn-sh-at-startup "~/.local/bin/osd daemon"
 spawn-sh-at-startup "swayidle -w timeout 3600 'gtklock -d' timeout 10800 'niri msg action power-off-monitors' before-sleep 'gtklock -d'"
 
+// ── Animations ──────────────────────────────────────────────────────────────
+// Pinned so they are easy to tune; values close to niri's defaults.
+animations {
+    window-open { duration-ms 200; curve "ease-out-cubic"; }
+    window-close { duration-ms 150; curve "ease-out-quad"; }
+    workspace-switch { spring damping-ratio=1.0 stiffness=900 epsilon=0.0001; }
+    horizontal-view-movement { spring damping-ratio=1.0 stiffness=800 epsilon=0.0001; }
+    window-movement { spring damping-ratio=1.0 stiffness=800 epsilon=0.0001; }
+    window-resize { spring damping-ratio=1.0 stiffness=800 epsilon=0.0001; }
+    overview-open-close { spring damping-ratio=1.0 stiffness=800 epsilon=0.0001; }
+}
+
 // ── Window rules ────────────────────────────────────────────────────────────
 window-rule {
-    geometry-corner-radius 6
+    geometry-corner-radius 10
     clip-to-geometry true
     // Ring is drawn as a solid rect behind the window; skip it so translucent windows stay translucent.
     draw-border-with-background false
@@ -137,6 +152,14 @@ window-rule {
 window-rule {
     match app-id="mpv"
     default-column-width { proportion 1.0; }
+}
+
+// Launcher and notifications get the same rounded shadow as windows.
+layer-rule {
+    match namespace="^launcher$"
+    match namespace="^notifications$"
+    shadow { on; }
+    geometry-corner-radius 12
 }
 
 // Wallpaper lives in the backdrop: stationary, and visible behind the overview.
