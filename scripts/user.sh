@@ -2,12 +2,17 @@
 # User part of the setup: dotfiles, fonts, cursor, wallpaper, theme settings,
 # dev runtimes, editor and mpv extras. Run as your normal user. Safe to re-run;
 # any existing config that differs is kept as <file>.bak-<timestamp>.
+#   --cursors=options|fun|all   also install extra cursor themes (scripts/cursors.sh)
 set -euo pipefail
 
 [ "$(id -u)" -ne 0 ] || { echo "run as your normal user, not root" >&2; exit 1; }
 here=$(cd "$(dirname "$0")/.." && pwd)
 stamp=$(date +%Y%m%d-%H%M%S)
 export PATH="$HOME/.local/bin:$PATH"
+cursors=
+for arg in "$@"; do
+    case "$arg" in --cursors=*) cursors=${arg#--cursors=} ;; esac
+done
 
 step() { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
 
@@ -63,6 +68,11 @@ if [ ! -d ~/.local/share/icons/Layan-White-Umbra ]; then
 fi
 mkdir -p ~/.icons/default
 printf '[Icon Theme]\nInherits=Layan-White-Umbra\n' > ~/.icons/default/index.theme
+
+if [ -n "$cursors" ]; then
+    step "Extra cursors: $cursors"
+    bash "$here/scripts/cursors.sh" "$cursors" || echo "  some extra cursors failed: re-run scripts/cursors.sh $cursors"
+fi
 
 step "Wallpaper: Umbra + awww + Waypaper"
 # default: Umbra; second option: Fedora's own night wallpaper, converted below

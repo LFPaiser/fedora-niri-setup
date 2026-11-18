@@ -81,7 +81,7 @@ dnf_install adw-gtk3-theme papirus-icon-theme rsms-inter-fonts \
 
 step "Terminal tools"
 dnf_install fish eza zoxide fzf bat ripgrep fd-find btop fastfetch tealdeer jq \
-    git gh curl wget unzip vim-enhanced htop
+    git gh curl wget unzip 7zip cpio vim-enhanced htop
 
 step "Development: compilers, containers, Docker, VS Code"
 dnf -y group install --skip-unavailable development-tools c-development

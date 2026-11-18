@@ -19,6 +19,7 @@ setup.sh                  entry point (run as your user, asks for sudo once)
 scripts/system.sh         repos, packages, drivers, services (root)
 scripts/user.sh           dotfiles, fonts, cursor, wallpaper, theme, dev runtimes (user)
 scripts/cursor-recolor.py recolours a cursor theme (builds the default Layan-White-Umbra)
+scripts/cursors.sh        optional extra cursor themes (options / fun / all)
 dotfiles/config/...       copied to ~/.config/... (@HOME@ is replaced with your home dir)
 dotfiles/local-bin/...    copied to ~/.local/bin/ (osd, powermenu, sistema, fastfetch-umbra)
 system-files/             Firefox policy (uBlock Origin, no telemetry), greetd login config
@@ -106,6 +107,8 @@ Wait ~5 minutes after the script finishes (the NVIDIA module builds in the
 background), then **reboot**. Check with `nvidia-smi`, which should list your NVIDIA GPU.
 
 Flags: `./setup.sh --no-gaming` skips the gaming tools; `--gaming` forces them in a VM.
+`--cursors=options`, `--cursors=fun` or `--cursors=all` also installs extra cursor themes
+(see [Customizing](#7-customizing)); the default cursor is always installed.
 
 ## 4. After the first login
 
@@ -248,6 +251,11 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   [Layan](https://github.com/vinceliuice/Layan-cursors) and recolours its outline with
   `scripts/cursor-recolor.py SRC DST NAME COLOUR [COLOUR2]` (one colour, or a diagonal
   gradient between two). The same script makes other colours of any Xcursor theme.
+  More themes, optional: `scripts/cursors.sh options` (everyday ones: Catppuccin
+  Mocha in 9 colours, Graphite, Vimix, Layan and its Umbra recolours, Bibata, Breeze,
+  Bluecurve, Notwaita, Kanagawa, XCursor Pro, WhiteSur, Qogir, ...), `scripts/cursors.sh fun`
+  (Banana, Miku, NieR, PopCat, Retrosmart 8-bit, WarCraft III) or `all`;
+  `scripts/cursors.sh list` shows them all. Each is downloaded from its own project.
   To switch theme, change `xcursor-theme` in `niri/config.kdl`,
   `gtk-cursor-theme-name` in `gtk-3.0/settings.ini` and
   `gsettings set org.gnome.desktop.interface cursor-theme NAME`.
