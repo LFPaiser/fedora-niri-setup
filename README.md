@@ -167,7 +167,7 @@ gh auth login                             # uploads the key to GitHub
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
 | "sistema" workspace | Super+0 / Super+': fastfetch + live journal warnings + btop, opened at login. The distro logo is animated in two Umbra colours (a random pair each time) |
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
-| Shell | fish + starship prompt, zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`), lazygit (`lg`), btop |
+| Shell | fish + Starship prompt (Umbra, two lines: blocks with folder · git · project language, slow-command time and clock on the right; `❯` turns red on failure), zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`), bat (`cat`), lazygit (`lg`), btop |
 | Dev | VS Code (themes, extensions and profiles via its Settings Sync), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails, yt-dlp (`mpv <youtube-url>` works) |
 | Browser | Firefox + uBlock Origin |

@@ -51,7 +51,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **Volume por grupo e por app**: grupos Mídia, Notificações, Sistema e Chamadas (loopbacks do PipeWire + roteamento por `media.role` do WirePlumber; sem papel = Mídia), cada um com volume próprio; wiremix no clique do meio do volume; rolar no player e Super+Shift+F10–F12 mexem só na Mídia.
 - [x] **Gravação de tela**: `~/.local/bin/record` (wf-recorder com o som do computador) — Super+Alt+R tela, Super+Alt+Shift+R área; cronômetro vermelho na waybar (clique para parar); notificação com Abrir/Abrir pasta. gpu-screen-recorder fica para hardware real.
 - [x] **Anotar captura de tela**: satty (binário oficial em `~/.local/bin`, Fedora não empacota) com paleta Umbra; Shift+Print.
-- [ ] **Prompt Starship**: criar `starship.toml` com a paleta Umbra (o Starship já está instalado, mas usa o prompt padrão).
+- [x] **Prompt Starship**: `starship.toml` com a paleta Umbra, duas linhas em blocos (pasta · git · linguagem do projeto, tempo e hora à direita; `❯` vermelho quando o comando falha).
 - [ ] **Git**: `git-delta` como pager (tema Umbra) + `merge.conflictstyle=zdiff3`, `rerere`, `diff.algorithm=histogram`, `push.autoSetupRemote`, aliases.
 
 - [ ] **Kitty no lugar do Alacritty** como terminal reserva: usa o mesmo protocolo de imagens do Ghostty (yazi, `icat`), então as ferramentas continuam funcionando ao trocar. Trocar o pacote em `system.sh`, criar `kitty/kitty.conf` com as cores Umbra, atalho no niri; o Foot (`Super+Shift+Enter`) fica como terminal de emergência.
