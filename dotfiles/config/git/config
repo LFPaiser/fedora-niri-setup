@@ -1,0 +1,69 @@
+# Git settings shared by every machine (identity and credentials stay in ~/.gitconfig,
+# which git reads after this file).
+
+[init]
+    defaultBranch = main
+[pull]
+    rebase = true
+[push]
+    autoSetupRemote = true      # first push of a new branch works without -u
+[fetch]
+    prune = true                # forget remote branches deleted on the server
+[diff]
+    algorithm = histogram       # cleaner hunks than the default myers
+    colorMoved = default        # moved blocks get their own colour
+[merge]
+    conflictStyle = zdiff3      # conflicts also show the original lines
+[rerere]
+    enabled = true              # remember conflict resolutions, reuse them on the next rebase
+[rebase]
+    autoStash = true
+[branch]
+    sort = -committerdate       # git branch: most recent first
+
+# --- delta: diffs, log -p, show and blame with Umbra colours (bat theme "Umbra") ---
+[core]
+    pager = delta
+[interactive]
+    diffFilter = delta --color-only
+[delta]
+    navigate = true             # n / N jump between files in the pager
+    dark = true
+    syntax-theme = Umbra
+    line-numbers = true
+    minus-style = syntax "#4a1530"
+    minus-emph-style = syntax "#73203f"
+    plus-style = syntax "#1f3a2a"
+    plus-emph-style = syntax "#2f5a3a"
+    map-styles = bold purple => syntax "#3a1544", bold cyan => syntax "#2a2440"
+    line-numbers-minus-style = "#e5455a"
+    line-numbers-plus-style = "#a8c98a"
+    line-numbers-zero-style = "#8f6a90"
+    line-numbers-left-style = "#57235a"
+    line-numbers-right-style = "#57235a"
+    file-style = bold "#e0a050"
+    file-decoration-style = "#e0a050" ul
+    hunk-header-style = file line-number syntax
+    hunk-header-decoration-style = "#c58bd6" box
+    hunk-header-file-style = "#c58bd6"
+    hunk-header-line-number-style = "#f2cf8a"
+    commit-decoration-style = "#e0a050" box
+    blame-palette = "#26082f #2e0c38 #3a1544"
+    merge-conflict-begin-symbol = ▼
+    merge-conflict-end-symbol = ▲
+    merge-conflict-ours-diff-header-style = "#e0a050" bold
+    merge-conflict-theirs-diff-header-style = "#c58bd6" bold
+
+[alias]
+    st = status -sb
+    sw = switch
+    co = checkout
+    br = branch
+    ci = commit
+    amend = commit --amend --no-edit
+    unstage = restore --staged
+    undo = reset --soft HEAD~1                 # undo the last commit, keep its changes staged
+    last = log -1 -p
+    lg = "log --graph --pretty=format:'%C(#e0a050)%h%Creset %C(#c58bd6)%d%Creset %s %C(#8f6a90)(%cr, %an)%Creset' --abbrev-commit"
+    ds = -c delta.side-by-side=true diff       # side-by-side diff; also: git ds --staged, git ds main
+    dss = -c delta.side-by-side=true show      # side-by-side show of a commit

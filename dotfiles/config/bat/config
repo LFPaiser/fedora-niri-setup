@@ -1,0 +1,3 @@
+# bat (cat is aliased to it in fish). Umbra theme from themes/; run `bat cache --build` after changing it.
+--theme=Umbra
+--style=numbers,changes,header

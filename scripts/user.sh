@@ -139,9 +139,10 @@ else
     echo "  no Firefox profile yet: open Firefox once, close it, and re-run scripts/user.sh"
 fi
 
-step "Git defaults"
-git config --global init.defaultBranch main
-git config --global pull.rebase true
+step "bat + delta: Umbra syntax theme"
+# git settings, delta and aliases live in ~/.config/git/config (installed above);
+# bat and delta only see themes/Umbra.tmTheme after the cache is rebuilt.
+command -v bat >/dev/null && bat cache --build >/dev/null
 
 step "mpv: uosc interface + thumbnails"
 if [ ! -f ~/.config/mpv/scripts/uosc/main.lua ]; then

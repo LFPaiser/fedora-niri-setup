@@ -1,4 +1,5 @@
 [tools]
+delta = "latest"
 direnv = "latest"
 gitleaks = "latest"
 go = "1.26"

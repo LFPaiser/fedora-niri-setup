@@ -52,7 +52,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **Gravação de tela**: `~/.local/bin/record` (wf-recorder com o som do computador) — Super+Alt+R tela, Super+Alt+Shift+R área; cronômetro vermelho na waybar (clique para parar); notificação com Abrir/Abrir pasta. gpu-screen-recorder fica para hardware real.
 - [x] **Anotar captura de tela**: satty (binário oficial em `~/.local/bin`, Fedora não empacota) com paleta Umbra; Shift+Print.
 - [x] **Prompt Starship**: `starship.toml` com a paleta Umbra, duas linhas em blocos (pasta · git · linguagem do projeto, tempo e hora à direita; `❯` vermelho quando o comando falha).
-- [ ] **Git**: `git-delta` como pager (tema Umbra) + `merge.conflictstyle=zdiff3`, `rerere`, `diff.algorithm=histogram`, `push.autoSetupRemote`, aliases.
+- [x] **Git**: `git-delta` como pager (tema Umbra, uma coluna; `git ds` lado a lado) + `merge.conflictstyle=zdiff3`, `rerere`, `diff.algorithm=histogram`, `push.autoSetupRemote`, aliases (`~/.config/git/config`).
 
 - [ ] **Kitty no lugar do Alacritty** como terminal reserva: usa o mesmo protocolo de imagens do Ghostty (yazi, `icat`), então as ferramentas continuam funcionando ao trocar. Trocar o pacote em `system.sh`, criar `kitty/kitty.conf` com as cores Umbra, atalho no niri; o Foot (`Super+Shift+Enter`) fica como terminal de emergência.
 - [ ] **Ghostty pela GPU** `[HW]`: confirmar que em hardware real não existe `/usr/local/bin/ghostty` (o script com `LIBGL_ALWAYS_SOFTWARE=1` é só da VM, que tem OpenGL 4.1 e o Ghostty precisa de 4.3) e que o Ghostty usa a GPU (`ghostty +show-config` / desempenho com muita saída).
@@ -87,7 +87,8 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 ### Baixa
 - [ ] Atalhos na barra lateral do Nemo/seletor de arquivos (projetos, Screenshots, Wallpapers).
 - [ ] fish: fisher + `done` (notifica quando um comando longo termina).
-- [ ] Tema do bat (`.tmTheme` Umbra) e LS_COLORS (vivid).
+- [x] Tema do bat (`.tmTheme` Umbra, também usado pelo delta).
+- [ ] LS_COLORS (vivid).
 - [ ] atuin (busca no histórico do shell).
 - [ ] Editor no terminal: vimrc mínimo, ou neovim/helix com tema Umbra.
 - [ ] GRUB: menu escondido (`GRUB_TIMEOUT_STYLE=hidden`) ou tema.
