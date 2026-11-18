@@ -1,0 +1,83 @@
+# eza in Umbra: the columns of `ll` (permissions, size, owner, date, git).
+# File-name colours come from LS_COLORS (vivid theme umbra), which takes precedence.
+colourful: true
+
+filekinds:
+  normal: {foreground: "#fdf0dc"}
+  directory: {foreground: "#e0a050", is_bold: true}
+  symlink: {foreground: "#8fcfc0"}
+  pipe: {foreground: "#c58bd6"}
+  block_device: {foreground: "#f2cf8a"}
+  char_device: {foreground: "#f0a6c8"}
+  socket: {foreground: "#f0a6c8"}
+  special: {foreground: "#f0a6c8"}
+  executable: {foreground: "#a8c98a", is_bold: true}
+  mount_point: {foreground: "#e0a050", is_underline: true}
+
+perms:
+  user_read: {foreground: "#f2cf8a"}
+  user_write: {foreground: "#e0a050"}
+  user_execute_file: {foreground: "#a8c98a", is_bold: true}
+  user_execute_other: {foreground: "#a8c98a"}
+  group_read: {foreground: "#c58bd6"}
+  group_write: {foreground: "#c58bd6"}
+  group_execute: {foreground: "#c58bd6"}
+  other_read: {foreground: "#8f6a90"}
+  other_write: {foreground: "#e5455a"}
+  other_execute: {foreground: "#8f6a90"}
+  special_user_file: {foreground: "#f0a6c8"}
+  special_other: {foreground: "#f0a6c8"}
+  attribute: {foreground: "#8f6a90"}
+
+size:
+  major: {foreground: "#f2cf8a"}
+  minor: {foreground: "#f2cf8a"}
+  number_byte: {foreground: "#e6d6c6"}
+  number_kilo: {foreground: "#f2cf8a"}
+  number_mega: {foreground: "#e0a050"}
+  number_giga: {foreground: "#f0889a"}
+  number_huge: {foreground: "#e5455a"}
+  unit_byte: {foreground: "#8f6a90"}
+  unit_kilo: {foreground: "#8f6a90"}
+  unit_mega: {foreground: "#8f6a90"}
+  unit_giga: {foreground: "#8f6a90"}
+  unit_huge: {foreground: "#8f6a90"}
+
+users:
+  user_you: {foreground: "#c58bd6"}
+  user_root: {foreground: "#e5455a"}
+  user_other: {foreground: "#f0a6c8"}
+  group_yours: {foreground: "#8f6a90"}
+  group_other: {foreground: "#8f6a90"}
+  group_root: {foreground: "#e5455a"}
+
+links:
+  normal: {foreground: "#8fcfc0"}
+  multi_link_file: {foreground: "#8fcfc0", is_bold: true}
+
+git:
+  new: {foreground: "#a8c98a"}
+  modified: {foreground: "#f2cf8a"}
+  deleted: {foreground: "#e5455a"}
+  renamed: {foreground: "#8fcfc0"}
+  typechange: {foreground: "#c58bd6"}
+  ignored: {foreground: "#6a3a6e"}
+  conflicted: {foreground: "#e5455a", is_bold: true}
+
+git_repo:
+  branch_main: {foreground: "#c58bd6"}
+  branch_other: {foreground: "#f0a6c8"}
+  git_clean: {foreground: "#a8c98a"}
+  git_dirty: {foreground: "#f2cf8a"}
+
+punctuation: {foreground: "#6a3a6e"}
+date: {foreground: "#8fcfc0"}
+inode: {foreground: "#8f6a90"}
+blocks: {foreground: "#8f6a90"}
+header: {foreground: "#fdf0dc", is_underline: true}
+octal: {foreground: "#c58bd6"}
+flags: {foreground: "#8f6a90"}
+symlink_path: {foreground: "#8fcfc0"}
+control_char: {foreground: "#e5455a"}
+broken_symlink: {foreground: "#e5455a"}
+broken_path_overlay: {is_underline: true}

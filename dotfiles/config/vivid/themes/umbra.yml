@@ -1,0 +1,111 @@
+# Umbra theme for vivid → LS_COLORS (ls, eza file names, fd, tree, fzf previews...).
+# Folders amber like the prompt; code lilac, config yellow, media green, archives red.
+colors:
+  amber: 'e0a050'
+  lilac: 'c58bd6'
+  lilac2: 'd6a6e4'
+  pink: 'f0a6c8'
+  green: 'a8c98a'
+  teal: '8fcfc0'
+  yellow: 'f2cf8a'
+  salmon: 'f0889a'
+  red: 'e5455a'
+  cream: 'fdf0dc'
+  soft: 'e6d6c6'
+  dim: '8f6a90'
+  surface: '3a1544'
+  surface1: '57235a'
+  base: '26082f'
+  crust: '14031a'
+
+core:
+  normal_text: {}
+  regular_file: {}
+  reset_to_normal: {}
+  directory:
+    foreground: amber
+    font-style: bold
+  symlink:
+    foreground: teal
+  multi_hard_link: {}
+  fifo:
+    foreground: crust
+    background: lilac
+  socket:
+    foreground: crust
+    background: pink
+  door:
+    foreground: crust
+    background: pink
+  block_device:
+    foreground: yellow
+    background: surface
+  character_device:
+    foreground: pink
+    background: surface
+  broken_symlink:
+    foreground: crust
+    background: red
+  missing_symlink_target:
+    foreground: crust
+    background: red
+  setuid:
+    foreground: crust
+    background: red
+  setgid:
+    foreground: crust
+    background: yellow
+  file_with_capability: {}
+  sticky_other_writable:
+    foreground: amber
+    background: surface1
+  other_writable:
+    foreground: amber
+    background: surface1
+  sticky:
+    foreground: amber
+    background: surface
+  executable_file:
+    foreground: green
+    font-style: bold
+
+text:
+  special:
+    foreground: base
+    background: yellow
+  todo:
+    font-style: bold
+  licenses:
+    foreground: dim
+  configuration:
+    foreground: yellow
+  other:
+    foreground: soft
+
+markup:
+  foreground: pink
+
+programming:
+  source:
+    foreground: lilac
+  tooling:
+    foreground: teal
+    continuous-integration:
+      foreground: teal
+
+media:
+  foreground: green
+
+office:
+  foreground: salmon
+
+archives:
+  foreground: red
+  font-style: underline
+
+executable:
+  foreground: green
+  font-style: bold
+
+unimportant:
+  foreground: dim

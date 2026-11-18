@@ -66,8 +66,8 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **Tema do fcitx5** (janela de candidatos) em Umbra.
 - [ ] **Regras do mako por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som).
 - [ ] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.
-- [ ] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
-- [ ] **eza**: `theme.yml` Umbra.
+- [x] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
+- [x] **eza**: `theme.yml` Umbra.
 - [ ] **fastfetch**: `config.jsonc` com cores Umbra (opcional: rodar ao abrir o fish).
 - [ ] **fish**: trocar aliases por `abbr`, adicionar funções úteis (mkcd, extract), ativar o hook do direnv.
 - [ ] **Bloqueio por inatividade**: escurecer a tela antes de bloquear; tempos mais curtos que 1 h.
@@ -88,7 +88,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] Atalhos na barra lateral do Nemo/seletor de arquivos (projetos, Screenshots, Wallpapers).
 - [ ] fish: fisher + `done` (notifica quando um comando longo termina).
 - [x] Tema do bat (`.tmTheme` Umbra, também usado pelo delta).
-- [ ] LS_COLORS (vivid).
+- [x] LS_COLORS (vivid).
 - [ ] atuin (busca no histórico do shell).
 - [ ] Editor no terminal: vimrc mínimo, ou neovim/helix com tema Umbra.
 - [ ] GRUB: menu escondido (`GRUB_TIMEOUT_STYLE=hidden`) ou tema.

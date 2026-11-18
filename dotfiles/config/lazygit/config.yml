@@ -1,0 +1,27 @@
+# lazygit (`lg` in fish). Umbra colours; diffs through delta (same look as git diff).
+gui:
+  nerdFontsVersion: "3"
+  border: rounded
+  colorScheme: dark
+  theme:
+    activeBorderColor: ["#e0a050", bold]
+    inactiveBorderColor: ["#6a3a6e"]
+    searchingActiveBorderColor: ["#c58bd6", bold]
+    optionsTextColor: ["#c58bd6"]
+    selectedLineBgColor: ["#57235a"]
+    inactiveViewSelectedLineBgColor: ["#3a1544"]
+    cherryPickedCommitFgColor: ["#26082f"]
+    cherryPickedCommitBgColor: ["#8fcfc0"]
+    markedBaseCommitFgColor: ["#26082f"]
+    markedBaseCommitBgColor: ["#f2cf8a"]
+    unstagedChangesColor: ["#e5455a"]
+    defaultFgColor: ["#fdf0dc"]
+  authorColors:
+    "*": "#c58bd6"
+git:
+  # `|` cycles between the two: one column (default), side by side
+  diffRenderers:
+    - command: delta --paging=never
+      name: delta
+    - command: delta --paging=never --side-by-side --width={{width}}
+      name: delta lado a lado
