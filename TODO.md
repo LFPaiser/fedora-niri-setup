@@ -81,7 +81,8 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **Histórico da área de transferência**: limitar o cliphist (`-max-items`), não guardar o que vem de gerenciadores de senha (`x-kde-passwordManagerHint`), atalho para apagar um item ou limpar tudo.
 - [ ] **Agente polkit**: o `mate-polkit` abre sem o tema Umbra → testar com o GTK atual ou trocar (ex.: `hyprpolkitagent`, `lxqt-policykit`).
 - [ ] **Compartilhar tela**: testar captura de tela/janela no Firefox e no Meet/Discord pelo `xdg-desktop-portal-gnome` e anotar o que funciona.
-- [ ] **Apps Flatpak com o tema**: `flatpak override --user` com `GTK_THEME`, acesso a `~/.themes`/`~/.icons`, cursor Layan-White-Umbra e fontes.
+- [x] **Apps Flatpak com o tema**: `flatpak override --user` com `GTK_THEME`, acesso a `~/.themes`/`~/.icons`, cursor Layan-White-Umbra e fontes.
+  - Feito em `scripts/user.sh`: `flatpak override --user` com `xdg-config/gtk-3.0`, `gtk-4.0` e `fontconfig` (`:ro`) + `XCURSOR_*`; extensão `org.gtk.Gtk3theme.adw-gtk3-dark`. Ícones/cursor/fontes do host o flatpak já expõe sozinho (`/run/host/...`); `GTK_THEME` NÃO usado (quebra libadwaita). Apps Electron (Bitwarden) ignoram gtk.css.
 - [ ] **Perfis de energia** `[HW]`: `tuned-ppd` + módulo da waybar.
 
 ### Baixa

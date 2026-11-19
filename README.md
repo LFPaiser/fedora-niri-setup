@@ -288,6 +288,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 - **Caps Lock as Esc (tap) / Ctrl (hold):** install `keyd` from COPR
   (`dnf copr enable alternateved/keyd`) and map `capslock = overload(control, esc)`.
 - **More apps (Flathub):** `flatpak install flathub com.discordapp.Discord com.spotify.Client com.obsproject.Studio`.
+  `user.sh` themes Flatpak apps too: user-level overrides share `gtk-3.0`/`gtk-4.0`/`fontconfig` read-only (Umbra `gtk.css`, font aliases) and set the cursor, and it installs the `adw-gtk3-dark` Flatpak theme. Icons, cursor and fonts are forwarded by Flatpak itself; `GTK_THEME` is intentionally unset (it breaks libadwaita apps). Electron apps ignore `gtk.css`. Undo with `flatpak override --user --reset`.
 
 ## 8. Troubleshooting
 

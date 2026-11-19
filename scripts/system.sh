@@ -64,6 +64,9 @@ gpgkey=https://packages.microsoft.com/keys/microsoft.asc
 EOF
 fi
 flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+# Dark adw-gtk3 for GTK3 Flatpak apps (system-wide, so every user gets it; see user.sh).
+flatpak install -y --noninteractive flathub org.gtk.Gtk3theme.adw-gtk3-dark//3.22 ||
+    echo "  adw-gtk3 flatpak theme not installed (flathub offline?): re-run system.sh"
 
 step "System update"
 dnf -y upgrade --refresh

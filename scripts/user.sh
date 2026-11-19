@@ -123,6 +123,25 @@ gs document-font-name 'Inter 11'
 gs monospace-font-name 'JetBrainsMono Nerd Font 11'
 gsettings set org.gnome.desktop.wm.preferences button-layout ':'
 
+step "Flatpak apps: same theme (gtk.css, fontconfig, adw-gtk3 runtime)"
+# Already forwarded by flatpak itself: icons and cursors (/run/host/{user-,}share/icons, so
+# Papirus-Dark-Umbra and Layan-White-Umbra just work), host fonts, XCURSOR_*, and the
+# gsettings theme/colour scheme via the settings portal. Missing: the Umbra gtk.css and the
+# fontconfig aliases, so those two dirs are shared read-only.
+# GTK_THEME is deliberately NOT set: it forces the theme on libadwaita (GTK4) apps too and
+# breaks them; GTK3 apps get adw-gtk3-dark from the runtime extension (system.sh) instead.
+if command -v flatpak >/dev/null; then
+    flatpak override --user --filesystem=xdg-config/gtk-3.0:ro --filesystem=xdg-config/gtk-4.0:ro \
+        --filesystem=xdg-config/fontconfig:ro
+    # Electron/Qt flatpaks ignore gtk.css; keep the cursor explicit for apps that skip the portal.
+    flatpak override --user --env=XCURSOR_THEME=Layan-White-Umbra --env=XCURSOR_SIZE=24
+    # the adw-gtk3-dark runtime itself is installed system-wide by system.sh
+    flatpak info org.gtk.Gtk3theme.adw-gtk3-dark >/dev/null 2>&1 ||
+        echo "  adw-gtk3 flatpak theme missing: re-run system.sh"
+else
+    echo "  flatpak not installed: skipped"
+fi
+
 step "mise: tools from ~/.config/mise/config.toml (Node, Python, Go, Rust, starship, lazygit...)"
 command -v mise >/dev/null || fetch https://mise.run | sh
 mise install -y
