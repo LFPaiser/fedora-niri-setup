@@ -59,13 +59,14 @@ dnf -y upgrade --refresh
 step "Desktop: niri + bar, launcher, notifications, lock, portals"
 dnf_install niri xwayland-satellite greetd tuigreet \
     waybar fuzzel mako gtklock swayidle wob libnotify \
+    gtk-layer-shell python3-cairo \
     xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring mate-polkit \
     pipewire pipewire-pulseaudio wireplumber pavucontrol wiremix wf-recorder xdg-terminal-exec \
     NetworkManager-tui network-manager-applet blueman \
     wl-clipboard cliphist grim slurp brightnessctl playerctl \
     ghostty alacritty foot nemo nautilus file-roller loupe gnome-text-editor tuned-ppd \
     f"$fedora"-backgrounds-base libjxl-utils \
-    cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper
+    cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper (python3-gobject also: idle-fade)
 
 step "Qt apps follow the Umbra palette (qt6ct)"
 dnf_install qt6ct

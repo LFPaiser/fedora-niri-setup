@@ -1,0 +1,72 @@
+#!/usr/bin/python3
+# idle-fade [seconds] [darkness]: dim every monitor before the idle lock.
+# Fades a black overlay in over SECONDS (default 10) up to DARKNESS (default 0.2,
+# i.e. the screen ends at 80% brightness) and holds there until it is killed.
+# swayidle starts it and kills it on any input (`resume 'pkill -x idle-fade'`), so
+# the overlay lets clicks through instead of handling input itself.
+# chayang does the same job but needs wp_single_pixel_buffer_manager_v1, which niri
+# doesn't offer.
+import signal
+import sys
+import time
+
+import cairo
+import gi
+
+gi.require_version("Gtk", "3.0")
+gi.require_version("Gdk", "3.0")
+gi.require_version("GtkLayerShell", "0.1")
+from gi.repository import Gdk, GLib, Gtk, GtkLayerShell  # noqa: E402
+
+DURATION = float(sys.argv[1]) if len(sys.argv) > 1 else 10.0
+DARKNESS = float(sys.argv[2]) if len(sys.argv) > 2 else 0.2
+start = time.monotonic()
+windows = []
+
+
+def alpha_now():
+    t = min((time.monotonic() - start) / DURATION, 1.0)
+    return DARKNESS * t * t * (3 - 2 * t)  # smoothstep: slow start, slow end
+
+
+def draw(_widget, cr):
+    cr.set_source_rgba(0, 0, 0, alpha_now())
+    cr.set_operator(cairo.OPERATOR_SOURCE)
+    cr.paint()
+    return False
+
+
+def tick():
+    for w in windows:
+        w.queue_draw()
+    return time.monotonic() - start < DURATION  # stop redrawing once fully dimmed
+
+
+display = Gdk.Display.get_default()
+for i in range(display.get_n_monitors()):
+    w = Gtk.Window()
+    w.set_visual(w.get_screen().get_rgba_visual())
+    w.set_app_paintable(True)
+    GtkLayerShell.init_for_window(w)
+    GtkLayerShell.set_namespace(w, "idle-fade")
+    GtkLayerShell.set_layer(w, GtkLayerShell.Layer.OVERLAY)
+    GtkLayerShell.set_monitor(w, display.get_monitor(i))
+    GtkLayerShell.set_exclusive_zone(w, -1)
+    for edge in (GtkLayerShell.Edge.TOP, GtkLayerShell.Edge.BOTTOM,
+                 GtkLayerShell.Edge.LEFT, GtkLayerShell.Edge.RIGHT):
+        GtkLayerShell.set_anchor(w, edge, True)
+    w.connect("draw", draw)
+    w.show_all()
+    w.input_shape_combine_region(cairo.Region())  # click-through
+    windows.append(w)
+
+try:  # GLibUnix is the newer home of signal_add; GLib.unix_signal_add is deprecated
+    gi.require_version("GLibUnix", "2.0")
+    from gi.repository import GLibUnix
+    signal_add = GLibUnix.signal_add
+except (ImportError, ValueError):
+    signal_add = GLib.unix_signal_add
+for sig in (signal.SIGTERM, signal.SIGINT):
+    signal_add(GLib.PRIORITY_DEFAULT, sig, lambda: Gtk.main_quit() or False)
+GLib.timeout_add(16, tick)
+Gtk.main()

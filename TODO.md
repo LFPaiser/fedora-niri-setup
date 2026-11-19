@@ -70,7 +70,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **eza**: `theme.yml` Umbra.
 - [ ] **fastfetch**: `config.jsonc` com cores Umbra (opcional: rodar ao abrir o fish).
 - [ ] **fish**: trocar aliases por `abbr`, adicionar funções úteis (mkcd, extract), ativar o hook do direnv.
-- [ ] **Bloqueio por inatividade**: escurecer a tela antes de bloquear; tempos mais curtos que 1 h.
+- [x] **Bloqueio por inatividade**: com 1 h parado a tela escurece para 80% em 10 s (`idle-fade`, overlay do GTK layer-shell — o chayang não roda no niri), bloqueia 1 min depois e desliga a tela 30 min após o bloqueio; qualquer toque desfaz o escurecimento.
 - [x] **Terminal padrão** para apps com `Terminal=true`: `xdg-terminal-exec` + `xdg-terminals.list` → Ghostty; Nemo com `exec-arg -e`; fuzzel já usava o Ghostty.
 - [x] **Portais**: seletor de arquivos fixado no GTK (`xdg-desktop-portal/niri-portals.conf`), o mesmo do Cinnamon ao lado do Nemo — o Nemo não tem portal próprio; o do Nautilus ficou de fora.
 - [ ] **Tela de boot (Plymouth)**: tema Umbra (hoje está em `text`; na VM depende do framebuffer).
