@@ -4,6 +4,8 @@
 #
 #   --gaming      install Steam & co. even inside a VM
 #   --no-gaming   skip them even on real hardware
+#   --boot-menu=hidden|show       GRUB menu hidden (1 s, Esc shows it; default) or shown (5 s)
+#   --boot-remember=yes|no        boot the last chosen entry next time (default no)
 set -euo pipefail
 
 [ "$(id -u)" -eq 0 ] || { echo "run as root (use ./setup.sh)" >&2; exit 1; }
@@ -16,10 +18,16 @@ virt=$(systemd-detect-virt || true)
 is_vm=false; [ "$virt" != none ] && is_vm=true
 
 gaming=auto
+boot_menu=hidden
+boot_remember=no
 for arg in "$@"; do
     case "$arg" in
         --gaming) gaming=yes ;;
         --no-gaming) gaming=no ;;
+        --boot-menu=hidden|--boot-menu=show) boot_menu=${arg#--boot-menu=} ;;
+        --boot-menu=*) echo "--boot-menu must be hidden or show" >&2; exit 1 ;;
+        --boot-remember=yes|--boot-remember=no) boot_remember=${arg#--boot-remember=} ;;
+        --boot-remember=*) echo "--boot-remember must be yes or no" >&2; exit 1 ;;
     esac
 done
 [ "$gaming" = auto ] && { $is_vm && gaming=no || gaming=yes; }
@@ -27,7 +35,7 @@ done
 step() { printf '\n\033[1;35m==> %s\033[0m\n' "$*"; }
 dnf_install() { dnf -y install --skip-unavailable "$@"; }
 
-step "Fedora $fedora | virtualization: $virt | gaming: $gaming | user: $TARGET_USER"
+step "Fedora $fedora | virtualization: $virt | gaming: $gaming | boot menu: $boot_menu | user: $TARGET_USER"
 
 step "dnf: parallel downloads"
 grep -q '^max_parallel_downloads' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' >> /etc/dnf/dnf.conf
@@ -190,15 +198,24 @@ systemctl set-default graphical.target
 usermod -s /usr/bin/fish "$TARGET_USER"
 usermod -aG video,input "$TARGET_USER"
 
-step "GRUB: menu hidden at boot (hold Shift or press Esc to show it)"
-# GRUB_TIMEOUT_STYLE=hidden: the default entry boots after GRUB_TIMEOUT seconds without
-# showing the menu; Shift or Esc during that window shows it. Fedora's grub2-mkconfig
-# reads this from /etc/default/grub and writes it into /boot/grub2/grub.cfg (UEFI too).
-# 1 s: short wait, Esc is meant to be pressed repeatedly right after power-on.
-if ! grep -qx 'GRUB_TIMEOUT=1' /etc/default/grub || ! grep -qx 'GRUB_TIMEOUT_STYLE=hidden' /etc/default/grub; then
-    sed -i '/^GRUB_TIMEOUT=/d; /^GRUB_TIMEOUT_STYLE=/d' /etc/default/grub
-    printf 'GRUB_TIMEOUT=1\nGRUB_TIMEOUT_STYLE=hidden\n' >> /etc/default/grub
-    grub2-mkconfig -o /boot/grub2/grub.cfg
-fi
+step "GRUB: boot menu $boot_menu, remember last entry: $boot_remember"
+# hidden: the default entry boots after 1 s without showing the menu; Esc (or Shift) in
+#         that second shows it, so press Esc repeatedly right after power-on.
+# show:   the menu appears every boot for 5 s.
+# remember: GRUB_SAVEDEFAULT stores the entry you pick (Fedora already uses GRUB_DEFAULT=saved);
+#         a kernel update still makes the new Fedora kernel the default.
+# grub2-mkconfig writes this into /boot/grub2/grub.cfg (UEFI too); only re-run on change.
+if [ "$boot_menu" = show ]; then grub_want=('GRUB_TIMEOUT=5' 'GRUB_TIMEOUT_STYLE=menu')
+else grub_want=('GRUB_TIMEOUT=1' 'GRUB_TIMEOUT_STYLE=hidden'); fi
+[ "$boot_remember" = yes ] && grub_want+=('GRUB_DEFAULT=saved' 'GRUB_SAVEDEFAULT=true') ||
+    grub_want+=('GRUB_SAVEDEFAULT=false')
+grub_changed=false
+for line in "${grub_want[@]}"; do
+    grep -qx "$line" /etc/default/grub && continue
+    sed -i "/^${line%%=*}=/d" /etc/default/grub
+    echo "$line" >> /etc/default/grub
+    grub_changed=true
+done
+$grub_changed && grub2-mkconfig -o /boot/grub2/grub.cfg
 
 step "System part done"
