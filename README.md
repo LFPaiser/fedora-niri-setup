@@ -69,7 +69,11 @@ Fedora installer may not see the drives.
    *Automatic* storage and **do not** tick "reclaim space" or delete anything.
    Fedora will use only the unallocated space (btrfs).
 4. Create your user, tick *Make this user administrator*, and finish.
-5. Reboot. The GRUB menu now offers both Fedora and Windows Boot Manager.
+5. Reboot. The GRUB menu offers both Fedora and Windows Boot Manager, but it is
+   hidden by default: the default entry boots after 1 s, and pressing **Esc** repeatedly
+   right after power-on shows it. When another OS is found, `setup.sh` asks instead:
+   hidden or shown every boot (5 s), and whether to remember the last choice
+   (`--boot-menu=hidden|show`, `--boot-remember=yes|no`; set up by `scripts/system.sh`).
 
 ## 3. Run the setup
 

@@ -91,7 +91,8 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] LS_COLORS (vivid).
 - [ ] atuin (busca no histórico do shell).
 - [ ] Editor no terminal: vimrc mínimo, ou neovim/helix com tema Umbra.
-- [ ] GRUB: menu escondido (`GRUB_TIMEOUT_STYLE=hidden`) ou tema.
+- [x] GRUB: menu escondido — `system.sh` põe `GRUB_TIMEOUT_STYLE=hidden` (1 s; aperte Esc repetidamente ao ligar mostra o menu; com outro sistema instalado, o `setup.sh` pergunta: escondido ou sempre visível, e se lembra a última escolha). Tema continua pendente.
+- [ ] Tema Umbra do GRUB (fundo, fonte e cores do menu que aparece com Esc).
 - [ ] Equalizador (easyeffects) e nomes dos dispositivos de áudio no WirePlumber `[HW]`.
 - [ ] Cores do uosc no mpv.
 - [ ] Visualizador de PDF próprio (Papers ou zathura) em vez do Firefox.
