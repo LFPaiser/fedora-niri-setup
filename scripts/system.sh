@@ -95,7 +95,7 @@ fi
 printf '[Icon Theme]\nInherits=Layan-White-Umbra\n' > /usr/share/icons/default/index.theme
 
 step "Terminal tools"
-dnf_install fish eza zoxide fzf bat ripgrep fd-find btop fastfetch tealdeer jq \
+dnf_install fish direnv eza zoxide fzf bat ripgrep fd-find btop fastfetch tealdeer jq \
     git gh curl wget unzip 7zip cpio vim-enhanced htop
 
 step "Development: compilers, containers, Docker, VS Code"

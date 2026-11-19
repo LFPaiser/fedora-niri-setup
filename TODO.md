@@ -69,7 +69,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
 - [x] **eza**: `theme.yml` Umbra.
 - [x] **fastfetch**: `config.jsonc` com cores Umbra (rodar ao abrir o fish: não, já aparece no workspace sistema).
-- [ ] **fish**: trocar aliases por `abbr`, adicionar funções úteis (mkcd, extract), ativar o hook do direnv.
+- [x] **fish**: trocar aliases por `abbr`, adicionar funções úteis (mkcd, extract), ativar o hook do direnv.
 - [ ] **Bloqueio por inatividade**: escurecer a tela antes de bloquear; tempos mais curtos que 1 h.
 - [x] **Terminal padrão** para apps com `Terminal=true`: `xdg-terminal-exec` + `xdg-terminals.list` → Ghostty; Nemo com `exec-arg -e`; fuzzel já usava o Ghostty.
 - [ ] **Portais**: fixar o seletor de arquivos em `xdg-desktop-portal/niri-portals.conf`.
