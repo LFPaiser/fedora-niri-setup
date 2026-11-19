@@ -164,7 +164,7 @@ gh auth login                             # uploads the key to GitHub
 | Clipboard | cliphist history (Super+Shift+V) |
 | Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons with violet folders (`scripts/papirus-umbra.sh`), Layan white cursor with an Umbra amber → lilac outline, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
-| Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
+| Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs). Right-click: "Abrir no terminal" (Ghostty), "Definir como wallpaper" (through Waypaper, the lock screen follows), "Copiar caminho", and compress/extract (`nemo-fileroller`). Actions live in `dotfiles/local-share/nemo/actions` |
 | "sistema" workspace | Super+0 / Super+': fastfetch + live journal warnings + btop, opened at login. The distro logo is animated in two Umbra colours (a random pair each time) |
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
 | Shell | fish + Starship prompt (Umbra, two lines: blocks with folder · git · project language, slow-command time and clock on the right; `❯` turns red on failure), zoxide (`z`), fzf (Ctrl+R/Ctrl+T), eza (`ls`/`ll`/`tree`, Umbra theme), file colours via vivid `LS_COLORS` (Umbra), bat (`cat`, Umbra theme), lazygit (`lg`, Umbra, diffs through delta; `|` toggles side by side), btop |

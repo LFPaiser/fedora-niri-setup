@@ -62,7 +62,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **Testar o swaync no lugar do mako**: principal motivo é pausar o tempo da notificação com o mouse em cima (o mako 1.11 não tem); de bônus, central de notificações com histórico. Confirmar a pausa antes de trocar, e ver se ele mostra o tempo restante na notificação (o mako não mostra). Para trocar: tema Umbra em CSS, atalhos Super+N / Shift+N / Ctrl+N, `dnd.sh` da waybar, 4 visíveis, agrupamento por app e o som.
 - [x] **Som de notificação** no mako: `message.oga` (urgente: `dialog-warning.oga`) pelo grupo de volume Notificações; mudo para urgência baixa e no não perturbe.
 - [ ] **Luz noturna**: `wlsunset` + botão na waybar (talvez não funcione na VM).
-- [ ] **Ações no Nemo**: "Abrir Ghostty aqui", "Definir como wallpaper", "Copiar caminho"; instalar `nemo-fileroller`.
+- [x] **Ações no Nemo**: "Abrir Ghostty aqui" (já é o "Abrir no terminal" do Nemo), "Definir como wallpaper", "Copiar caminho"; instalar `nemo-fileroller`.
 - [ ] **Tema do fcitx5** (janela de candidatos) em Umbra.
 - [ ] **Regras do mako por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som).
 - [ ] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.

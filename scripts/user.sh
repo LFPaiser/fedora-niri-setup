@@ -43,6 +43,15 @@ done
 for f in "$here"/dotfiles/local-bin/*; do
     install_file "$f" "$HOME/.local/bin/$(basename "$f")" 755
 done
+# ~/.local/share bits (Nemo right-click actions)
+(cd "$here/dotfiles/local-share" && find . -type f) | while read -r f; do
+    src=$here/dotfiles/local-share/$f
+    if grep -q '@HOME@' "$src"; then
+        sed "s|@HOME@|$HOME|g" "$src" > "$render"
+        src=$render
+    fi
+    install_file "$src" "$HOME/.local/share/${f#./}"
+done
 mkdir -p ~/Pictures/Screenshots ~/Pictures/Wallpapers
 
 step "Font: JetBrainsMono Nerd Font"
