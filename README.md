@@ -70,7 +70,7 @@ Fedora installer may not see the drives.
    Fedora will use only the unallocated space (btrfs).
 4. Create your user, tick *Make this user administrator*, and finish.
 5. Reboot. The GRUB menu offers both Fedora and Windows Boot Manager, but it is
-   hidden: the default entry boots after 3 s. Hold **Shift** or press **Esc** during
+   hidden: the default entry boots after 1 s. Hold **Shift** or press **Esc** during
    that time to show it (set up by `scripts/system.sh`).
 
 ## 3. Run the setup
