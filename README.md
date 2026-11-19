@@ -154,7 +154,7 @@ gh auth login                             # uploads the key to GitHub
 | Login | greetd + tuigreet (remembers the last user, shows the time) |
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
 | Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar (day and month in Portuguese), weather (5 sources with automatic fallback; expected rain in mm next to the temperature on rainy days), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
-| Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul) |
+| Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul). Candidate window in the Umbra theme (`dotfiles/local-share/fcitx5/themes/umbra`, same card as the notifications) |
 | Terminal | **Ghostty**, one process for all windows (Alacritty kept as fallback, Foot for emergencies). Default for `Terminal=true` apps and Nemo via `xdg-terminal-exec`. Bar pop-ups (volume, network, weather, updates) open floating |
 | Launcher / notifications / lock | fuzzel / mako (with a sound through the Notifications volume group; silent in do-not-disturb and for low urgency) / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |

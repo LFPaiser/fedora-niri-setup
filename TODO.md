@@ -63,7 +63,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **Som de notificação** no mako: `message.oga` (urgente: `dialog-warning.oga`) pelo grupo de volume Notificações; mudo para urgência baixa e no não perturbe.
 - [ ] **Luz noturna**: `wlsunset` + botão na waybar (talvez não funcione na VM).
 - [ ] **Ações no Nemo**: "Abrir Ghostty aqui", "Definir como wallpaper", "Copiar caminho"; instalar `nemo-fileroller`.
-- [ ] **Tema do fcitx5** (janela de candidatos) em Umbra.
+- [x] **Tema do fcitx5** (janela de candidatos) em Umbra.
 - [ ] **Regras do mako por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som).
 - [ ] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.
 - [x] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
