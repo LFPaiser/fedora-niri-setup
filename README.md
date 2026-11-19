@@ -5,7 +5,7 @@ Everything needed to set up a themed niri desktop on Fedora, on real hardware
 
 - **Desktop:** Fedora 44 + [niri](https://github.com/YaLTeR/niri), a scrollable-tiling Wayland compositor.
 - **Look:** **Umbra**, a warm plum + amber palette taken from the bundled wallpaper
-  (`wallpapers/umbra-construction-v2.png`), used everywhere: niri, a custom waybar, Ghostty, Alacritty, fuzzel,
+  (`wallpapers/umbra-construction-v2.png`), used everywhere: niri, a custom waybar, Ghostty, Kitty, fuzzel,
   mako, GTK 4 / libadwaita apps, Firefox (the Umbra theme on AMO) and the lock screen. Login is a text greeter
   (greetd + tuigreet); the lock screen (gtklock) shows the darkened wallpaper, clock + date and a password field.
 - **Uses:** development, gaming (on real hardware), browsing and video.
@@ -155,7 +155,7 @@ gh auth login                             # uploads the key to GitHub
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
 | Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar (day and month in Portuguese), weather (5 sources with automatic fallback; expected rain in mm next to the temperature on rainy days), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
 | Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul) |
-| Terminal | **Ghostty**, one process for all windows (Alacritty kept as fallback, Foot for emergencies). Default for `Terminal=true` apps and Nemo via `xdg-terminal-exec`. Bar pop-ups (volume, network, weather, updates) open floating |
+| Terminal | **Ghostty**, one process for all windows (Kitty as fallback on Super+Alt+Enter, same image protocol and split keys; Foot for emergencies). Default for `Terminal=true` apps and Nemo via `xdg-terminal-exec`. Bar pop-ups (volume, network, weather, updates) open floating |
 | Launcher / notifications / lock | fuzzel / mako (with a sound through the Notifications volume group; silent in do-not-disturb and for low urgency) / gtklock + swayidle (locks after 1 h, screen off after 3 h) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Volume groups | **Media**, **Notifications**, **System**, **Calls**: each its own volume in front of the master (PipeWire loopbacks + WirePlumber role routing; apps that set no role are Media). **wiremix** (middle-click the volume icon) adjusts groups and single apps |
@@ -182,6 +182,7 @@ gh auth login                             # uploads the key to GitHub
 |---|---|
 | Super+Enter (or T) | Ghostty terminal |
 | Super+Shift+Enter | Foot terminal (emergency: CPU-rendered, works when the GPU/Ghostty breaks) |
+| Super+Alt+Enter | Kitty terminal (fallback) |
 | Super+A (or Space) | app launcher |
 | Super+B / Super+E | Firefox / Files (Nemo) |
 | Super+; | VS Code |
@@ -247,7 +248,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   wttr.in); if one is down, the next one is used automatically.
 - **Different theme:** the Umbra colors live in `niri/config.kdl` (focus ring),
   `waybar/colors.css`, `fuzzel/fuzzel.ini`, `mako/config`,
-  `alacritty/alacritty.toml`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
+  `kitty/kitty.conf`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
   `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config.ghostty`; list the
   built-in options with `ghostty +list-themes`). The previous Catppuccin Mocha look is one
   `theme = Catppuccin Mocha` + palette swap away. Edit the files in this repo and
