@@ -17,9 +17,10 @@ tooltip label { color: @text; }
 #tray > widget { opacity: 0.72; }   /* app icons are images; soften them to match */
 
 /* On / active / something to look at: amber */
-#mpris.playing, #custom-dnd.on, #idle_inhibitor.activated, #bluetooth.connected,
+#mpris.playing, #custom-dnd.dnd-none, #custom-dnd.dnd-notification,
+#custom-dnd.dnd-inhibited-none, #custom-dnd.dnd-inhibited-notification, #idle_inhibitor.activated, #bluetooth.connected,
 #battery.charging, #battery.plugged, #custom-github.unread, #custom-updates.pending { color: @amber; }
-#bluetooth.on { color: @text; }
+#bluetooth.on, #custom-dnd.notification { color: @text; }
 
 /* Off / missing: dim */
 #pulseaudio.muted, #network.disconnected, #network.disabled,

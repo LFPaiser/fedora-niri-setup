@@ -212,10 +212,11 @@ binds {
     // ' is the key left of 1 on ABNT2
     Mod+Apostrophe hotkey-overlay-title="Workspace sistema (fastfetch + btop)" { spawn-sh "~/.local/bin/sistema"; }
 
-    // Notifications (mako). Clicking a notification runs its default action.
-    Mod+N hotkey-overlay-title="Fechar notificação" { spawn "makoctl" "dismiss"; }
-    Mod+Shift+N hotkey-overlay-title="Fechar todas as notificações" { spawn "makoctl" "dismiss" "--all"; }
-    Mod+Ctrl+N hotkey-overlay-title="Reabrir última notificação" { spawn "makoctl" "restore"; }
+    // Notifications (swaync or mako, see ~/.local/bin/notifications). Clicking a
+    // notification runs its default action; its × only closes it.
+    Mod+N hotkey-overlay-title="Fechar notificação" { spawn-sh "~/.local/bin/notifications hide"; }
+    Mod+Shift+N hotkey-overlay-title="Fechar todas as notificações" { spawn-sh "~/.local/bin/notifications hide-all"; }
+    Mod+Ctrl+N hotkey-overlay-title="Central / reabrir notificação" { spawn-sh "~/.local/bin/notifications history"; }
 
     // Media keys (work on the lock screen too)
     XF86AudioRaiseVolume allow-when-locked=true { spawn-sh "~/.local/bin/osd volume-up"; }

@@ -6,7 +6,7 @@ Everything needed to set up a themed niri desktop on Fedora, on real hardware
 - **Desktop:** Fedora 44 + [niri](https://github.com/YaLTeR/niri), a scrollable-tiling Wayland compositor.
 - **Look:** **Umbra**, a warm plum + amber palette taken from the bundled wallpaper
   (`wallpapers/umbra-construction-v2.png`), used everywhere: niri, a custom waybar, Ghostty, Kitty, fuzzel,
-  mako, GTK 4 / libadwaita apps, Firefox (the Umbra theme on AMO) and the lock screen. Login is a text greeter
+  swaync (or mako), GTK 4 / libadwaita apps, Firefox (the Umbra theme on AMO) and the lock screen. Login is a text greeter
   (greetd + tuigreet); the lock screen (gtklock) shows the darkened wallpaper, clock + date and a password field.
 - **Uses:** development, gaming (on real hardware), browsing and video.
 
@@ -106,7 +106,7 @@ NVIDIA driver won't load while Secure Boot is on.
 Wait ~5 minutes after the script finishes (the NVIDIA module builds in the
 background), then **reboot**. Check with `nvidia-smi`, which should list your NVIDIA GPU.
 
-Flags: `./setup.sh --no-gaming` skips the gaming tools; `--gaming` forces them in a VM.
+Flags: `./setup.sh --no-gaming` skips the gaming tools; `--gaming` forces them in a VM. `--notifications=swaync` or `--notifications=mako` picks the notification daemon (asked when omitted in a terminal; swaync when unattended).
 `--cursors=options`, `--cursors=fun` or `--cursors=all` also installs extra cursor themes
 (see [Customizing](#7-customizing)); the default cursor is always installed.
 
@@ -153,10 +153,10 @@ gh auth login                             # uploads the key to GitHub
 |---|---|
 | Login | greetd + tuigreet (remembers the last user, shows the time) |
 | Compositor | niri, rounded corners, thin shadows, gradient focus ring, overview with wallpaper backdrop |
-| Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar (day and month in Portuguese), weather (5 sources with automatic fallback; expected rain in mm next to the temperature on rainy days), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, do-not-disturb, stay-awake, power menu |
+| Bar | **waybar**, 4 interchangeable presets (default: *faixa*, a thin floating band). Workspaces, window title with app icon, clock + calendar (day and month in Portuguese), weather (5 sources with automatic fallback; expected rain in mm next to the temperature on rainy days), media, CPU/RAM/uptime, dnf updates (click to pick which), GitHub notifications, clipboard, input method, Wi-Fi menu, Bluetooth, battery, volume, notifications (bell + count; click: notification center, right-click: do-not-disturb, middle: clear all), stay-awake, power menu |
 | Input method | **fcitx5**: ABNT2 + US layouts, plus Japanese (Mozc), Chinese (Pinyin) and Korean (Hangul). Candidate window in the Umbra theme (`dotfiles/local-share/fcitx5/themes/umbra`, same card as the notifications) |
 | Terminal | **Ghostty**, one process for all windows (Kitty as fallback on Super+Alt+Enter, same image protocol and split keys; Foot for emergencies). Default for `Terminal=true` apps and Nemo via `xdg-terminal-exec`. Bar pop-ups (volume, network, weather, updates) open floating |
-| Launcher / notifications / lock | fuzzel / mako (with a sound through the Notifications volume group; silent in do-not-disturb and for low urgency) / gtklock + swayidle (after 1 h idle the screen dims to 60% black with `idle-fade`, locks 1 min later, screens off 30 min after the lock) |
+| Launcher / notifications / lock | fuzzel / **swaync** by default, or mako (`setup.sh --notifications=mako`; asked when run in a terminal). swaync pauses a notification while the mouse is over it and keeps a notification center; clicking a notification runs its default action, its × only closes it. Both play a sound through the Notifications volume group, silent in do-not-disturb and for low urgency / gtklock + swayidle (after 1 h idle the screen dims to 60% black with `idle-fade`, locks 1 min later, screens off 30 min after the lock) |
 | Volume/brightness pop-up | wob, via `~/.local/bin/osd` |
 | Volume groups | **Media**, **Notifications**, **System**, **Calls**: each its own volume in front of the master (PipeWire loopbacks + WirePlumber role routing; apps that set no role are Media). **wiremix** (middle-click the volume icon) adjusts groups and single apps |
 | Screen recording / annotation | `~/.local/bin/record` (wf-recorder, H.264 + AAC, with the computer's sound) / satty |
@@ -189,7 +189,7 @@ gh auth login                             # uploads the key to GitHub
 | Super+; | VS Code |
 | Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
-| Super+N / Super+Shift+N | dismiss the notification / all of them · Super+Ctrl+N brings the last one back |
+| Super+N / Super+Shift+N | dismiss the notification / all of them (they stay in the history) · Super+Ctrl+N opens the notification center (mako: brings the last one back) |
 | Super+Q | close window |
 | Super+O | overview of all windows/workspaces |
 | Super+' | toggle the "sistema" workspace (fastfetch + btop, opened at login) · Super+0 goes there |
@@ -248,7 +248,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   to cycle sources (Open-Meteo, INPE + Open-Meteo, CPTEC/INPE, MET Norway,
   wttr.in); if one is down, the next one is used automatically.
 - **Different theme:** the Umbra colors live in `niri/config.kdl` (focus ring),
-  `waybar/colors.css`, `fuzzel/fuzzel.ini`, `mako/config`,
+  `waybar/colors.css`, `fuzzel/fuzzel.ini`, `swaync/style.css`, `mako/config`,
   `kitty/kitty.conf`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
   `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config.ghostty`; list the
   built-in options with `ghostty +list-themes`). The previous Catppuccin Mocha look is one
@@ -276,10 +276,10 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   widgets show; the Unlock button and "Password:" label are hidden). Test with `gtklock`.
 - **A fancier bar/shell (real hardware only):** [Noctalia](https://github.com/noctalia-dev/noctalia-shell)
   and [DankMaterialShell](https://github.com/AvengeMedia/DankMaterialShell) are
-  complete, animated niri shells. They replace waybar, mako and the OSD. They were
+  complete, animated niri shells. They replace waybar, the notification daemon and the OSD. They were
   not used here because they need a real GPU to feel smooth. To try one,
   install it, turn off the bar and notifications with
-  `systemctl --user disable --now waybar mako` and remove the `osd` line from
+  `systemctl --user disable --now waybar swaync` (or `mako`) and remove the `osd` line from
   `spawn-at-startup`.
 - **Caps Lock as Esc (tap) / Ctrl (hold):** install `keyd` from COPR
   (`dnf copr enable alternateved/keyd`) and map `capslock = overload(control, esc)`.
@@ -290,7 +290,7 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 | Problem | Fix |
 |---|---|
 | Black screen / no niri after login | In tuigreet press F3 to pick another session (e.g. GNOME), or switch to a TTY (Ctrl+Alt+F2). Then check `journalctl --user -b -u niri`. |
-| Bar, notifications, idle lock or clipboard history gone | They are systemd user services and restart on their own after a crash. Check with `systemctl --user status waybar mako swayidle cliphist`; restart one with `systemctl --user restart waybar`. |
+| Bar, notifications, idle lock or clipboard history gone | They are systemd user services and restart on their own after a crash. Check with `systemctl --user status waybar swaync swayidle cliphist` (or `mako`); restart one with `systemctl --user restart waybar`. |
 | No wallpaper | Check `pgrep awww-daemon`; run `awww-daemon & waypaper --restore`. |
 | `nvidia-smi` fails after reboot | Wait for `akmods` to finish (`sudo akmods --force`), or Secure Boot key not enrolled: `mokutil --import /etc/pki/akmods/certs/public_key.der` and reboot. |
 | Game runs on Intel GPU | Use the launch options in §4; `switcherooctl list` shows the GPUs. |

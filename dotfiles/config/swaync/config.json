@@ -1,0 +1,31 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "layer": "overlay",
+  "control-center-layer": "top",
+  "cssPriority": "user",
+  "notification-window-width": 372,
+  "notification-icon-size": 48,
+  "timeout": 8,
+  "timeout-low": 8,
+  "timeout-critical": 0,
+  "relative-timestamps": true,
+  "notification-grouping": true,
+  "transition-time": 200,
+  "hide-on-action": true,
+  "control-center-width": 420,
+  "control-center-margin-top": 6,
+  "control-center-margin-right": 6,
+  "control-center-margin-bottom": 6,
+  "text-empty": "Nenhuma notificação",
+  "script-fail-notify": false,
+  "scripts": {
+    "som": { "app-name": ".*", "exec": "@HOME@/.local/bin/notify-sound" }
+  },
+  "widgets": ["title", "dnd", "notifications"],
+  "widget-config": {
+    "title": { "text": "Notificações", "clear-all-button": true, "button-text": "Limpar" },
+    "dnd": { "text": "Não perturbe" }
+  }
+}

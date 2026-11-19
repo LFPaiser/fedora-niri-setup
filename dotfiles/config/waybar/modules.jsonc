@@ -145,12 +145,22 @@
         "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%-"
     },
 
+    // Notifications (swaync or mako): bell + count. Kept the "dnd" id so presets and CSS still match.
     "custom/dnd": {
-        "exec": "~/.config/waybar/scripts/dnd.sh",
-        "on-click": "~/.config/waybar/scripts/dnd.sh toggle",
+        "exec": "~/.config/waybar/scripts/notifications.sh",
         "return-type": "json",
-        "interval": 60,
-        "signal": 8
+        "restart-interval": 2,
+        "format": "{icon}{text}",
+        "format-icons": {
+            "notification": "󰂚", "none": "󰂚",
+            "dnd-notification": "󰂛", "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚", "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛", "dnd-inhibited-none": "󰂛"
+        },
+        "on-click": "~/.local/bin/notifications history",
+        "on-click-right": "~/.local/bin/notifications dnd",
+        "on-click-middle": "~/.local/bin/notifications clear",
+        "escape": true
     },
 
     "tray": { "icon-size": 16, "spacing": 8 },

@@ -8,7 +8,7 @@ auto_switch = false
 [ui]
 status_indicators = "dots"
 
-# Background agent finished / needs attention -> desktop notification (mako)
+# Background agent finished / needs attention -> desktop notification (swaync/mako)
 [ui.toast]
 delivery = "system"
 
