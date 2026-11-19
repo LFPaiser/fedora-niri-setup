@@ -1,0 +1,12 @@
+#!/bin/sh
+# Sound for each new notification (swaync runs this; see swaync/config.json "scripts").
+# Same rules as the mako setup: silent for low urgency and in do-not-disturb; a
+# warning sound for critical. Plays through the Notifications volume group
+# (media-role Notification, see pipewire.conf.d/60-volume-groups.conf).
+[ "$(swaync-client -D -sw 2>/dev/null)" = true ] && exit 0
+case $SWAYNC_URGENCY in
+    Low)      exit 0 ;;
+    Critical) sound=dialog-warning ;;
+    *)        sound=message ;;
+esac
+exec pw-play --media-role=Notification "/usr/share/sounds/freedesktop/stereo/$sound.oga"

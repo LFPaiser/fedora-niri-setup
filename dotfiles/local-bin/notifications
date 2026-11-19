@@ -1,0 +1,30 @@
+#!/bin/sh
+# One interface for the notification daemon, so niri binds and the waybar module
+# work with either swaync or mako (picked at install: setup.sh --notifications=).
+#   notifications hide        newest off screen, kept in history  (Super+N)
+#   notifications hide-all    all off screen, kept in history     (Super+Shift+N)
+#   notifications history     swaync: toggle the center; mako: bring back the last one (Super+Ctrl+N)
+#   notifications clear       delete all, history included        (middle-click on the bell)
+#   notifications dnd         toggle do not disturb               (right-click on the bell)
+#   notifications daemon      print swaync or mako
+daemon() {
+    if pgrep -x swaync >/dev/null; then echo swaync
+    elif pgrep -x mako >/dev/null; then echo mako
+    elif command -v swaync-client >/dev/null; then echo swaync
+    else echo mako; fi
+}
+d=$(daemon)
+case "$1:$d" in
+    hide:swaync)      swaync-client --hide-latest -sw ;;
+    hide:mako)        makoctl dismiss ;;
+    hide-all:swaync)  swaync-client --hide-all -sw ;;
+    hide-all:mako)    makoctl dismiss --all ;;
+    clear:swaync)     swaync-client --close-all -sw ;;
+    clear:mako)       makoctl dismiss --all --no-history ;;
+    history:swaync)   swaync-client --toggle-panel -sw ;;
+    history:mako)     makoctl restore ;;
+    dnd:swaync)       swaync-client --toggle-dnd -sw >/dev/null ;;
+    dnd:mako)         makoctl mode -t do-not-disturb >/dev/null ;;
+    daemon:*)         echo "$d" ;;
+    *) echo "usage: notifications hide|hide-all|history|clear|dnd|daemon" >&2; exit 2 ;;
+esac

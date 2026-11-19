@@ -9,8 +9,8 @@ Marque com [x] quando adicionar ou risque quando descartar.
 - [ ] **Seletor de saída de áudio** — clique alterna fone/caixa (`wpctl`), sem abrir o pavucontrol.
 - [ ] **Perfil de energia** — economia / equilibrado / desempenho. Precisa `power-profiles-daemon` (módulo nativo `power-profiles-daemon`).
 - [ ] **Luz noturna** — liga/desliga `wlsunset` (tela mais quente à noite).
-- [ ] **Pomodoro / timer** — contagem regressiva na barra + notificação do mako no fim.
-- [ ] **Contador de notificações** — quantas o mako guardou durante o "não perturbe" (`makoctl history`).
+- [ ] **Pomodoro / timer** — contagem regressiva na barra + notificação no fim.
+- [x] **Contador de notificações** — feito: o sino mostra a contagem (swaync ou mako; `scripts/notifications.sh`).
 - [ ] **Tráfego de rede** — ↓/↑ ao vivo num drawer, como CPU/RAM.
 - [ ] **Disco** — espaço livre em `/` e `/home`; vira alerta acima de 90%.
 - [ ] **GPU** — uso e temperatura (`nvidia-smi` ou `/sys/class/drm/*/device/gpu_busy_percent`).

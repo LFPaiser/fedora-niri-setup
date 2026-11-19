@@ -3,6 +3,7 @@
 # dev runtimes, editor and mpv extras. Run as your normal user. Safe to re-run;
 # any existing config that differs is kept as <file>.bak-<timestamp>.
 #   --cursors=options|fun|all   also install extra cursor themes (scripts/cursors.sh)
+#   --notifications=swaync|mako which notification service to enable (default swaync)
 set -euo pipefail
 
 [ "$(id -u)" -ne 0 ] || { echo "run as your normal user, not root" >&2; exit 1; }
@@ -10,8 +11,12 @@ here=$(cd "$(dirname "$0")/.." && pwd)
 stamp=$(date +%Y%m%d-%H%M%S)
 export PATH="$HOME/.local/bin:$PATH"
 cursors=
+notif=swaync
 for arg in "$@"; do
-    case "$arg" in --cursors=*) cursors=${arg#--cursors=} ;; esac
+    case "$arg" in
+        --cursors=*) cursors=${arg#--cursors=} ;;
+        --notifications=*) notif=${arg#--notifications=} ;;
+    esac
 done
 
 step() { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
@@ -225,11 +230,13 @@ fi
 (cd "$ORCA_DIR" && ./install.sh)
 
 step "Session services (systemd --user)"
-# waybar, mako, swayidle and cliphist start with the session and restart if they crash
-# (units: Fedora's for waybar/mako, ours in dotfiles/config/systemd/user).
+# waybar, the notification daemon (swaync or mako), swayidle and cliphist start with
+# the session and restart if they crash (units: Fedora's for waybar/swaync/mako, ours
+# in dotfiles/config/systemd/user). Both notification configs are installed; only
+# the chosen daemon is (system.sh removes the other).
 systemctl --user daemon-reload 2>/dev/null &&
-    systemctl --user enable waybar.service mako.service swayidle.service cliphist.service ||
-    echo "  no user session bus: run 'systemctl --user enable waybar mako swayidle cliphist' after login"
+    systemctl --user enable waybar.service "$notif.service" swayidle.service cliphist.service ||
+    echo "  no user session bus: run 'systemctl --user enable waybar $notif swayidle cliphist' after login"
 
 step "Check niri config"
 niri validate

@@ -4,6 +4,7 @@
 #
 #   --gaming      install Steam & co. even inside a VM
 #   --no-gaming   skip them even on real hardware
+#   --notifications=swaync|mako   notification daemon (default swaync); the other is removed
 set -euo pipefail
 
 [ "$(id -u)" -eq 0 ] || { echo "run as root (use ./setup.sh)" >&2; exit 1; }
@@ -16,10 +17,13 @@ virt=$(systemd-detect-virt || true)
 is_vm=false; [ "$virt" != none ] && is_vm=true
 
 gaming=auto
+notif=swaync
 for arg in "$@"; do
     case "$arg" in
         --gaming) gaming=yes ;;
         --no-gaming) gaming=no ;;
+        --notifications=swaync|--notifications=mako) notif=${arg#--notifications=} ;;
+        --notifications=*) echo "--notifications must be swaync or mako" >&2; exit 1 ;;
     esac
 done
 [ "$gaming" = auto ] && { $is_vm && gaming=no || gaming=yes; }
@@ -27,7 +31,7 @@ done
 step() { printf '\n\033[1;35m==> %s\033[0m\n' "$*"; }
 dnf_install() { dnf -y install --skip-unavailable "$@"; }
 
-step "Fedora $fedora | virtualization: $virt | gaming: $gaming | user: $TARGET_USER"
+step "Fedora $fedora | virtualization: $virt | gaming: $gaming | notifications: $notif | user: $TARGET_USER"
 
 step "dnf: parallel downloads"
 grep -q '^max_parallel_downloads' /etc/dnf/dnf.conf || echo 'max_parallel_downloads=10' >> /etc/dnf/dnf.conf
@@ -58,7 +62,7 @@ dnf -y upgrade --refresh
 
 step "Desktop: niri + bar, launcher, notifications, lock, portals"
 dnf_install niri xwayland-satellite greetd tuigreet \
-    waybar fuzzel mako gtklock swayidle wob libnotify \
+    waybar fuzzel gtklock swayidle wob libnotify \
     xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring mate-polkit \
     pipewire pipewire-pulseaudio wireplumber pavucontrol wiremix wf-recorder xdg-terminal-exec \
     NetworkManager-tui network-manager-applet blueman \
@@ -66,6 +70,15 @@ dnf_install niri xwayland-satellite greetd tuigreet \
     ghostty alacritty foot nemo nautilus file-roller loupe gnome-text-editor tuned-ppd \
     f"$fedora"-backgrounds-base libjxl-utils \
     cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper
+
+step "Notifications: $notif"
+# swaync and mako both claim org.freedesktop.Notifications; with both installed
+# systemd refuses to load either unit and D-Bus may start the wrong one.
+if [ "$notif" = swaync ]; then
+    dnf_install SwayNotificationCenter; dnf -y remove mako || true
+else
+    dnf_install mako; dnf -y remove SwayNotificationCenter || true
+fi
 
 step "Qt apps follow the Umbra palette (qt6ct)"
 dnf_install qt6ct

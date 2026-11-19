@@ -1,0 +1,50 @@
+/* Notifications (swaync). Umbra (from wallpaper), same look as the old mako cards.
+   Starts from swaync's own stylesheet and only changes colors, sizes and fonts. */
+@import url("file:///etc/xdg/swaync/style.css");
+
+:root {
+  --cc-bg: rgba(38, 8, 47, 0.94);
+  --noti-border-color: #e0a050;
+  --noti-bg: 38, 8, 47;
+  --noti-bg-alpha: 0.94;
+  --noti-bg-darker: #1d0624;
+  --noti-bg-hover: #3a1544;
+  --noti-bg-focus: rgba(87, 35, 90, 0.5);
+  --noti-close-bg: rgba(253, 240, 220, 0.08);
+  --noti-close-bg-hover: rgba(253, 240, 220, 0.18);
+  --text-color: #fdf0dc;
+  --text-color-disabled: #8f6a90;
+  --bg-selected: #57235a;
+  --border: 2px solid var(--noti-border-color);
+  --border-radius: 12px;
+  --notification-icon-size: 48px;
+  --font-size-body: 11pt;
+  --font-size-summary: 11pt;
+}
+
+* { font-family: "Inter", sans-serif; }
+
+.notification-row .notification-background { padding: 6px 6px; }
+
+.notification-row .notification-background .notification {
+  box-shadow: none;
+}
+.notification-row .notification-background .notification.critical {
+  border-color: #e5455a;
+}
+
+.notification-row .notification-background .notification .notification-default-action {
+  padding: 8px;
+}
+.notification-row .notification-background .notification .notification-default-action:hover {
+  background: transparent;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+  font-weight: normal;
+  color: #8f6a90;
+}
+
+/* Progress bar: amber fill on a faint track */
+progressbar trough { background: rgba(253, 240, 220, 0.1); border-radius: 6px; min-height: 6px; }
+progressbar progress { background: #e0a050; border-radius: 6px; min-height: 6px; }
