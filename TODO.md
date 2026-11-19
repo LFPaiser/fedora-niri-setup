@@ -72,7 +72,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **fish**: trocar aliases por `abbr`, adicionar funções úteis (mkcd, extract), ativar o hook do direnv.
 - [ ] **Bloqueio por inatividade**: escurecer a tela antes de bloquear; tempos mais curtos que 1 h.
 - [x] **Terminal padrão** para apps com `Terminal=true`: `xdg-terminal-exec` + `xdg-terminals.list` → Ghostty; Nemo com `exec-arg -e`; fuzzel já usava o Ghostty.
-- [ ] **Portais**: fixar o seletor de arquivos em `xdg-desktop-portal/niri-portals.conf`.
+- [x] **Portais**: seletor de arquivos fixado no GTK (`xdg-desktop-portal/niri-portals.conf`), o mesmo do Cinnamon ao lado do Nemo — o Nemo não tem portal próprio; o do Nautilus ficou de fora.
 - [ ] **Tela de boot (Plymouth)**: tema Umbra (hoje está em `text`; na VM depende do framebuffer).
 - [ ] **yazi** (gerenciador de arquivos no terminal) com tema Umbra.
 - [x] **Janelas de script flutuando** (920×620, centralizadas): as janelas Ghostty abertas pela waybar (`Clima`, `Atualizações`, wifi-menu, wiremix) abrem como coluna inteira → `window-rule` por título com `open-floating true` e tamanho fixo.
