@@ -79,7 +79,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **Detectar diferença entre repo e `~/.config`**: script `scripts/drift.sh` que compara os dotfiles do repo com os instalados e lista o que mudou de um lado ou do outro (evita config viva fora do repo, como no item de Problemas).
 - [ ] **Backup do home**: Pika Backup ou restic com timer `systemd --user` (excluir `~/.cache`, `node_modules`, VMs).
 - [x] **Histórico da área de transferência**: limitar o cliphist (`-max-items`), não guardar o que vem de gerenciadores de senha (`x-kde-passwordManagerHint`), atalho para apagar um item ou limpar tudo.
-- [ ] **Agente polkit**: o `mate-polkit` abre sem o tema Umbra → testar com o GTK atual ou trocar (ex.: `hyprpolkitagent`, `lxqt-policykit`).
+- [x] **Agente polkit**: o `mate-polkit` já abre com o tema Umbra (adw-gtk3-dark + `gtk-3.0/gtk.css`, fonte Inter), testado com `pkcheck --allow-user-interaction`; não precisa trocar de agente. (Obs.: `pkexec true` não pede senha se já houver autorização em cache.)
 - [ ] **Compartilhar tela**: testar captura de tela/janela no Firefox e no Meet/Discord pelo `xdg-desktop-portal-gnome` e anotar o que funciona.
 - [x] **Apps Flatpak com o tema**: `flatpak override --user` com `GTK_THEME`, acesso a `~/.themes`/`~/.icons`, cursor Layan-White-Umbra e fontes.
   - Feito em `scripts/user.sh`: `flatpak override --user` com `xdg-config/gtk-3.0`, `gtk-4.0` e `fontconfig` (`:ro`) + `XCURSOR_*`; extensão `org.gtk.Gtk3theme.adw-gtk3-dark`. Ícones/cursor/fontes do host o flatpak já expõe sozinho (`/run/host/...`); `GTK_THEME` NÃO usado (quebra libadwaita). Apps Electron (Bitwarden) ignoram gtk.css.
