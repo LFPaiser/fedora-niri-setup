@@ -93,7 +93,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] Editor no terminal: vimrc mínimo, ou neovim/helix com tema Umbra.
 - [ ] GRUB: menu escondido (`GRUB_TIMEOUT_STYLE=hidden`) ou tema.
 - [ ] Equalizador (easyeffects) e nomes dos dispositivos de áudio no WirePlumber `[HW]`.
-- [ ] Cores do uosc no mpv.
+- [x] Cores do uosc no mpv.
 - [ ] Visualizador de PDF próprio (Papers ou zathura) em vez do Firefox.
 - [ ] Snapshots btrfs (snapper) antes de mexer em arquivos do sistema.
 - [ ] Ação da tampa / suspensão (`logind.conf.d`) `[HW]`.
