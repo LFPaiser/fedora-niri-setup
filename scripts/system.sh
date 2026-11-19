@@ -62,7 +62,7 @@ dnf_install niri xwayland-satellite greetd tuigreet \
     xdg-desktop-portal-gnome xdg-desktop-portal-gtk gnome-keyring mate-polkit \
     pipewire pipewire-pulseaudio wireplumber pavucontrol wiremix wf-recorder xdg-terminal-exec \
     NetworkManager-tui network-manager-applet blueman \
-    wl-clipboard cliphist grim slurp brightnessctl playerctl \
+    wl-clipboard wtype qalculate cliphist grim slurp brightnessctl playerctl \
     ghostty alacritty foot nemo nemo-fileroller nautilus file-roller loupe gnome-text-editor tuned-ppd \
     f"$fedora"-backgrounds-base libjxl-utils \
     cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper

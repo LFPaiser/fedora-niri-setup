@@ -162,6 +162,7 @@ gh auth login                             # uploads the key to GitHub
 | Screen recording / annotation | `~/.local/bin/record` (wf-recorder, H.264 + AAC, with the computer's sound) / satty |
 | Mic and recorder icons | in the bar's audio group (volume, mic, recorder; brightness, do-not-disturb and stay-awake sit with the power button): mic muted (crossed out) / on / **in use** (red, apps in the tooltip); recorder idle (click: screen, right: area) / **recording** (red timer, click stops) |
 | Clipboard | cliphist history (Super+Shift+V) |
+| Emoji / calculator | fuzzel pickers: emoji by English or Portuguese name, typed into the focused window with wtype (Super+Ctrl+Space); quick calculator on qalc (Super+Ctrl+=) |
 | Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons with violet folders (`scripts/papirus-umbra.sh`), Layan white cursor with an Umbra amber → lilac outline, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs). Right-click: "Abrir no terminal" (Ghostty), "Definir como wallpaper" (through Waypaper, the lock screen follows), "Copiar caminho", and compress/extract (`nemo-fileroller`). Actions live in `dotfiles/local-share/nemo/actions` |
@@ -188,6 +189,8 @@ gh auth login                             # uploads the key to GitHub
 | Super+; | VS Code |
 | Super+Shift+W | wallpaper picker (Waypaper) |
 | Super+Shift+V | clipboard history |
+| Super+Ctrl+Space | emoji picker (search in English or Portuguese; copies and types it) |
+| Super+Ctrl+= | calculator (qalc: `2+2`, `15% of 80`, `5 km to mi`; Enter on empty copies the result) |
 | Super+N / Super+Shift+N | dismiss the notification / all of them · Super+Ctrl+N brings the last one back |
 | Super+Q | close window |
 | Super+O | overview of all windows/workspaces |

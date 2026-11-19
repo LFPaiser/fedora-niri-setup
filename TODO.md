@@ -100,6 +100,6 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] Monitores: escala e taxa de atualização nos blocos `output` do niri `[HW]`.
 - [ ] Touchpad: toque e rolagem natural `[HW]`.
 - [ ] MangoHud e gamemode com cores Umbra, para `system.sh --gaming` `[HW]`.
-- [ ] Seletor de emoji (`fuzzel --dmenu` com lista de emojis, Super+Ctrl+Space) e calculadora rápida (`qalc`) pelo fuzzel, com atalho.
+- [x] Seletor de emoji (`fuzzel --dmenu` com lista de emojis, Super+Ctrl+Space) e calculadora rápida (`qalc`) pelo fuzzel, com atalho.
 - [ ] Atualização de firmware `[HW]`: `fwupdmgr refresh && fwupdmgr update`, ou um aviso na waybar junto com o `updates.sh`.
 - [ ] Mais widgets da barra: ver `dotfiles/config/waybar/CANDIDATOS.md`.
