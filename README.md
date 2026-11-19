@@ -161,7 +161,7 @@ gh auth login                             # uploads the key to GitHub
 | Volume groups | **Media**, **Notifications**, **System**, **Calls**: each its own volume in front of the master (PipeWire loopbacks + WirePlumber role routing; apps that set no role are Media). **wiremix** (middle-click the volume icon) adjusts groups and single apps |
 | Screen recording / annotation | `~/.local/bin/record` (wf-recorder, H.264 + AAC, with the computer's sound) / satty |
 | Mic and recorder icons | in the bar's audio group (volume, mic, recorder; brightness, do-not-disturb and stay-awake sit with the power button): mic muted (crossed out) / on / **in use** (red, apps in the tooltip); recorder idle (click: screen, right: area) / **recording** (red timer, click stops) |
-| Clipboard | cliphist history (Super+Shift+V) |
+| Clipboard | cliphist history (Super+Shift+V): last 200 items, password-manager copies skipped; Shift+Del deletes an item, Ctrl+Shift+Del clears all |
 | Theme | Umbra (custom), adw-gtk3-dark + an Umbra `gtk-4.0/gtk.css`, Papirus-Dark icons with violet folders (`scripts/papirus-umbra.sh`), Layan white cursor with an Umbra amber → lilac outline, Inter + JetBrainsMono Nerd Font; Qt apps via qt6ct; login screen and text console in Umbra colours |
 | Wallpaper | awww + Waypaper (Super+Shift+W), optional slideshow |
 | Files | **Nemo** (default for folders; Nautilus kept for GNOME dialogs) |
