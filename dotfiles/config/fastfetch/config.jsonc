@@ -1,0 +1,39 @@
+// fastfetch in Umbra colours (waybar/colors.css). Also used by fastfetch-umbra
+// (the animated logo in the "sistema" workspace), which prints this info block.
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "color": { "1": "38;2;224;160;80", "2": "38;2;197;139;214" },   // amber, lilac
+    "padding": { "top": 1, "right": 3 }
+  },
+  "display": {
+    "separator": " ",
+    "color": {
+      "keys": "38;2;224;160;80",       // amber
+      "title": "38;2;197;139;214",     // lilac
+      "output": "38;2;253;240;220",    // text (cream)
+      "separator": "38;2;87;35;90"     // surface1
+    },
+    "bar": { "char": { "elapsed": "■", "total": "■" }, "color": { "elapsed": "38;2;224;160;80", "total": "38;2;58;21;68" }, "border": null, "width": 12 },
+    "percent": { "type": ["bar", "num"], "color": { "green": "38;2;168;201;138", "yellow": "38;2;242;207;138", "red": "38;2;229;69;90" } }
+  },
+  "modules": [
+    { "type": "title", "format": "{user-name-colored}{at-symbol-colored}{host-name-colored}" },
+    { "type": "separator", "string": "─" },
+    { "type": "os",       "key": "󰣛 sistema ",  "format": "{pretty-name}" },
+    { "type": "kernel",   "key": " kernel  " },
+    { "type": "uptime",   "key": "󰅐 ligado  " },
+    { "type": "packages", "key": "󰏖 pacotes " },
+    { "type": "wm",       "key": " niri    ",     "format": "{version} ({protocol-name})" },
+    { "type": "shell",    "key": " shell   " },
+    { "type": "terminal", "key": " terminal" },
+    "break",
+    { "type": "cpu",      "key": " cpu     ",      "format": "{name} ({cores-logical})" },
+    { "type": "gpu",      "key": "󰢮 gpu     ",      "format": "{name}" },
+    { "type": "memory",   "key": " memória " },
+    { "type": "disk",     "key": "󰋊 disco   ",    "folders": "/" },
+    { "type": "battery",  "key": "󰁹 bateria " },
+    "break",
+    { "type": "colors", "symbol": "circle", "paddingLeft": 2 }
+  ]
+}
