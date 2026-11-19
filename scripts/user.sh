@@ -172,6 +172,11 @@ printf '[D-BUS Service]\nName=org.freedesktop.FileManager1\nExec=/usr/bin/nemo -
 gsettings set org.cinnamon.desktop.default-applications.terminal exec ghostty 2>/dev/null || true
 gsettings set org.cinnamon.desktop.default-applications.terminal exec-arg -e 2>/dev/null || true    # Nemo: "Open in Terminal", Terminal=true apps
 
+step "GNOME Text Editor: Umbra colours, JetBrains Mono"
+gsettings set org.gnome.TextEditor style-scheme umbra 2>/dev/null || true
+gsettings set org.gnome.TextEditor use-system-font false 2>/dev/null || true
+gsettings set org.gnome.TextEditor custom-font 'JetBrains Mono 11' 2>/dev/null || true
+
 step "Launcher: hide helper apps from fuzzel"
 mkdir -p ~/.local/share/applications
 for app in htop kbd-layout-viewer5 gkbd-keyboard-display org.fcitx.Fcitx5 \

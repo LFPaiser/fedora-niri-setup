@@ -65,7 +65,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **Ações no Nemo**: "Abrir Ghostty aqui" (já é o "Abrir no terminal" do Nemo), "Definir como wallpaper", "Copiar caminho"; instalar `nemo-fileroller`.
 - [x] **Tema do fcitx5** (janela de candidatos) em Umbra.
 - [ ] **Regras do mako por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som).
-- [ ] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.
+- [x] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.
 - [x] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
 - [x] **eza**: `theme.yml` Umbra.
 - [ ] **fastfetch**: `config.jsonc` com cores Umbra (opcional: rodar ao abrir o fish).
