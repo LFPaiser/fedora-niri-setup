@@ -1,0 +1,28 @@
+#!/bin/bash
+# Quick calculator (Super+Ctrl+=) using qalc (qalculate). Type an expression, Enter evaluates it and
+# the result stays above the prompt; keep calculating (an expression starting with + - * / ^ continues
+# from the last result). Enter on an empty prompt copies the last result and closes; Esc closes.
+command -v qalc >/dev/null || { notify-send "Calculator" "qalc not installed (sudo dnf install qalculate)"; exit 1; }
+
+last=""
+mesg="Ex.: 2+2 · 15% of 80 · 5 km to mi · sqrt(2) · 0xff"
+while :; do
+    expr=$(fuzzel --prompt-only '󰃬  ' --width 50 --mesg "$mesg") || exit 0
+    if [ -z "$expr" ]; then
+        if [ -n "$last" ]; then
+            printf %s "$last" | wl-copy
+            notify-send -t 2500 "Calculator" "Copied: $last"
+        fi
+        exit 0
+    fi
+    case $expr in
+        [+*/^]*) [ -n "$last" ] && expr="($last)$expr" ;;
+    esac
+    out=$(qalc -t "$expr" 2>&1 | tail -n 1)
+    if [ -z "$out" ] || [[ $out == *error* ]]; then
+        mesg="$expr = ?  (invalid expression)"
+        continue
+    fi
+    last=$out
+    mesg="$expr = $out"$'\n'"Enter on an empty line copies the result"
+done
