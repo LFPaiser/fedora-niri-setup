@@ -86,7 +86,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 
 ### Baixa
 - [ ] Atalhos na barra lateral do Nemo/seletor de arquivos (projetos, Screenshots, Wallpapers).
-- [ ] fish: fisher + `done` (notifica quando um comando longo termina).
+- [x] fish: fisher + `done` (notifica quando um comando longo termina). Plugins em `dotfiles/config/fish/fish_plugins` (o `user.sh` instala o fisher e roda `fisher update`); notificação via `notify-send` só quando a janela focada mudou, comandos > 10 s, exclusões e texto em `conf.d/done-notify.fish`.
 - [x] Tema do bat (`.tmTheme` Umbra, também usado pelo delta).
 - [x] LS_COLORS (vivid).
 - [ ] atuin (busca no histórico do shell).

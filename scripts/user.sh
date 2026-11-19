@@ -153,6 +153,20 @@ step "bat + delta: Umbra syntax theme"
 # bat and delta only see themes/Umbra.tmTheme after the cache is rebuilt.
 command -v bat >/dev/null && bat cache --build >/dev/null
 
+step "fish: fisher + plugins (dotfiles/config/fish/fish_plugins: done)"
+# fisher is not packaged, so it is fetched once; "fisher update" then installs everything
+# listed in fish_plugins (fisher itself too) and updates the rest. Offline: it is skipped.
+if command -v fish >/dev/null; then
+    fisher_src=$(mktemp)
+    if fish -c 'type -q fisher' || fetch -o "$fisher_src" https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish; then
+        fish -c "type -q fisher || source '$fisher_src'; fisher update" ||
+            echo "  fisher update failed (offline?): re-run scripts/user.sh later"
+    else
+        echo "  could not fetch fisher (offline?): re-run scripts/user.sh later"
+    fi
+    rm -f "$fisher_src"
+fi
+
 step "mpv: uosc interface + thumbnails"
 if [ ! -f ~/.config/mpv/scripts/uosc/main.lua ]; then
     tmp=$(mktemp -d)
