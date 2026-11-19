@@ -199,6 +199,7 @@ binds {
     Mod+Return hotkey-overlay-title="Terminal: Ghostty" { spawn "ghostty"; }
     Mod+T { spawn "ghostty"; }
     Mod+Shift+Return hotkey-overlay-title="Terminal de emergência: Foot" { spawn "foot"; }
+    Mod+Alt+Return hotkey-overlay-title="Terminal reserva: Kitty" { spawn "kitty"; }
     Mod+Space hotkey-overlay-title="App launcher" { spawn "fuzzel"; }
     Mod+A { spawn "fuzzel"; }
     Mod+B hotkey-overlay-title="Browser: Firefox" { spawn "firefox"; }

@@ -64,7 +64,7 @@ dnf_install niri xwayland-satellite greetd tuigreet \
     pipewire pipewire-pulseaudio wireplumber pavucontrol wiremix wf-recorder xdg-terminal-exec \
     NetworkManager-tui network-manager-applet blueman \
     wl-clipboard cliphist grim slurp brightnessctl playerctl \
-    ghostty alacritty foot nemo nemo-fileroller nautilus file-roller loupe gnome-text-editor tuned-ppd \
+    ghostty kitty foot nemo nautilus file-roller loupe gnome-text-editor tuned-ppd \
     f"$fedora"-backgrounds-base libjxl-utils \
     cargo lz4-devel wayland-devel wayland-protocols-devel python3-gobject gtk3  # awww + Waypaper (python3-gobject also: idle-fade)
 
