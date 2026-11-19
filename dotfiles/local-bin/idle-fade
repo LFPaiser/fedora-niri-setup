@@ -1,11 +1,11 @@
 #!/usr/bin/python3
 # idle-fade [seconds] [darkness]: dim every monitor before the idle lock.
-# Fades a black overlay in over SECONDS (default 10) up to DARKNESS (default 0.2,
-# i.e. the screen ends at 80% brightness) and holds there until it is killed.
+# Fades a black overlay in over SECONDS (default 10) up to DARKNESS (default 0.6,
+# i.e. 60% black: the screen ends at 40% brightness) and holds there until it is killed.
 # swayidle starts it and kills it on any input (`resume 'pkill -x idle-fade'`), so
 # the overlay lets clicks through instead of handling input itself.
 # chayang does the same job but needs wp_single_pixel_buffer_manager_v1, which niri
-# doesn't offer.
+# doesn't offer, and it only fades to full black.
 import signal
 import sys
 import time
@@ -19,7 +19,7 @@ gi.require_version("GtkLayerShell", "0.1")
 from gi.repository import Gdk, GLib, Gtk, GtkLayerShell  # noqa: E402
 
 DURATION = float(sys.argv[1]) if len(sys.argv) > 1 else 10.0
-DARKNESS = float(sys.argv[2]) if len(sys.argv) > 2 else 0.2
+DARKNESS = float(sys.argv[2]) if len(sys.argv) > 2 else 0.6
 start = time.monotonic()
 windows = []
 
