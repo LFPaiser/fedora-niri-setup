@@ -70,15 +70,15 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [x] **eza**: `theme.yml` Umbra.
 - [x] **fastfetch**: `config.jsonc` com cores Umbra (rodar ao abrir o fish: não, já aparece no workspace sistema).
 - [x] **fish**: trocar aliases por `abbr`, adicionar funções úteis (mkcd, extract), ativar o hook do direnv.
-- [ ] **Bloqueio por inatividade**: escurecer a tela antes de bloquear; tempos mais curtos que 1 h.
+- [x] **Bloqueio por inatividade**: com 1 h parado a tela escurece com 60% de preto em 10 s (`idle-fade`, overlay do GTK layer-shell — o chayang não roda no niri), bloqueia 1 min depois e desliga a tela 30 min após o bloqueio; qualquer toque desfaz o escurecimento.
 - [x] **Terminal padrão** para apps com `Terminal=true`: `xdg-terminal-exec` + `xdg-terminals.list` → Ghostty; Nemo com `exec-arg -e`; fuzzel já usava o Ghostty.
-- [ ] **Portais**: fixar o seletor de arquivos em `xdg-desktop-portal/niri-portals.conf`.
+- [x] **Portais**: seletor de arquivos fixado no GTK (`xdg-desktop-portal/niri-portals.conf`), o mesmo do Cinnamon ao lado do Nemo — o Nemo não tem portal próprio; o do Nautilus ficou de fora.
 - [ ] **Tela de boot (Plymouth)**: tema Umbra (hoje está em `text`; na VM depende do framebuffer).
 - [ ] **yazi** (gerenciador de arquivos no terminal) com tema Umbra.
 - [x] **Janelas de script flutuando** (920×620, centralizadas): as janelas Ghostty abertas pela waybar (`Clima`, `Atualizações`, wifi-menu, wiremix) abrem como coluna inteira → `window-rule` por título com `open-floating true` e tamanho fixo.
 - [ ] **Detectar diferença entre repo e `~/.config`**: script `scripts/drift.sh` que compara os dotfiles do repo com os instalados e lista o que mudou de um lado ou do outro (evita config viva fora do repo, como no item de Problemas).
 - [ ] **Backup do home**: Pika Backup ou restic com timer `systemd --user` (excluir `~/.cache`, `node_modules`, VMs).
-- [ ] **Histórico da área de transferência**: limitar o cliphist (`-max-items`), não guardar o que vem de gerenciadores de senha (`x-kde-passwordManagerHint`), atalho para apagar um item ou limpar tudo.
+- [x] **Histórico da área de transferência**: limitar o cliphist (`-max-items`), não guardar o que vem de gerenciadores de senha (`x-kde-passwordManagerHint`), atalho para apagar um item ou limpar tudo.
 - [ ] **Agente polkit**: o `mate-polkit` abre sem o tema Umbra → testar com o GTK atual ou trocar (ex.: `hyprpolkitagent`, `lxqt-policykit`).
 - [ ] **Compartilhar tela**: testar captura de tela/janela no Firefox e no Meet/Discord pelo `xdg-desktop-portal-gnome` e anotar o que funciona.
 - [ ] **Apps Flatpak com o tema**: `flatpak override --user` com `GTK_THEME`, acesso a `~/.themes`/`~/.icons`, cursor Layan-White-Umbra e fontes.

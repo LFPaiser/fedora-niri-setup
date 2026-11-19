@@ -1,4 +1,7 @@
-# Idle lock: lock after 1 h, screens off after 3 h, and lock before suspend.
+# Idle lock: after 1 h idle the screen dims to 60% black (idle-fade, 10 s fade); any input
+# undoes it. Locks 1 min later (1 h 01), screens off 30 min after the lock (1 h 31),
+# and locks before suspend. idle-fade runs in the background (&): it never exits on its
+# own, and -w makes swayidle wait for each command, so it would block the lock.
 # A user service (enabled by user.sh) so it comes back if it ever crashes; when it was
 # spawned by niri, a crash meant no idle lock until the next login, silently.
 [Unit]
@@ -8,11 +11,17 @@ After=graphical-session.target
 Requisite=graphical-session.target
 
 [Service]
-ExecStart=/usr/bin/swayidle -w timeout 3600 'gtklock -d' timeout 10800 'niri msg action power-off-monitors' before-sleep 'gtklock -d'
+ExecStart=/usr/bin/swayidle -w \
+    timeout 3600 '%h/.local/bin/idle-fade 10 0.6 &' resume 'pkill -x idle-fade' \
+    timeout 3660 'pkill -x idle-fade; gtklock -d' \
+    timeout 5460 'niri msg action power-off-monitors' \
+    before-sleep 'gtklock -d'
 Restart=on-failure
 # gtklock runs in this unit's cgroup: on a restart, stop only swayidle, never an open
 # lock screen (killing it would unlock the session)
 KillMode=process
+# ...but do clear a dim overlay left on screen
+ExecStopPost=-/usr/bin/pkill -x idle-fade
 
 [Install]
 WantedBy=graphical-session.target

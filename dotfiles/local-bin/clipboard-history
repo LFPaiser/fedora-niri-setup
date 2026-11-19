@@ -1,0 +1,26 @@
+#!/bin/sh
+# Clipboard history picker (Super+Shift+V, waybar click).
+#   Enter                copy the item back to the clipboard
+#   Shift+Del            delete the item, picker stays open
+#   Ctrl+Shift+Del       clear the whole history (asks first)
+# Items copied from password managers are never stored: wl-paste marks them
+# CLIPBOARD_STATE=sensitive and cliphist skips them. Limit: ~/.config/cliphist/config.
+mesg='Enter copia · Shift+Del apaga o item · Ctrl+Shift+Del limpa tudo'
+index=0
+while :; do
+    list=$(cliphist list)
+    [ -n "$list" ] || { notify-send -a cliphist 'Área de transferência' 'Histórico vazio'; exit 0; }
+    sel=$(printf '%s\n' "$list" | fuzzel --dmenu --only-match --prompt '󰅌  ' \
+        --mesg "$mesg" --select-index "$index" --index)
+    rc=$?
+    [ -n "$sel" ] || exit 0
+    line=$(printf '%s\n' "$list" | sed -n "$((sel + 1))p")
+    case $rc in
+        0)  printf '%s\n' "$line" | cliphist decode | wl-copy; exit 0 ;;
+        10) printf '%s\n' "$line" | cliphist delete; index=$sel ;;
+        11) ok=$(printf 'Não\nSim, apagar tudo\n' | fuzzel --dmenu --only-match --index \
+                --prompt '󰆴  ' --mesg 'Limpar todo o histórico?')
+            [ "$ok" = 1 ] && { cliphist wipe; exit 0; } ;;
+        *)  exit 0 ;;
+    esac
+done
