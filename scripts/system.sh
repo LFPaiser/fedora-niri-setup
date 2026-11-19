@@ -190,4 +190,15 @@ systemctl set-default graphical.target
 usermod -s /usr/bin/fish "$TARGET_USER"
 usermod -aG video,input "$TARGET_USER"
 
+step "GRUB: menu hidden at boot (hold Shift or press Esc to show it)"
+# GRUB_TIMEOUT_STYLE=hidden: the default entry boots after GRUB_TIMEOUT seconds without
+# showing the menu; Shift or Esc during that window shows it. Fedora's grub2-mkconfig
+# reads this from /etc/default/grub and writes it into /boot/grub2/grub.cfg (UEFI too).
+grep -q '^GRUB_TIMEOUT=' /etc/default/grub || echo 'GRUB_TIMEOUT=3' >> /etc/default/grub
+if ! grep -qx 'GRUB_TIMEOUT_STYLE=hidden' /etc/default/grub; then
+    sed -i '/^GRUB_TIMEOUT_STYLE=/d' /etc/default/grub
+    echo 'GRUB_TIMEOUT_STYLE=hidden' >> /etc/default/grub
+    grub2-mkconfig -o /boot/grub2/grub.cfg
+fi
+
 step "System part done"
