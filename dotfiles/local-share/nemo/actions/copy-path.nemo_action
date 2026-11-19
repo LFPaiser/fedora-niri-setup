@@ -1,0 +1,8 @@
+[Nemo Action]
+# Right-click → copy the full path of the selected files/folders (one per line).
+Name=Copiar caminho
+Comment=Copiar o caminho completo para a área de transferência
+Exec="@HOME@/.local/bin/copy-path" %F
+Icon-Name=edit-copy
+Selection=notnone
+Extensions=any;

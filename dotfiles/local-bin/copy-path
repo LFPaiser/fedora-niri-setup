@@ -1,0 +1,6 @@
+#!/bin/sh
+# Copy the given paths to the clipboard, one per line (Nemo: "Copiar caminho").
+[ $# -gt 0 ] || exit 1
+printf '%s\n' "$@" | head -c -1 | wl-copy
+if [ $# -eq 1 ]; then msg=$1; else msg="$# caminhos"; fi
+notify-send -a Arquivos -i edit-copy 'Caminho copiado' "$msg"

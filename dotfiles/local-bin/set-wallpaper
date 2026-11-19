@@ -1,0 +1,10 @@
+#!/bin/sh
+# Set an image as the wallpaper through Waypaper (Nemo: "Definir como wallpaper"):
+# awww applies it, Waypaper saves it and its post_command re-points
+# ~/Pictures/Wallpapers/.current for the lock screen.
+[ -f "$1" ] || exit 1
+if ~/.local/bin/waypaper --wallpaper "$1" >/dev/null 2>&1; then
+    notify-send -a Wallpaper -i preferences-desktop-wallpaper 'Wallpaper alterado' "$(basename "$1")"
+else
+    notify-send -a Wallpaper -u critical 'Wallpaper não alterado' "Waypaper falhou com $(basename "$1")"
+fi
