@@ -181,8 +181,11 @@ if [ "$gaming" = yes ]; then
     flatpak install -y --noninteractive flathub com.heroicgameslauncher.hgl net.davidotek.pupgui2
 fi
 
+# VM-only: everything that exists only because of VirtualBox lives in this block and is
+# listed in README §9. Nothing here may run on real hardware.
 if [ "$virt" = oracle ]; then
     step "VirtualBox guest additions"
+    # Also syncs the guest clock with the Windows host (boot offset: README §9).
     dnf_install virtualbox-guest-additions
     # The virtual GPU only offers OpenGL 4.1; Ghostty needs 4.3, so render it in software.
     printf '#!/bin/sh\nLIBGL_ALWAYS_SOFTWARE=1 exec /usr/bin/ghostty "$@"\n' > /usr/local/bin/ghostty

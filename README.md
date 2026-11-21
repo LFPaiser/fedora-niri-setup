@@ -327,3 +327,13 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 - The VM's virtual GPU only offers OpenGL 4.1 and Ghostty needs 4.3, so in a VM
   `setup.sh` adds `/usr/local/bin/ghostty`, which runs it with software rendering.
   Real hardware doesn't need this.
+- Clock off by a few seconds at boot (`chronyd: System clock wrong by N seconds`, then
+  stepped): VirtualBox starts the guest clock from the Windows host clock, and Windows
+  only syncs it now and then. Chrony corrects it a few seconds after boot. The guest
+  additions are already installed (VM only). To shrink the offset, resync the host: admin
+  `w32tm /resync`. Real hardware has its own RTC and doesn't need any of this.
+
+**VM-only rule:** anything that exists only because of VirtualBox (guest additions,
+software-rendered Ghostty, clock notes above) goes inside the `if [ "$virt" = oracle ]`
+block of `scripts/system.sh` and is documented in this section. It must never run on
+real hardware.
