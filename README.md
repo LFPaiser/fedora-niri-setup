@@ -1,7 +1,6 @@
 # Fedora + niri setup
 
-Everything needed to set up a themed niri desktop on Fedora, on real hardware
-(e.g. a laptop with hybrid Intel + NVIDIA graphics) or in a VirtualBox VM for testing.
+Everything needed to set up a themed niri desktop on Fedora, on real hardware or in a VirtualBox VM for testing.
 
 - **Desktop:** Fedora 44 + [niri](https://github.com/YaLTeR/niri), a scrollable-tiling Wayland compositor.
 - **Look:** **Umbra**, a warm plum + amber palette taken from the bundled wallpaper
