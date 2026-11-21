@@ -26,6 +26,7 @@
   "widgets": ["title", "dnd", "notifications"],
   "widget-config": {
     "title": { "text": "Notificações", "clear-all-button": true, "button-text": "Limpar" },
-    "dnd": { "text": "Não perturbe" }
+    "dnd": { "text": "Não perturbe" },
+    "notifications": {}
   }
 }
