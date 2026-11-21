@@ -1,5 +1,5 @@
 # Default apps (scripts/user.sh installs this to ~/.config/mimeapps.list).
-# Built from each app's MimeType list: archives File Roller, images Loupe,
+# Built from each app's MimeType list: archives File Roller, images Gwenview,
 # video/audio mpv, text Text Editor; folders Nemo; PDF Firefox.
 [Default Applications]
 application/bzip2=org.gnome.FileRoller.desktop
@@ -142,32 +142,32 @@ audio/x-vorbis=mpv.desktop
 audio/x-vorbis+ogg=mpv.desktop
 audio/x-wav=mpv.desktop
 audio/x-wavpack=mpv.desktop
-image/apng=org.gnome.Loupe.desktop
-image/avif=org.gnome.Loupe.desktop
-image/bmp=org.gnome.Loupe.desktop
-image/gif=org.gnome.Loupe.desktop
-image/heic=org.gnome.Loupe.desktop
-image/jp2=org.gnome.Loupe.desktop
-image/jpeg=org.gnome.Loupe.desktop
-image/jxl=org.gnome.Loupe.desktop
-image/png=org.gnome.Loupe.desktop
-image/qoi=org.gnome.Loupe.desktop
-image/svg+xml=org.gnome.Loupe.desktop
-image/svg+xml-compressed=org.gnome.Loupe.desktop
-image/tiff=org.gnome.Loupe.desktop
-image/vnd.microsoft.icon=org.gnome.Loupe.desktop
-image/webp=org.gnome.Loupe.desktop
-image/x-dds=org.gnome.Loupe.desktop
-image/x-exr=org.gnome.Loupe.desktop
-image/x-portable-anymap=org.gnome.Loupe.desktop
-image/x-portable-bitmap=org.gnome.Loupe.desktop
-image/x-portable-graymap=org.gnome.Loupe.desktop
-image/x-portable-pixmap=org.gnome.Loupe.desktop
-image/x-qoi=org.gnome.Loupe.desktop
-image/x-tga=org.gnome.Loupe.desktop
-image/x-win-bitmap=org.gnome.Loupe.desktop
-image/x-xbitmap=org.gnome.Loupe.desktop
-image/x-xpixmap=org.gnome.Loupe.desktop
+image/apng=org.kde.gwenview.desktop
+image/avif=org.kde.gwenview.desktop
+image/bmp=org.kde.gwenview.desktop
+image/gif=org.kde.gwenview.desktop
+image/heic=org.kde.gwenview.desktop
+image/jp2=org.kde.gwenview.desktop
+image/jpeg=org.kde.gwenview.desktop
+image/jxl=org.kde.gwenview.desktop
+image/png=org.kde.gwenview.desktop
+image/qoi=org.kde.gwenview.desktop
+image/svg+xml=org.kde.gwenview.desktop
+image/svg+xml-compressed=org.kde.gwenview.desktop
+image/tiff=org.kde.gwenview.desktop
+image/vnd.microsoft.icon=org.kde.gwenview.desktop
+image/webp=org.kde.gwenview.desktop
+image/x-dds=org.kde.gwenview.desktop
+image/x-exr=org.kde.gwenview.desktop
+image/x-portable-anymap=org.kde.gwenview.desktop
+image/x-portable-bitmap=org.kde.gwenview.desktop
+image/x-portable-graymap=org.kde.gwenview.desktop
+image/x-portable-pixmap=org.kde.gwenview.desktop
+image/x-qoi=org.kde.gwenview.desktop
+image/x-tga=org.kde.gwenview.desktop
+image/x-win-bitmap=org.kde.gwenview.desktop
+image/x-xbitmap=org.kde.gwenview.desktop
+image/x-xpixmap=org.kde.gwenview.desktop
 inode/directory=nemo.desktop
 text/markdown=org.gnome.TextEditor.desktop
 text/plain=org.gnome.TextEditor.desktop

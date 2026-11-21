@@ -32,7 +32,7 @@ Coisas que estão erradas ou inconsistentes hoje. Ordem: prioridade alta → bai
 - [x] **VS Code igual ao do Windows**: Settings Sync ligado (GitHub), trazido do Windows com Replace Local; daqui em diante sincroniza nos dois sentidos. O repo não gerencia o VS Code.
 
 ### Média
-- [x] **Associações de arquivo**: `mimeapps.list` no repo, montado a partir dos tipos de cada app — compactados: File Roller; imagens: Loupe; vídeo/áudio: mpv; texto: Text Editor (zip abria no Nautilus).
+- [x] **Associações de arquivo**: `mimeapps.list` no repo, montado a partir dos tipos de cada app — compactados: File Roller; imagens: Gwenview; vídeo/áudio: mpv; texto: Text Editor (zip abria no Nautilus).
 
 ### Baixa
 - [x] Arquivos `*.bak*` antigos em `~/.config` apagados (17, até 17/11). Os de 18/11 ficam até confirmar que está tudo certo.
