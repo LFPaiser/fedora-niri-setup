@@ -11,6 +11,9 @@
 #                               every boot (5 s); asked only when another OS is installed
 #   --boot-remember=yes|no      boot the last chosen entry (e.g. Windows) next time;
 #                               asked together with --boot-menu
+#   --godot[=VERSION] | --no-godot  Godot editor, official build in ~/.local (default:
+#                               latest stable); asked when run in a terminal, off when unattended
+#   --godot-templates           also Godot's export templates (~1 GB; asked with --godot)
 set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
 
@@ -27,6 +30,22 @@ case " $* " in
             [ "$ans" = 2 ] && notif=mako
         fi
         args+=("--notifications=$notif") ;;
+esac
+
+case " $* " in
+    *" --godot "*|*" --godot="*|*" --no-godot "*) ;;
+    *)
+        if [ -t 0 ]; then
+            read -rp "Install the Godot game engine (official build, latest stable)? [y/N]: " ans
+            case $ans in
+                [yYsS]*)
+                    args+=(--godot)
+                    case " $* " in *" --godot-templates "*) ;; *)
+                        read -rp "  Also its export templates, to export for Windows/Linux (~1 GB)? [y/N]: " ans
+                        case $ans in [yYsS]*) args+=(--godot-templates) ;; esac
+                    esac ;;
+            esac
+        fi ;;
 esac
 
 # Another OS next to Fedora (UEFI entry outside \EFI\fedora, or os-prober finds one)?
