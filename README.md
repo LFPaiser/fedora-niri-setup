@@ -26,7 +26,12 @@ wallpapers/umbra-construction-v2.png  default wallpaper (the Umbra palette is de
                           Fedora's own night wallpaper is set up as the second option)
 ks/ks.cfg, oemdrv-ks.iso  VM only: unattended install (wipes the disk!)
 vm_ed25519                VM only (optional, not committed): SSH key for the test VM
+docs/apps.md              suggested apps that are not installed yet
 ```
+
+Planned work and known bugs are tracked in [GitHub issues](https://github.com/LFPaiser/fedora-niri-setup/issues)
+(labelled by type, `area:*` component, `priority:*` and `hw` for real-hardware-only items);
+`TODO.md` keeps the older checklist.
 
 ---
 

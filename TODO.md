@@ -6,6 +6,12 @@ Checklist do sistema, em duas categorias:
 - **Alterações**: personalizações e ferramentas novas que ainda não foram feitas.
 
 Em cada categoria, a ordem é de prioridade: alta → média → baixa.
+
+> **Itens novos ficam nas [issues do GitHub](https://github.com/LFPaiser/fedora-niri-setup/issues)**, não aqui.
+> Etiquetas: tipo (`bug`, `enhancement`, `performance`, `security`, `idea`, `documentation`),
+> componente (`area:waybar`, `area:niri`, `area:install`, …), prioridade (`priority:high|medium|low`)
+> e `hw` (só em hardware real). Esta lista continua com o que já estava nela.
+> Apps sugeridos: [`docs/apps.md`](docs/apps.md).
 `[HW]` = só faz sentido em hardware real (não na VM).
 
 Tokens visuais propostos, para usar como referência nos itens de consistência:
