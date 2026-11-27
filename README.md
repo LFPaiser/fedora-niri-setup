@@ -15,18 +15,18 @@ as `<file>.bak-<date>`.
 
 ```
 setup.sh                  entry point (run as your user, asks for sudo once)
-scripts/system.sh         repos, packages, drivers, services (root)
-scripts/user.sh           dotfiles, fonts, cursor, wallpaper, theme, dev runtimes (user)
-scripts/cursor-recolor.py recolours a cursor theme (builds the default Layan-White-Umbra)
-scripts/cursors.sh        optional extra cursor themes (options / fun / all)
-dotfiles/config/...       copied to ~/.config/... (@HOME@ is replaced with your home dir)
-dotfiles/local-bin/...    copied to ~/.local/bin/ (osd, powermenu, sistema, fastfetch-umbra)
-system-files/             Firefox policy (uBlock Origin, no telemetry), greetd login config
-wallpapers/umbra-construction-v2.png  default wallpaper (the Umbra palette is derived from it;
+scripts/                  installer steps: scripts/system.sh (root), scripts/user.sh (user),
+                          scripts/cursor-recolor.py, scripts/cursors.sh,
+                          scripts/papirus-umbra.sh, scripts/gen-emoji.py
+system-files/             system config copied into place: firefox-policies.json,
+                          greetd-config.toml, umbra-vtrgb.service and vtrgb
+dotfiles/                 config/, local-bin/, local-share/, firefox/ and the rest of the
+                          dotfiles copied into $HOME (@HOME@ is replaced with your home dir)
+docs/                     extra documentation (apps.md, ...)
+wallpapers/               default wallpaper (the Umbra palette is derived from it;
                           Fedora's own night wallpaper is set up as the second option)
-ks/ks.cfg, oemdrv-ks.iso  VM only: unattended install (wipes the disk!)
+ks/                       VM only: unattended install (wipes the disk!) and oemdrv-ks.iso
 vm_ed25519                VM only (optional, not committed): SSH key for the test VM
-docs/apps.md              suggested apps that are not installed yet
 ```
 
 Planned work and known bugs are tracked in [GitHub issues](https://github.com/LFPaiser/fedora-niri-setup/issues)
