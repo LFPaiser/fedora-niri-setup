@@ -299,6 +299,16 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 - **More apps (Flathub):** `flatpak install flathub com.discordapp.Discord com.spotify.Client com.obsproject.Studio`.
   `user.sh` themes Flatpak apps too: user-level overrides share `gtk-3.0`/`gtk-4.0`/`fontconfig` read-only (Umbra `gtk.css`, font aliases) and set the cursor, and it installs the `adw-gtk3-dark` Flatpak theme. Icons, cursor and fonts are forwarded by Flatpak itself; `GTK_THEME` is intentionally unset (it breaks libadwaita apps). Electron apps ignore `gtk.css`. Undo with `flatpak override --user --reset`.
 
+### Language policy
+
+User-facing UI strings are written in Portuguese. Documentation, issue titles and bodies, code comments and commit messages are written in English. File and directory names are English.
+
+Mixed strings to be fixed by their component owners:
+
+- `dotfiles/config/niri/config.kdl:203-256` mixes "App launcher" and "Power menu" with "Arquivos: Nemo" and "Fechar janela em foco"
+- `dotfiles/config/waybar/modules.jsonc:168` says "Power menu (Super+P)" while `dotfiles/config/waybar/scripts/github.sh:3` says "gh: sem acesso"
+- `TODO.md` and `dotfiles/config/waybar/CANDIDATOS.md` are Portuguese notes; new work belongs in English GitHub issues
+
 ## 8. Troubleshooting
 
 | Problem | Fix |
