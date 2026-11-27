@@ -119,6 +119,15 @@ Flags: `./setup.sh --no-gaming` skips the gaming tools; `--gaming` forces them i
 `--cursors=options`, `--cursors=fun` or `--cursors=all` also installs extra cursor themes
 (see [Customizing](#7-customizing)); the default cursor is always installed.
 
+### What gets downloaded and run
+
+`setup.sh` fetches code from the internet. Run it only on a network you trust.
+
+- **As root (`scripts/system.sh`):** package repositories (RPM Fusion, the Ghostty COPR, VS Code and Flathub) and their packages, plus the Layan cursor tarball from the `master` branch of `vinceliuice/Layan-cursors`.
+- **As your user (`scripts/user.sh`):** `https://mise.run` is piped to `sh` and `https://claude.ai/install.sh` is piped to `bash` (see [#297](https://github.com/LFPaiser/fedora-niri-setup/issues/297)). Release files are fetched from GitHub for JetBrainsMono Nerd Font, uosc, herdr, fastfetch and Satty, and `awww` is cloned from Codeberg; herdr is dropped into `~/.local/bin` without a checksum (see [#6](https://github.com/LFPaiser/fedora-niri-setup/issues/6)). Orca is cloned from GitHub and its `install.sh` is run.
+
+To skip optional parts: `--no-gaming` skips the gaming tools, `--notifications=mako` picks mako instead of swaync, `--cursors=options|fun|all` adds extra cursor themes, and `ORCA_DIR` moves the Orca checkout. The default cursor theme is always installed.
+
 ## 4. After the first login
 
 ```bash
