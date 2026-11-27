@@ -97,6 +97,7 @@ On real hardware it automatically:
   - Intel: `intel-media-driver` (hardware video decoding);
   - AMD: the RPM Fusion "freeworld" Mesa VA-API/VDPAU drivers;
   - NVIDIA: `akmod-nvidia` plus CUDA, VA-API and suspend support, with the GPU powering off when idle to save battery;
+- installs **LibreOffice** (documents, spreadsheets, presentations) from Flathub;
 - installs **gaming** tools: Steam, GameMode, MangoHud, gamescope, Heroic (Epic/GOG) and ProtonUp-Qt;
 - replaces GDM with **greetd + tuigreet** (a text login that starts niri) and makes fish your shell;
 - sets the keyboard to **Brazilian ABNT2** (US as second layout) on the console, login and desktop;
@@ -182,6 +183,7 @@ gh auth login                             # uploads the key to GitHub
 | Dev | VS Code (themes, extensions and profiles via its Settings Sync), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails (Umbra colours, Inter font), yt-dlp (`mpv <youtube-url>` works) |
 | Browser | Firefox + uBlock Origin |
+| Office | **LibreOffice** (Flathub): Writer (documents), Calc (spreadsheets), Impress (presentations) |
 | Gaming (real HW) | Steam + Proton, GameMode, MangoHud, gamescope, Heroic, ProtonUp-Qt |
 
 ## 6. Keyboard cheat sheet

@@ -140,6 +140,11 @@ step "Firefox: uBlock Origin, Umbra theme, no telemetry (system policy)"
 install -Dm644 "$here/system-files/firefox-policies.json" /etc/firefox/policies/policies.json
 dnf_install firefox
 
+step "Office: LibreOffice (Writer, Calc, Impress) from Flathub"
+# Flathub build: follows upstream releases and stays out of dnf upgrades.
+flatpak install -y --noninteractive flathub org.libreoffice.LibreOffice ||
+    echo "  LibreOffice not installed (flathub offline?): re-run system.sh"
+
 gpus=$(lspci -nn | grep -Ei 'vga|3d|display' || true)
 if ! $is_vm; then
     step "GPU drivers"
