@@ -260,13 +260,12 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   format is at the top of `waybar/scripts/weather.sh`. Right-click the weather
   to cycle sources (Open-Meteo, INPE + Open-Meteo, CPTEC/INPE, MET Norway,
   wttr.in); if one is down, the next one is used automatically.
-- **Different theme:** the Umbra colors live in `niri/config.kdl` (focus ring),
-  `waybar/colors.css`, `fuzzel/fuzzel.ini`, `swaync/style.css`, `mako/config`,
-  `kitty/kitty.conf`, `gtklock/style.css`, `gtk-4.0/gtk.css`,
-  `ghostty/themes/Umbra` (switch with `theme = ...` in `ghostty/config.ghostty`; list the
-  built-in options with `ghostty +list-themes`). The previous Catppuccin Mocha look is one
-  `theme = Catppuccin Mocha` + palette swap away. Edit the files in this repo and
-  re-run `./setup.sh` to keep them in sync.
+- **Different theme:** Umbra colours are spread across many files. List the files that
+  carry the palette from a checkout with
+  `git grep -l -i -E '#(26082f|e0a050|c58bd6)' -- dotfiles system-files`, then edit the
+  colour definitions in those files. Ghostty also has a theme in `ghostty/themes/Umbra`
+  (select it with `theme = ...` in `ghostty/config.ghostty`; list the built-in options
+  with `ghostty +list-themes`). Re-run `./setup.sh` after changing files in this repo.
 - **"sistema" workspace logo:** `sistema logo umbra` (default: colour wave),
   `sistema logo spin` (fastfetch's 3D spinning logo) or `sistema logo fastfetch`
   (static). The choice is remembered. `spin` needs fastfetch 2.69+: until Fedora ships
