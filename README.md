@@ -118,6 +118,13 @@ background), then **reboot**. Check with `nvidia-smi`, which should list your NV
 Flags: `./setup.sh --no-gaming` skips the gaming tools; `--gaming` forces them in a VM. `--notifications=swaync` or `--notifications=mako` picks the notification daemon (asked when omitted in a terminal; swaync when unattended).
 `--cursors=options`, `--cursors=fun` or `--cursors=all` also installs extra cursor themes
 (see [Customizing](#7-customizing)); the default cursor is always installed.
+`--godot` installs the **Godot** game engine editor (official build, latest stable) in
+`~/.local/opt/godot/<version>`, with `godot` on `PATH`, a launcher entry and the `project.godot`
+file type. `--godot=4.7.2` picks a version (re-run with another version to switch; older ones
+stay installed). `--godot-templates` also installs its export templates (~1 GB, for exporting
+to Windows, Linux and the rest). Both are asked when omitted in a terminal, and skipped when unattended.
+The official build is used instead of Flathub's because it reports `<version>.stable.official`
+(projects can pin that) and it reaches external editors and SDKs without a sandbox.
 
 ## 4. After the first login
 
@@ -180,7 +187,7 @@ gh auth login                             # uploads the key to GitHub
 | Agents | **herdr** (agent workspaces) + **Claude Code** + **Orca** (stable checkout in `~/.local/src/orca-stable`) |
 | Shell | fish + Starship prompt (Umbra, two lines: blocks with folder · git · project language, slow-command time and clock on the right; `❯` turns red on failure), zoxide (`z`), fzf (Ctrl+R/Ctrl+T), fisher + the `done` plugin (desktop notification when a command over 10 s ends while another niri window has focus; interactive programs excluded), eza (`ls`/`ll`/`la`/`tree`, Umbra theme), file colours via vivid `LS_COLORS` (Umbra), bat (`cat`, Umbra theme), lazygit (`lg`, Umbra, diffs through delta; `|` toggles side by side), btop. Shortcuts are fish `abbr` (expand on Space: `ll`, `cat`, `lg`, git `g` `gs` `gd` `ga` `gc` `gp` `gl` `gsw`, `!!`), plus `mkcd` and `extract` functions and the direnv hook |
 | Git | `~/.config/git/config`: delta as pager (Umbra syntax colours, line numbers, changed words highlighted; `n`/`N` jump between files), `git ds` for a side-by-side diff (`git dss` for a commit), zdiff3 conflicts, rerere, histogram diffs, push without `-u`; aliases `st` `sw` `co` `br` `ci` `amend` `unstage` `undo` `last` `lg` (graph log). Identity stays in `~/.gitconfig` |
-| Dev | VS Code (themes, extensions and profiles via its Settings Sync), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx) |
+| Dev | VS Code (themes, extensions and profiles via its Settings Sync), gcc/cmake, **mise** (Node LTS + Python 3.13; per project: `mise use node@22`), uv, gh, Podman + Toolbox + Distrobox, Docker (+ Compose, Buildx), optional **Godot** (`--godot`) |
 | Video | full codecs (RPM Fusion ffmpeg), **mpv** with the uosc interface + thumbnails (Umbra colours, Inter font), yt-dlp (`mpv <youtube-url>` works) |
 | Browser | Firefox + uBlock Origin |
 | Office | **LibreOffice** (Flathub): Writer (documents), Calc (spreadsheets), Impress (presentations) |

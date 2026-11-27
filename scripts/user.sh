@@ -4,6 +4,9 @@
 # any existing config that differs is kept as <file>.bak-<timestamp>.
 #   --cursors=options|fun|all   also install extra cursor themes (scripts/cursors.sh)
 #   --notifications=swaync|mako which notification service to enable (default swaync)
+#   --godot[=VERSION]           Godot editor, official build (default: latest stable;
+#                               VERSION like 4.7.2 or 4.7.2-stable)
+#   --godot-templates           also its export templates (Windows, Linux, ...; ~1 GB)
 set -euo pipefail
 
 [ "$(id -u)" -ne 0 ] || { echo "run as your normal user, not root" >&2; exit 1; }
@@ -12,12 +15,22 @@ stamp=$(date +%Y%m%d-%H%M%S)
 export PATH="$HOME/.local/bin:$PATH"
 cursors=
 notif=swaync
+godot=
+godot_templates=no
 for arg in "$@"; do
     case "$arg" in
         --cursors=*) cursors=${arg#--cursors=} ;;
         --notifications=*) notif=${arg#--notifications=} ;;
+        --godot) godot=latest ;;
+        --godot=*) godot=${arg#--godot=}; godot=${godot%-stable} ;;
+        --no-godot) godot= ;;
+        --godot-templates) godot_templates=yes ;;
     esac
 done
+case "$godot" in
+    ''|latest|[0-9]*.[0-9]*) ;;
+    *) echo "--godot must be a version like 4.7.2" >&2; exit 1 ;;
+esac
 
 step() { printf '\n\033[1;36m==> %s\033[0m\n' "$*"; }
 
@@ -224,6 +237,68 @@ for app in htop kbd-layout-viewer5 gkbd-keyboard-display org.fcitx.Fcitx5 \
         > ~/.local/share/applications/$app.desktop
 done
 fc-cache -f >/dev/null   # fontconfig aliases (sans = Inter, mono = JetBrainsMono)
+
+if [ -n "$godot" ]; then
+    step "Godot (official build) + export templates: $godot_templates"
+    # The official build, not Flathub's: it reports "<version>.stable.official", which
+    # projects can pin, and it reaches external editors and SDKs without a sandbox.
+    # Each version lives in ~/.local/opt/godot/<version>; ~/.local/bin/godot points at the
+    # one installed last. Re-run with another --godot=VERSION to switch.
+    if [ "$godot" = latest ]; then
+        godot=$(fetch https://api.github.com/repos/godotengine/godot/releases/latest |
+            sed -n 's/.*"tag_name": *"\([^"]*\)-stable".*/\1/p' || true)
+        [ -n "$godot" ] || echo "  could not read the latest Godot version (offline?): skipped"
+    fi
+fi
+if [ -n "$godot" ]; then
+    gd_url=https://github.com/godotengine/godot/releases/download/$godot-stable
+    gd_dir=~/.local/opt/godot/$godot
+    if [ ! -x "$gd_dir/godot" ]; then
+        tmp=$(mktemp -d)
+        fetch -o "$tmp/godot.zip" "$gd_url/Godot_v$godot-stable_linux.x86_64.zip"
+        unzip -oq "$tmp/godot.zip" -d "$tmp"
+        mkdir -p "$gd_dir"
+        install -m 755 "$tmp/Godot_v$godot-stable_linux.x86_64" "$gd_dir/godot"
+        gd_raw=https://raw.githubusercontent.com/godotengine/godot/$godot-stable
+        fetch -o "$gd_dir/icon.png" "$gd_raw/main/app_icon.png" || echo "  no icon fetched"
+        # MIME type for project.godot, so file managers open it with Godot
+        if fetch -o "$tmp/godot-mime.xml" "$gd_raw/misc/dist/linux/org.godotengine.Godot.xml"; then
+            install -Dm644 "$tmp/godot-mime.xml" ~/.local/share/mime/packages/org.godotengine.Godot.xml
+            update-mime-database ~/.local/share/mime 2>/dev/null || true
+        fi
+        rm -rf "$tmp"
+    fi
+    ln -sf "$gd_dir/godot" ~/.local/bin/godot
+    mkdir -p ~/.local/share/applications
+    cat > ~/.local/share/applications/godot.desktop <<EOF
+[Desktop Entry]
+Type=Application
+Name=Godot $godot
+GenericName=Game engine
+Comment=Godot Engine editor (official build)
+Exec=$HOME/.local/bin/godot %f
+Icon=$gd_dir/icon.png
+Categories=Development;IDE;
+MimeType=application/x-godot-project;
+StartupWMClass=Godot
+EOF
+    # Templates go where the editor looks for them:
+    # ~/.local/share/godot/export_templates/<version>.stable
+    tpl_dir=~/.local/share/godot/export_templates/$godot.stable
+    if [ "$godot_templates" = yes ] && [ ! -f "$tpl_dir/version.txt" ]; then
+        echo "  downloading the export templates (~1 GB)"
+        tmp=$(mktemp -d)
+        if fetch -o "$tmp/templates.tpz" "$gd_url/Godot_v$godot-stable_export_templates.tpz"; then
+            unzip -oq "$tmp/templates.tpz" -d "$tmp"
+            mkdir -p "$tpl_dir"
+            cp -a "$tmp"/templates/. "$tpl_dir"/
+        else
+            echo "  template download failed: re-run, or use Editor > Manage Export Templates"
+        fi
+        rm -rf "$tmp"
+    fi
+    godot --headless --version 2>/dev/null | tail -n 1 | sed 's/^/  /'
+fi
 
 step "herdr (terminal workspace manager for coding agents)"
 if ! command -v herdr >/dev/null; then
