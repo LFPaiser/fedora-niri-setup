@@ -27,7 +27,7 @@ Tokens visuais propostos, para usar como referência nos itens de consistência:
 | Fonte mono | JetBrainsMono Nerd Font 11 |
 | Cores com função fixa | âmbar = foco/ativo; lilás = secundário; surface1 = seleção; vermelho forte `#e5455a` = urgente/erro; amarelo = aviso |
 | Animação | 200 ms ease-in-out em todas (niri: `cubic-bezier 0.42 0 0.58 1`; waybar) |
-| Sombra | larga e suave: softness 60, spread 8, y 10, `#14031a55` |
+| Sombra | desligada no niri; os valores antigos (softness 60, spread 8, y 10, `#14031a55`) não são usados |
 
 ## Problemas
 
@@ -62,15 +62,15 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 
 - [x] **Kitty no lugar do Alacritty** como terminal reserva: usa o mesmo protocolo de imagens do Ghostty (yazi, `icat`), então as ferramentas continuam funcionando ao trocar. Trocar o pacote em `system.sh`, criar `kitty/kitty.conf` com as cores Umbra, atalho no niri; o Foot (`Super+Shift+Enter`) fica como terminal de emergência.
 - [ ] **Ghostty pela GPU** `[HW]`: confirmar que em hardware real não existe `/usr/local/bin/ghostty` (o script com `LIBGL_ALWAYS_SOFTWARE=1` é só da VM, que tem OpenGL 4.1 e o Ghostty precisa de 4.3) e que o Ghostty usa a GPU (`ghostty +show-config` / desempenho com muita saída).
-- [x] **Ghostty: instância única ou não** — decidido: manter uma instância só (comentado no `config.ghostty`). Antes: `gtk-single-instance = detect` põe todas as janelas num processo só; se o Ghostty travar, todas as sessões (ex.: várias do Claude Code) fecham juntas. Decidir entre `false` (um processo por janela) ou manter + tmux/zellij.
+- [x] **Ghostty: instância única ou não** — decidido: manter uma instância só (comentado no `config.ghostty`).
 
 ### Média
-- [x] **Testar o swaync no lugar do mako** — feito: swaync é o padrão, mako continua como opção (`setup.sh --notifications=mako`): principal motivo é pausar o tempo da notificação com o mouse em cima (o mako 1.11 não tem); de bônus, central de notificações com histórico. Confirmar a pausa antes de trocar, e ver se ele mostra o tempo restante na notificação (o mako não mostra). Para trocar: tema Umbra em CSS, atalhos Super+N / Shift+N / Ctrl+N, `dnd.sh` da waybar, 4 visíveis, agrupamento por app e o som.
+- [x] **Testar o swaync no lugar do mako** — feito: swaync é o padrão, mako continua como opção (`setup.sh --notifications=mako`): principal motivo é pausar o tempo da notificação com o mouse em cima (o mako 1.11 não tem); de bônus, central de notificações com histórico; tema Umbra em CSS e atalhos Super+N / Shift+N / Ctrl+N.
 - [x] **Som de notificação** no mako: `message.oga` (urgente: `dialog-warning.oga`) pelo grupo de volume Notificações; mudo para urgência baixa e no não perturbe.
 - [ ] **Luz noturna**: `wlsunset` + botão na waybar (talvez não funcione na VM).
 - [x] **Ações no Nemo**: "Abrir Ghostty aqui" (já é o "Abrir no terminal" do Nemo), "Definir como wallpaper", "Copiar caminho"; instalar `nemo-fileroller`.
 - [x] **Tema do fcitx5** (janela de candidatos) em Umbra.
-- [ ] **Regras do mako por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som).
+- [ ] **Regras do swaync por app** quando aparecerem os casos reais (ex.: player de música com tempo curto e sem som); mako continua como opção.
 - [x] **GNOME Text Editor**: esquema de cores Umbra (GtkSourceView 5) e fonte JetBrainsMono.
 - [x] **lazygit**: `config.yml` com cores Umbra e o delta como pager.
 - [x] **eza**: `theme.yml` Umbra.
@@ -89,7 +89,7 @@ Personalizações e ferramentas novas. Ordem: prioridade alta → baixa.
 - [ ] **Compartilhar tela**: testar captura de tela/janela no Firefox e no Meet/Discord pelo `xdg-desktop-portal-gnome` e anotar o que funciona.
 - [x] **Apps Flatpak com o tema**: `flatpak override --user` com `GTK_THEME`, acesso a `~/.themes`/`~/.icons`, cursor Layan-White-Umbra e fontes.
   - Feito em `scripts/user.sh`: `flatpak override --user` com `xdg-config/gtk-3.0`, `gtk-4.0` e `fontconfig` (`:ro`) + `XCURSOR_*`; extensão `org.gtk.Gtk3theme.adw-gtk3-dark`. Ícones/cursor/fontes do host o flatpak já expõe sozinho (`/run/host/...`); `GTK_THEME` NÃO usado (quebra libadwaita). Apps Electron (Bitwarden) ignoram gtk.css.
-- [ ] **Perfis de energia** `[HW]`: `tuned-ppd` + módulo da waybar.
+- [ ] **Perfis de energia** `[HW]`: `tuned-ppd` já instalado em `scripts/system.sh`; falta o módulo da waybar.
 
 ### Baixa
 - [ ] Atalhos na barra lateral do Nemo/seletor de arquivos (projetos, Screenshots, Wallpapers).
