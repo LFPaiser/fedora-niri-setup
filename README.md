@@ -283,8 +283,11 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
   (Banana, Miku, NieR, PopCat, Retrosmart 8-bit, WarCraft III) or `all`;
   `scripts/cursors.sh list` shows them all. Each is downloaded from its own project.
   To switch theme, change `xcursor-theme` in `niri/config.kdl`,
-  `gtk-cursor-theme-name` in `gtk-3.0/settings.ini` and
-  `gsettings set org.gnome.desktop.interface cursor-theme NAME`.
+  `gtk-cursor-theme-name` in `gtk-3.0/settings.ini`, the `Inherits` name in
+  `~/.icons/default/index.theme` (written by `scripts/user.sh`) and in
+  `/usr/share/icons/default/index.theme` (written by `scripts/system.sh`, needs
+  sudo), and the Flatpak `XCURSOR_THEME` override set by `scripts/user.sh`; then
+  run `gsettings set org.gnome.desktop.interface cursor-theme NAME`.
 - **Lock screen:** `~/.config/gtklock/style.css` (look) and `layout.ui` (which
   widgets show; the Unlock button and "Password:" label are hidden). Test with `gtklock`.
 - **A fancier bar/shell (real hardware only):** [Noctalia](https://github.com/noctalia-dev/noctalia-shell)
