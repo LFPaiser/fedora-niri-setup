@@ -333,6 +333,13 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 - The VM's virtual GPU only offers OpenGL 4.1 and Ghostty needs 4.3, so in a VM
   `setup.sh` adds `/usr/local/bin/ghostty`, which runs it with software rendering.
   Real hardware doesn't need this.
+- `journalctl -b -p warning` in the VM shows `vmwgfx ... seems to be running on an
+  unsupported hypervisor`, `This configuration is likely broken` and repeated
+  `[drm:vmw_msg_ioctl [vmwgfx]] *ERROR* Failed to open channel.` These are expected
+  VirtualBox VMSVGA quirks, not a broken install (`lspci -k` shows the VMware SVGA II
+  Adapter using `vmwgfx`). Use the **VMSVGA** display controller with **3D acceleration
+  enabled** and at least 128 MB of video memory; none of these messages appear on
+  real hardware.
 - Clock off by a few seconds at boot (`chronyd: System clock wrong by N seconds`, then
   stepped): VirtualBox starts the guest clock from the Windows host clock, and Windows
   only syncs it now and then. Chrony corrects it a few seconds after boot. The guest
