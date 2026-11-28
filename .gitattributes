@@ -1,3 +1,12 @@
 * text=auto eol=lf
 *.iso binary
 *.png binary
+*.jpg binary
+*.webp binary
+*.jxl binary
+*.oga binary
+*.ttf binary
+*.zip binary
+*.xpi binary
+*.svg text
+dotfiles/local-share/emoji/emoji.txt linguist-generated=true -diff
