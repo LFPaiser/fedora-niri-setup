@@ -315,6 +315,24 @@ What is still left to tune (problems to fix and ideas, by priority) is tracked i
 
 ## 9. The test VM (VirtualBox on Windows)
 
+### Verification status
+
+Recorded against **Fedora 44** in the VirtualBox VM on **2026-11-28**. Where the VM has
+no equivalent device, real-hardware behaviour is deliberately left unmarked; the
+remaining checks are the `[HW]` items in `TODO.md`.
+
+| Feature | VM | Real hardware | Notes |
+| --- | --- | --- | --- |
+| Kickstart install, ABNT2 keyboard, `en_US.UTF-8`, UTC | Verified | Not verified | `ks/ks.cfg` + `oemdrv-ks.iso` |
+| niri, greetd/tuigreet, fish, themes and fonts | Verified | Not verified | — |
+| Chrony clock sync, SSH access | Verified | Not verified | — |
+| Ghostty with software rendering | Verified | Not needed | VM OpenGL is 4.1; a real GPU provides 4.3 |
+| GPU drivers (NVIDIA/MOK, AMD freeworld, PRIME offload) | n/a | Untested | no GPU in the VM; `TODO.md [HW]` |
+| Gaming (Steam, GameMode, MangoHud, gamescope) | Not testable | Untested | `setup.sh` skips it in the VM |
+| Laptop power, touchpad, monitor scaling/refresh, audio names, firmware | n/a | Untested | `TODO.md [HW]` |
+
+This table is a status record, not a promise: update it when a hardware ticket closes.
+
 - Attach `oemdrv-ks.iso` to the VM next to the Fedora install ISO. The unattended
   installer reads `ks/ks.cfg` from it (volume label `OEMDRV`). It **wipes the VM disk**;
   never boot that ISO on real hardware.
