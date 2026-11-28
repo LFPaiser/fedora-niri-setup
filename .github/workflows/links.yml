@@ -1,0 +1,28 @@
+name: Check links
+
+# Keep README/TODO links (including in-page anchors such as #7-customizing) honest.
+# The weekly run catches upstream URLs that move after a release.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lychee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Check Markdown links and anchors
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --no-progress --include-fragments --exclude-path .git '**/*.md' '*.md'
+          fail: true
+          jobSummary: true
